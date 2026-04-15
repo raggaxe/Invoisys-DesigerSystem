@@ -1,0 +1,1769 @@
+/*
+ * =============================================================================
+ * componentes.css — componentes e padrões de UI do portal
+ * =============================================================================
+ * Finalidade: reset/base leve, formulários, botões, alertas, modais, DataTables auxiliares,
+ * layout .main-content / .page-content, carrossel de métricas. Não redefinir
+ * utilitários já em tokens.css (.d-flex, .text-start, …) — canónicos em tokens.css.
+ *
+ * Ordem típica (varia por view):
+ *   Delivery Monitor: main → tokens → table → componentes → página.
+ *   NF-e Entrada Beta: componentes → main → table → tokens.
+ *   Ao adicionar regras, considerar cascade entre estas duas ordens.
+ *
+ * Toolbar / painel de listagem: estilos base .panel-card, .combo-container,
+ * .square-button, .metrics-button em table.css; aqui ficam métricas (carrossel),
+ * .panel .panel-toggle e estados (ex.: disabled).
+ * Select empresa na toolbar: .dm-empresa-select-wrap (largura mínima 385px, todos os estados).
+ *
+ * Como criar uma nova tela: ver comentário em main.css.
+ * =============================================================================
+ */
+
+/* ==========================
+BASE / RESET
+========================== */
+body {
+    min-height: 100vh !important;
+    overflow-x: hidden !important;
+    flex: 1 1 auto;
+    flex: 1 1 auto !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content .page-content > .header, .main-content .page-content > div > .header {
+    padding-block: 15px 0;
+    position: relative;
+}
+
+/* Título da página no cabeçalho (ex.: NF-e): canónico no DS; alinha legado disperso ao mesmo aspeto. */
+.main-content .page-content > .header h2,
+.main-content .page-content > div > .header h2 {
+    color: var(--cor-texto-heading);
+    font-family: var(--fonte-principal);
+    font-size: var(--tamanho-xxl);
+    letter-spacing: -0.5px;
+    margin: 0;
+    padding-bottom: 7px;
+    font-weight: var(--peso-fonte-extra-leve);
+}
+
+a:focus {
+    outline: none !important;
+    outline-offset: 0 !important;
+}
+
+/* Teclado / leitores: anel de foco alinhado a tokens em main.css (mouse mantém outline removido em :focus) */
+a:focus-visible {
+    outline: var(--focus-ring-largura) solid var(--focus-ring-cor) !important;
+    outline-offset: var(--focus-ring-offset) !important;
+}
+
+button:focus-visible,
+.btn:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: var(--focus-ring-largura) solid var(--focus-ring-cor) !important;
+    outline-offset: var(--focus-ring-offset) !important;
+}
+
+/* Display / alinhamento genérico: ver tokens.css (.d-none, .d-flex, .text-*) */
+
+/* ==========================
+TEXTO / TIPOGRAFIA
+========================== */
+.link {
+    text-decoration: underline;
+    color: var(--cor-action-texto);
+}
+
+.text-label {
+    color: var(--cor-texto-secundario);
+    font-family: var(--fonte-principal);
+    font-weight: var(--peso-fonte-normal);
+    font-size: var(--tamanho-sm);
+}
+
+.title-main {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: var(--fonte-principal);
+}
+
+/* ==========================
+FORMULÁRIOS
+========================== */
+.js-filter-input {
+    color: var(--cor-texto-secundario);
+    font-family: var(--fonte-principal);
+    font-size: var(--tamanho-base-fonte);
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.control-label {
+    font-weight: bold;
+    color: var(--cor-texto-secundario);
+    margin-bottom: 5px;
+    display: block;
+}
+
+/**
+ * .form-control — base alinhada a filtros / toolbar (portal MVC usa em conjunto com Bootstrap).
+ * Largura: 100% do contentor; em colunas estreitas (ex. 385px) o pai define o teto.
+ */
+input.form-control,
+select.form-control,
+textarea.form-control {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-height: 39px;
+    padding: 6px 12px;
+    font-family: var(--fonte-principal), Arial, sans-serif;
+    font-size: var(--tamanho-sm);
+    line-height: 1.42857143;
+    color: var(--cor-texto-secundario);
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda-neutra);
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+textarea.form-control {
+    min-height: 80px;
+    height: auto;
+    resize: vertical;
+}
+
+select.form-control {
+    cursor: pointer;
+}
+
+input.form-control:disabled,
+select.form-control:disabled,
+textarea.form-control:disabled {
+    background-color: var(--cor-disabled-fundo);
+    color: var(--cor-texto-disabled);
+    cursor: not-allowed;
+    opacity: 0.9;
+}
+
+select.form-control[multiple] {
+    min-height: auto;
+    height: auto;
+    padding: 8px;
+}
+
+/**
+ * Ficheiro composto (portal): rótulo + caixa única com nome à esquerda e botão verde «Escolha o …» à direita.
+ * Markup: .file > .option-group > input.form-control[readonly] + span.file-button.btn-primary + input[type=file].dropzone.custom-file
+ */
+.file {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.file .option-group {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    border: 1px solid var(--cor-borda-neutra);
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #fafafa;
+    box-sizing: border-box;
+}
+
+.file .option-group > input.form-control {
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background-color: #fafafa !important;
+}
+
+.file .option-group .file-button,
+.file .option-group span.file-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    min-height: 39px;
+    padding: 0 16px;
+    margin: 0;
+    border: 0 !important;
+    border-radius: 0;
+    border-left: 1px solid rgba(0, 0, 0, 0.06);
+    font-family: var(--fonte-principal), Arial, sans-serif;
+    font-size: var(--tamanho-sm);
+    font-weight: var(--peso-fonte-strong);
+    line-height: 1.2;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    box-sizing: border-box;
+}
+
+.file .option-group .file-button.btn-primary,
+.file .option-group span.file-button.btn-primary {
+    background-color: var(--cor-brand) !important;
+    border-color: var(--cor-brand) !important;
+    color: var(--cor-texto-sobre-brand) !important;
+}
+
+.file .option-group input[type="file"].custom-file,
+.file .option-group input[type="file"].dropzone {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: min(200px, 50%);
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    cursor: pointer;
+    font-size: 0;
+    z-index: 2;
+}
+
+/* Select */
+.select-filter .form-select {
+    background-color: var(--cor-disabled-fundo);
+    border-color: var(--cor-disabled-fundo);
+    color: var(--cor-texto-secundario);
+    font-size: var(--tamanho-sm);
+    font-style: italic;
+    height: 39px;
+}
+
+.select-verde {
+    background-color: var(--cor-action-fundo) !important;
+    color: var(--cor-action-texto) !important;
+    border-color: var(--cor-action-fundo) !important;
+    font-weight: var(--peso-fonte-strong) !important;
+}
+
+/* ==========================
+   SKELETON / LOADING PULSE
+   Mesmo ritmo que table.css (.loading-table, .loading-panel, .loading-select-item).
+   Define aqui para views que carregam componentes.css sem table.css.
+   ========================== */
+@keyframes loading-pulse {
+    0% {
+        background-color: #f0f0f0;
+    }
+
+    50% {
+        background-color: #ffffff;
+    }
+
+    100% {
+        background-color: #f0f0f0;
+    }
+}
+
+/** Bloco neutro (área de card, linha, placeholder) — combina com min-height, w-100, border-radius no HTML */
+.skeleton-pulse {
+    animation: loading-pulse 1.5s infinite ease-in-out;
+}
+
+/**
+ * Campo em skeleton: texto invisível + pulse no fundo até os dados chegarem.
+ * Para Select2 na toolbar, prefere o padrão .dm-empresa-select-wrap--loading (componentes.css).
+ */
+input.form-control.skeleton-pulse--field,
+select.form-control.skeleton-pulse--field,
+textarea.form-control.skeleton-pulse--field {
+    pointer-events: none;
+    cursor: wait;
+    color: transparent !important;
+    text-shadow: none;
+    -webkit-text-fill-color: transparent !important;
+    animation: loading-pulse 1.5s infinite ease-in-out;
+    border: 1px solid var(--cor-borda-neutra);
+    box-sizing: border-box;
+}
+
+textarea.form-control.skeleton-pulse--field {
+    min-height: 72px;
+}
+
+.loading-select{
+    width:385px;
+}
+#select-wrap{
+    display:none;
+}
+
+.prepend-icon i.fa-calendar {
+    color: var(--cor-icone-calendario-suave);
+    font-size: 14px;
+    height: 34px;
+    left: 0;
+    line-height: 39px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 36px;
+}
+
+.loading-select-item {
+    width: 385px;
+    animation: loading-pulse 1.5s infinite ease-in-out;
+    height: 39px;
+    border-radius:4px;
+}
+.select-wrap{
+    display: none;
+}
+/* Select2 — largura máxima alinhada ao padrão toolbar (385px; selects em colunas usam width:100% no pai) */
+.select2-container {
+    max-width: 385px !important;
+    width: 100% !important;
+}
+
+.select2-container--default .select2-selection--single {
+    background: transparent !important;
+    height: 39px !important;
+    border: none !important;
+    border-radius: 4px;
+    max-width: 385px;
+}
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: var(--cor-texto-secundario);
+        font-family: var(--fonte-principal);
+        font-size: var(--tamanho-sm);
+        margin: var(--none);
+        line-height: 37px;
+        border: 1px solid var(--cor-borda-neutra);
+        font-weight: 700;
+        border-radius: 4px;
+        max-width: 385px;
+        background: var(--cor-superficie);
+    }
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    display: block;
+    padding-left: 8px;
+    padding-right: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ==========================
+TOOLBAR — wrap do select empresa (.dm-empresa-select-wrap)
+Reutilizável em qualquer view; largura mínima 385px (normal, focus, open, --loading).
+Select2 genérico acima já é 385px; o wrap reforça o mesmo teto dentro do bloco empresa.
+========================== */
+.dm-empresa-select-wrap {
+    flex: 0 0 auto;
+    width: 385px;
+    max-width: min(385px, 100%);
+    min-width: min(385px, 100%);
+    position: relative;
+    box-sizing: border-box;
+}
+
+.dm-empresa-select-wrap--loading > select.form-control {
+    pointer-events: none;
+    cursor: wait;
+    color: transparent !important;
+    text-shadow: none;
+    -webkit-text-fill-color: transparent;
+    animation: loading-pulse 1.5s infinite ease-in-out;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    max-width: 385px;
+    box-sizing: border-box;
+}
+
+.dm-empresa-select-wrap--loading .select2-container--default .select2-selection--single .select2-selection__rendered {
+    pointer-events: none;
+    cursor: wait;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent;
+    animation: loading-pulse 1.5s infinite ease-in-out;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    max-width: 385px;
+    box-sizing: border-box;
+}
+
+.dm-empresa-select-wrap--loading .select2-container--default .select2-selection--single .select2-selection__arrow b {
+    opacity: 0.35;
+}
+
+.dm-empresa-select-wrap select.form-control {
+    width: 100%;
+    max-width: 100%;
+    color: #333;
+    background-color: #fff;
+    height: 39px;
+}
+
+.dm-empresa-select-wrap .select2-container {
+    max-width: 385px !important;
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+.dm-empresa-select-wrap .select2-container--default .select2-selection--single {
+    background: transparent !important;
+    height: 39px !important;
+    border: none !important;
+    border-radius: 4px;
+    max-width: 385px;
+    box-sizing: border-box;
+}
+
+/* CDN Select2 usa #444/peso normal — alinhar a tokens do portal */
+.dm-empresa-select-wrap .select2-container--default .select2-selection--single .select2-selection__rendered,
+.dm-empresa-select-wrap .select2-container--default.select2-container--open .select2-selection--single .select2-selection__rendered,
+.dm-empresa-select-wrap .select2-container--default.select2-container--focus .select2-selection--single .select2-selection__rendered {
+    color: var(--cor-texto-secundario) !important;
+    font-family: var(--fonte-principal), var(--fonte-secundaria), sans-serif !important;
+    font-size: var(--tamanho-sm) !important;
+    font-weight: 700 !important;
+    margin: var(--none);
+    line-height: 37px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #FFF !important;
+    display: block;
+    padding-left: 8px;
+    padding-right: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -webkit-font-smoothing: antialiased;
+    max-width: 385px;
+    box-sizing: border-box;
+}
+
+.dm-empresa-select-wrap .select2-container--default .select2-selection--single .select2-selection__rendered .select2-selection__placeholder {
+    color: var(--cor-texto-secundario) !important;
+    font-weight: 700 !important;
+}
+
+.dm-empresa-select-wrap .select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: var(--cor-texto-secundario) transparent transparent transparent !important;
+}
+
+.dm-empresa-select-wrap .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 37px;
+}
+
+/* ==========================
+BOTÕES
+========================== */
+.btn {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 39px;
+    padding: 0 14px;
+    margin: 0;
+    font-family: var(--fonte-principal);
+    font-size: var(--tamanho-base-fonte);
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease, opacity 0.12s ease;
+}
+
+a.btn {
+    text-decoration: none;
+}
+
+.btn .fa {
+    line-height: 1;
+}
+
+.btn:disabled,
+.btn.disabled,
+fieldset:disabled .btn {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+a.btn.disabled,
+a.btn[aria-disabled="true"] {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.btn-canceled {
+    background-color: var(--cor-borda);
+    border-color: var(--cor-borda);
+    color: var(--cor-texto-secundario);
+}
+
+.btn-band {
+    background-color: var(--cor-brand) !important;
+    border-color: var(--cor-brand);
+    color: var(--cor-texto-sobre-brand);
+}
+
+.btn-primary {
+    background-color: var(--cor-brand) !important;
+
+    border-color: var(--cor-action-border) !important;
+    color: var(--cor-texto-sobre-brand) !important;
+    font-weight: var(--peso-fonte-strong);
+
+}
+
+/**
+ * Botão de confirmação «cheio» marca (ex.: rodapé de modal Entrada XML).
+ * Equivalente visual a .btn-primary com borda sólida de marca.
+ */
+.btn.bg-green-invoisys {
+    background-color: var(--cor-brand) !important;
+    border-color: var(--cor-brand) !important;
+    color: var(--cor-texto-sobre-brand) !important;
+    font-weight: var(--peso-fonte-strong);
+}
+
+/**
+ * Confirmação de ação destrutiva (ex.: modal «apagar ficheiro»).
+ * Sobrepõe o estilo Bootstrap quando esta folha entra depois no cascade.
+ */
+.btn.btn-danger {
+    background-color: var(--cor-danger-fundo) !important;
+    border-color: var(--cor-danger-border) !important;
+    color: var(--cor-texto-sobre-brand) !important;
+    font-weight: var(--peso-fonte-strong);
+}
+
+.btn.btn-danger:hover {
+    filter: brightness(0.93);
+}
+
+/**
+ * Botão quadrado só com ícone e contorno (ex.: menu / ColVis na toolbar).
+ * Fundo transparente; borda neutra; 39×39 alinhado a .btn.
+ */
+.btn.btn-outline-icon {
+    width: 39px;
+    min-width: 39px;
+    max-width: 39px;
+    padding: 0 !important;
+    justify-content: center;
+    gap: 0;
+    background-color: transparent !important;
+    border: 1px solid var(--cor-borda-neutra) !important;
+    color: var(--cor-texto-heading);
+    box-shadow: none;
+}
+
+.btn.btn-outline-icon:hover {
+    background-color: var(--cor-superficie-suave) !important;
+}
+
+.btn.btn-outline-icon .fa {
+    font-size: var(--tamanho-base-fonte);
+}
+
+.btn-secondary {
+    background-color: var(--cor-botao-secondary-fundo) !important;
+    border-color: var(--cor-action-border) !important;
+    color: var(--cor-texto-sobre-brand) !important;
+    font-weight: var(--peso-fonte-strong);
+  
+}
+
+/**
+ * Botão com aspeto de hiperligação (equivalente a Bootstrap .btn-link).
+ * Usar com <button type="button"> ou <a href="…"> para ações secundárias discretas.
+ */
+.btn.btn-link {
+    height: auto;
+    min-height: 0;
+    padding: 0.35rem 0.5rem;
+    font-weight: var(--peso-fonte-normal);
+    color: var(--cor-action-texto);
+    background-color: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+a.btn.btn-link {
+    text-decoration: underline;
+}
+
+.btn.btn-link:hover {
+    color: var(--cor-texto-heading);
+    text-decoration: none;
+}
+
+/* ==========================
+breadcrum
+========================== */
+.main-content .page-content .breadcrumb-wrapper {
+    position: relative !important;
+    right: inherit !important;
+    top: inherit !important;
+}
+.breadcrumb {
+    padding: 8px 15px;
+    margin-bottom: 0px!important;
+    list-style: none;
+    background-color: var(--cor-superficie-suave);
+    border-radius: 4px;
+}
+
+.main-content .page-content .breadcrumb li {
+    font-family: var(--fonte-principal), Arial, sans-serif;
+    font-weight: 700;
+    font-size: var(--tamanho-xs);
+    text-transform: uppercase;
+}
+
+/* ==========================
+TABS
+========================== */
+.tabs-header {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.tab-panel {
+    display: none;
+}
+
+    .tab-panel.active {
+        display: block;
+    }
+
+.tab-invoisys .tab-button {
+    min-width: 366px;
+    text-transform: uppercase;
+    font-weight: var(--peso-fonte-negrito);
+}
+
+/**
+ * Tab bar (Figma — fundo claro).
+ * Ativo: texto escuro + negrito + linha escura por baixo (largura ~ à do rótulo).
+ * Inativos: cinza mais claro, sem linha.
+ */
+.invoisys-tabbar {
+    box-sizing: border-box;
+    background: var(--cor-superficie);
+    border-radius: 5px;
+    padding: var(--espacamento-xl) var(--espacamento-xxl);
+}
+
+.invoisys-tabbar__track {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: var(--espacamento-xl) var(--espacamento-xxxxl);
+}
+
+.invoisys-tabbar__tab {
+    position: relative;
+    padding: 0 4px 10px;
+    margin: 0;
+    font-family: var(--fonte-principal), Arial, sans-serif;
+    font-size: var(--tamanho-xs);
+    font-weight: var(--peso-fonte-strong);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    color: var(--cor-texto-secundario);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.invoisys-tabbar__tab:hover {
+    color: var(--cor-texto-medio);
+}
+
+.invoisys-tabbar__tab:focus {
+    outline: none;
+}
+
+.invoisys-tabbar__tab:focus-visible {
+    outline: 2px solid var(--cor-brand);
+    outline-offset: 4px;
+    border-radius: 2px;
+}
+
+.invoisys-tabbar__tab--active {
+    color: var(--cor-texto-heading);
+    font-weight: var(--peso-fonte-negrito);
+}
+
+.invoisys-tabbar__tab--active:hover {
+    color: var(--cor-texto-heading);
+}
+
+.invoisys-tabbar__tab--active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--cor-texto-heading);
+}
+
+.invoisys-tabbar__tab:disabled,
+.invoisys-tabbar__tab[aria-disabled="true"] {
+    color: var(--cor-texto-disabled);
+    cursor: not-allowed;
+    opacity: 0.9;
+    pointer-events: none;
+}
+
+.invoisys-tabbar__tab:disabled:hover,
+.invoisys-tabbar__tab[aria-disabled="true"]:hover {
+    color: var(--cor-texto-disabled);
+}
+
+.invoisys-tabbar__tab--active:disabled::after,
+.invoisys-tabbar__tab--active[aria-disabled="true"]::after {
+    display: none;
+}
+
+/* ==========================
+MODAIS
+========================== */
+.modal-header {
+    background-color: var(--cor-brand);
+    color: var(--cor-texto-sobre-brand);
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-header .modal-title {
+    margin: 0;
+    font-weight: var(--peso-fonte-normal);
+    font-size: var(--tamanho-modal-titulo);
+    line-height: 1.35;
+    text-transform: uppercase;
+}
+
+.modal-header .modal-title strong {
+    font-weight: inherit;
+}
+
+/* Portal: cabeçalho de modal com utilitários herdados (Bootstrap / layout legado). */
+.modal-header.bg-primary,
+.modal-header.bg-green-invoisys {
+    background-color: var(--cor-brand);
+    color: var(--cor-texto-sobre-brand);
+}
+
+/**
+ * Rodapé do modal (padrão Invoisys): linha a 100% com dois botões a dividir o espaço
+ * (utilitários d-flex, flex-fill, gap-2, p-2 em tokens.css). Sem borda superior.
+ */
+.modal-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5rem;
+    margin: 0;
+    border-top: none !important;
+    text-align: left;
+}
+
+.modal-footer .btn.flex-fill {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: var(--cor-overlay-puro);
+    opacity: 0.5;
+    z-index: var(--z-modal-backdrop);
+}
+.select2-container--open {
+    z-index: var(--z-select2-dropdown) !important;
+}
+
+.modal.left {
+    z-index: var(--z-modal);
+}
+.modal-body {
+    overflow: visible !important;
+    font-size: var(--tamanho-sm);
+}
+
+.modal.left .modal-dialog {
+    position: fixed;
+    width: 520px;
+    height: 100vh;
+    left: 0;
+    margin: 0;
+}
+
+/* ==========================
+PILLS / STATUS
+========================== */
+.pill {
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 13px;
+    height: 28px;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.pill-success {
+    background-color: var(--cor-brand);
+    color: var(--cor-texto-sobre-brand);
+}
+
+.pill-danger {
+    background-color: var(--cor-danger-fundo-claro);
+}
+
+.pill-warning {
+    background-color: var(--cor-pill-warning);
+}
+.pill-default {
+    background-color: var(--cor-superficie-alternada);
+}
+.pill-square {
+    width: 27px;
+    height: 27px;
+    font-size: 13px;
+    color: var(--cor-texto-secundario);
+    font-family: var(--fonte-principal);
+}
+
+/**
+ * Pills de estado / contagem: variantes claras (fundo suave + texto escuro) e fortes
+ * (fundo saturado). Combinar sempre com .pill; usar .pill-inline para largura ao texto
+ * (ex.: código + rótulo de estado); manter .pill-square para índice compacto (carrossel).
+ * Tokens em main.css: --cor-pill-*, --cor-action-*, --cor-brand, --cor-danger-*.
+ */
+.pill.pill-inline:not(.pill-square) {
+    width: auto;
+    min-width: 0;
+    max-width: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.pill.pill-light-white {
+    background-color: var(--cor-superficie);
+    color: var(--cor-texto-heading);
+    border: 1px solid var(--cor-borda-neutra);
+}
+
+.pill.pill-light-success {
+    background-color: var(--cor-pill-successo);
+    color: var(--cor-pill-successo-texto);
+}
+
+.pill.pill-light-danger {
+    background-color: var(--cor-danger-fundo-claro);
+    color: var(--cor-pill-danger-texto);
+}
+
+.pill.pill-light-warning {
+    background-color: var(--cor-pill-warning);
+    color: var(--cor-pill-warning-texto);
+}
+
+.pill.pill-light-info {
+    background-color: var(--cor-action-fundo);
+    color: var(--cor-action-texto);
+}
+
+.pill.pill-light-neutral {
+    background-color: var(--cor-superficie-alternada);
+    color: var(--cor-texto-secundario);
+}
+
+.pill.pill-solid-success {
+    background-color: var(--cor-brand);
+    color: var(--cor-texto-sobre-brand);
+}
+
+.pill.pill-solid-danger {
+    background-color: var(--cor-danger-fundo);
+    color: var(--cor-texto-sobre-brand);
+}
+
+/* Aviso forte: fundo laranja portal; texto escuro para contraste em etiquetas pequenas */
+.pill.pill-solid-warning {
+    background-color: var(--cor-status-alerta);
+    color: var(--cor-texto-heading);
+}
+
+.pill.pill-solid-neutral {
+    background-color: var(--cor-texto-heading);
+    color: var(--cor-texto-sobre-brand);
+}
+
+/* ==========================
+ALERTAS (feedback de página, validação, sistema)
+========================== */
+.alert {
+    position: relative;
+    padding: 12px 16px;
+    margin-bottom: 0;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-family: var(--fonte-principal);
+    font-size: var(--tamanho-sm);
+    line-height: 1.5;
+    color: var(--cor-texto-corpo-forte);
+    box-sizing: border-box;
+}
+
+.alert-heading {
+    margin: 0 0 4px;
+    font-size: var(--tamanho-md);
+    font-weight: 700;
+    line-height: 1.3;
+    color: inherit;
+}
+
+.alert .alert-link {
+    font-weight: 700;
+    color: inherit;
+    text-decoration: underline;
+}
+
+.alert .alert-link:hover {
+    text-decoration: none;
+}
+
+.alert-success {
+    background-color: var(--cor-pill-successo);
+    border-color: var(--cor-indicador-sucesso);
+    color: var(--cor-pill-successo-texto);
+}
+
+.alert-info {
+    background-color: var(--cor-action-fundo);
+    border-color: var(--cor-action-border);
+    color: var(--cor-action-texto);
+}
+
+.alert-warning {
+    background-color: var(--cor-pill-warning);
+    border-color: var(--cor-status-alerta);
+    color: var(--cor-pill-warning-texto);
+}
+
+.alert-danger {
+    background-color: var(--cor-danger-fundo-claro);
+    border-color: var(--cor-danger-border);
+    color: var(--cor-pill-danger-texto);
+}
+
+.alert-neutral {
+    background-color: var(--cor-superficie-nuvem);
+    border-color: var(--cor-borda-neutra);
+    color: var(--cor-texto-heading);
+}
+
+.alert-dismissible {
+    padding-right: 2.75rem;
+}
+
+.alert-dismissible .alert__close {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    border: 0;
+    padding: 4px 6px;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+    line-height: 1;
+    font-size: 1.125rem;
+    color: inherit;
+    opacity: 0.65;
+    border-radius: 4px;
+}
+
+.alert-dismissible .alert__close:hover {
+    opacity: 1;
+}
+
+.alert-dismissible .alert__close:focus {
+    outline: none;
+}
+
+.alert-dismissible .alert__close:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+/* ==========================
+DROPDOWN / TOOLTIP
+========================== */
+.dropdown-menu {
+    font-size: var(--tamanho-sm);
+    font-family: var(--fonte-principal);
+}
+
+.tooltip {
+    position: absolute;
+    z-index: var(--z-tooltip);
+}
+
+/**
+ * Tooltip «marca» (fundo branco, texto e contorno verde) — alinhado a hints da toolbar / Importar XML.
+ * Bootstrap 3: passar <code>template</code> com <code>class="tooltip invoisys-tooltip-brand"</code> em <code>.tooltip()</code>.
+ * Bootstrap 5.3: usar <code>data-bs-custom-class="invoisys-tooltip-brand"</code> + variáveis (ver doc Tooltips).
+ */
+.tooltip.invoisys-tooltip-brand {
+    opacity: 1;
+}
+
+.tooltip.invoisys-tooltip-brand .tooltip-inner {
+    max-width: min(22rem, 90vw);
+    padding: 10px 14px;
+    text-align: center;
+    font-family: var(--fonte-principal);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.45;
+    color: var(--cor-brand);
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-brand);
+    border-radius: 6px;
+    white-space: normal;
+    box-shadow: none;
+}
+
+/* Seta — Bootstrap 3 (triângulo por bordas em .tooltip-arrow) */
+.tooltip.invoisys-tooltip-brand.top .tooltip-arrow {
+    border-top-color: var(--cor-brand);
+}
+.tooltip.invoisys-tooltip-brand.bottom .tooltip-arrow {
+    border-bottom-color: var(--cor-brand);
+}
+.tooltip.invoisys-tooltip-brand.left .tooltip-arrow {
+    border-left-color: var(--cor-brand);
+}
+.tooltip.invoisys-tooltip-brand.right .tooltip-arrow {
+    border-right-color: var(--cor-brand);
+}
+
+/* Seta — Bootstrap 5.3 (::before em .tooltip-arrow; inclui bs-tooltip-auto + Popper) */
+.tooltip.invoisys-tooltip-brand.bs-tooltip-top .tooltip-arrow::before,
+.tooltip.invoisys-tooltip-brand.bs-tooltip-auto[data-popper-placement^="top"] .tooltip-arrow::before {
+    border-top-color: var(--cor-brand) !important;
+}
+.tooltip.invoisys-tooltip-brand.bs-tooltip-bottom .tooltip-arrow::before,
+.tooltip.invoisys-tooltip-brand.bs-tooltip-auto[data-popper-placement^="bottom"] .tooltip-arrow::before {
+    border-bottom-color: var(--cor-brand) !important;
+    border-top-color: transparent !important;
+}
+.tooltip.invoisys-tooltip-brand.bs-tooltip-start .tooltip-arrow::before,
+.tooltip.invoisys-tooltip-brand.bs-tooltip-left .tooltip-arrow::before,
+.tooltip.invoisys-tooltip-brand.bs-tooltip-auto[data-popper-placement^="left"] .tooltip-arrow::before {
+    border-left-color: var(--cor-brand) !important;
+    border-top-color: transparent !important;
+}
+.tooltip.invoisys-tooltip-brand.bs-tooltip-end .tooltip-arrow::before,
+.tooltip.invoisys-tooltip-brand.bs-tooltip-right .tooltip-arrow::before,
+.tooltip.invoisys-tooltip-brand.bs-tooltip-auto[data-popper-placement^="right"] .tooltip-arrow::before {
+    border-right-color: var(--cor-brand) !important;
+    border-top-color: transparent !important;
+}
+
+/* NFeEntrada_Beta: tabela fica oculta até o primeiro draw (após carregar fluxo e grid) */
+.nfeentrada-table-hidden {
+    display: none !important;
+}
+
+/* ==========================
+FILTERS
+========================== */
+#filtersList {
+    /*    flex: 0 0 33%;*/
+    background: var(--cor-superficie-painel);
+    padding: 10px!important;
+    margin-top: 20px;
+}
+
+#filtersList label{
+    font-size:13px!important;
+}
+/* Células dos switches nos filtros: label em 2 linhas, pouco espaço para não ultrapassar a coluna */
+#filtersList .filter-switch-cell {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+#filtersList .filter-switch-cell .form-label {
+    display: block;
+    line-height: 1.25;
+    margin-bottom: 4px;
+    font-size: 12px !important;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+#filtersList .filter-switch-cell .switch {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+#filtersList .filter-switch-cell > div {
+    margin-top: 0;
+}
+
+/* Switch do painel de filtros: texto Sim/Não menor e sem corte */
+#filtersList .form-group .switch {
+    height: 18px;
+    width: 52px;
+    padding: 2px;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-radius: 14px;
+}
+#filtersList .form-group .switch .switch-label {
+    font-size: 10px;
+    overflow: visible;
+    white-space: nowrap;
+}
+#filtersList .form-group .switch .switch-label:before,
+#filtersList .form-group .switch .switch-label:after {
+    font-size: 10px;
+    overflow: visible;
+}
+#filtersList .form-group .switch .switch-label:before {
+    right: 6px;
+}
+#filtersList .form-group .switch .switch-label:after {
+    left: 6px;
+}
+#filtersList .form-group .switch .switch-handle {
+    height: 14px;
+    width: 14px;
+    top: 2px;
+    left: 2px;
+    border-radius: 8px;
+}
+#filtersList .form-group .switch .switch-handle:before {
+    height: 10px;
+    width: 10px;
+    margin: -5px 0 0 -5px;
+    border-radius: 5px;
+}
+#filtersList .form-group .switch .switch-input:checked ~ .switch-handle {
+    left: 34px;
+}
+
+/* Apenas dentro do painel de filtros: selects e Select2 em 100% da coluna (não herdam max-width global) */
+#filtersList .select2-container {
+    width: 100% !important;
+    max-width: none !important;
+}
+#filtersList .select2-container--default .select2-selection--single,
+#filtersList .select2-container .select2-selection--single {
+    max-width: none !important;
+    flex: 0 0 100%;
+    background: var(--cor-superficie);
+    font-weight: normal;
+}
+#filtersList .select2-container--default .select2-selection--single .select2-selection__rendered,
+#filtersList .select2-container .select2-selection--single .select2-selection__rendered {
+    max-width: none !important;
+    flex: 0 0 100%;
+    background: var(--cor-superficie);
+    font-weight: bold;
+    font-size: 13px !important;
+}
+#filtersList .filter-container .select2-container {
+    width: 100% !important;
+    max-width: none !important;
+    border-radius: 4px;
+    min-height: 39px;
+    font-size: 13px !important;
+}
+#filtersList .filter-container .selection {
+    width: 100% !important;
+    display: block;
+}
+#filtersList .form-group select.form-control {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+.filter-container .select2-container .select2-selection--single {
+    flex: 0 0 100%;
+    background: var(--cor-superficie);
+    font-weight: normal
+}
+    .filter-container .select2-container .select2-selection--single .select2-selection__rendered {
+        flex: 0 0 100%;
+        background: var(--cor-superficie);
+        font-weight: bold;
+        font-size: 13px !important;
+    }
+.filter-container .select2-container {
+    width: 100% !important;
+    max-width: none !important;
+    border-radius: 4px;
+    min-height: 39px;
+    font-size: 13px !important;
+}
+    .filter-container .selection {
+        width:100% !important;
+     
+        display:block
+    }
+.select2-container .select2-search--inline .select2-search__field {
+    box-sizing: border-box;
+    border: none;
+    font-size: 100%;
+    margin-top: 0px;
+    padding: 0;
+    height: 39px;
+}
+
+
+.filter-container .form-control {
+    display: block;
+    width: 100%;
+    height: 39px;
+    padding: 6px 12px;
+    font-size: 13px !important;
+    line-height: 1.42857143;
+    color: var(--cor-texto-secundario);
+    background-color: var(--cor-superficie);
+    background-image: none;
+    border: 1px solid var(--cor-borda-neutra);
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out
+}
+
+.select2-container--default .select2-selection--multiple {
+    border: 1px solid var(--cor-borda-neutra);
+    border-radius: 4px;
+    font-size: 13px !important;
+    padding: 0px 12px;
+    font-size: 13px !important;
+    line-height: 0;
+}
+
+.select2-container--default.select2-container--below {
+    background: var(--cor-superficie-painel) !important;
+    font-size: 13px !important;
+    border: none!important;
+    border-radius: 4px;
+}
+
+
+        /* ==========================
+DATATABLES
+========================== */
+    .dataTables_filter input {
+    width: 200px !important;
+    height: 34px !important;
+}
+
+.dt-buttons {
+    display: flex !important;
+    gap: 8px;
+}
+
+.main-content .page-content.page-thin {
+    padding: 50px 25px 0 25px !important;
+    flex: 1 1 auto;
+    flex: 1 1 auto !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    min-height: 100%;
+    flex: 1 1 auto;
+    flex: 1 1 auto !important;
+    display: flex;
+    flex-direction: column;
+}
+
+    .main-content .page-content {
+        background: var(--cor-superficie-suave);
+        margin-top: 0px;
+        overflow: hidden;
+        padding: 0px 50px 0;
+        position: relative;
+        height: 100%;
+    }
+
+        .main-content .page-content .panel-content.pagination2 {
+            padding: 0px !important;
+            -webkit-border-radius: 0 0 2px 2px;
+            -moz-border-radius: 0 0 2px 2px;
+            border-radius: 0 0 2px 2px;
+            -moz-background-clip: padding;
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+            flex: 1 1 auto;
+            flex: 1 1 auto !important;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content .page-content .panel {
+            box-shadow: none;
+        }
+
+/* ==========================
+ANIMAÇÕES
+========================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ==========================
+RESPONSIVO
+========================== */
+@media (max-width: 1199px) {
+    .panel-container {
+        flex-direction: column;
+    }
+
+    .select2-container {
+        width: 100% !important;
+        max-width: 385px;
+    }
+}
+
+@media (max-width: 768px) {
+    .tabs-header {
+        flex-direction: column;
+    }
+}
+
+/* ==========================================================
+   TOOLBAR / PAINEL MÉTRICAS (padrão portal)
+   Base de .panel-card, .combo-container, .square-button, botões da toolbar da
+   grid — table.css. Abaixo: carrossel de métricas, mensagens vazias, estados.
+   ========================================================== */
+
+/* Mensagem quando não há indicadores: mesma altura do painel preenchido */
+.indicadores-empty-msg,
+#indicadores_panel_empty {
+    min-height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+/* Select de visão (Totalizadores/Indicadores) desabilitado por falta de indicadores */
+.panel-select-wrapper.panel-select-disabled {
+    cursor: not-allowed;
+}
+
+/* Botão "Mostrar Métricas" desabilitado quando não há registros na tabela */
+.metrics-button.nfeentrada-metrics-disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+/* Aba Fluxo de Trabalho no modal: padding para as bolinhas não ficarem coladas na esquerda */
+#tab-6 #workflow {
+    padding-inline: 20px;
+}
+
+.metrics-carousel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 140px;
+    padding: 0 15px;
+}
+
+.metrics-carousel {
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    cursor: grab;
+}
+
+.metrics-carousel-wrapper.carousel-dragging {
+    cursor: grabbing;
+    user-select: none;
+}
+
+.metrics-track {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.metrics-carousel .metrics-box {
+    flex: 0 0 25%;
+    text-align: left;
+    position: relative;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    font-family: var(--fonte-principal) !important;
+    padding: 10px 16px;
+    min-width: 280px;
+    max-width: 360px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.metrics-carousel .metrics-box .metric-paramentro {
+    white-space: nowrap;
+    width: auto;
+    max-width: 100%;
+}
+
+.metrics-carousel .metrics-box .text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.metrics-carousel .metrics-box .metrics-box-row {
+    flex-shrink: 0;
+}
+
+.metrics-carousel .metrics-box .metrics-bar-wrap {
+    min-width: 50px;
+    flex: 1 1 auto;
+}
+
+.metrics-carousel .metrics-box .min-w-0 {
+    min-width: 0;
+}
+
+.metrics-carousel .metrics-box .flex-shrink-0 {
+    flex-shrink: 0;
+}
+
+.metrics-carousel .metrics-box .flex-grow-1 {
+    flex-grow: 1;
+}
+
+.metrics-carousel .metrics-box .metrics-progress {
+    display: block;
+    width: 100%;
+    height: 12px;
+    min-height: 12px;
+   
+    overflow: hidden;
+    background-color: var(--cor-progresso-track);
+    margin: 0;
+    padding: 0;
+}
+
+.metrics-carousel .metrics-box .metrics-progress .progress-bar {
+    display: block;
+    float: none;
+    height: 100%;
+    min-height: 12px;
+ 
+    transition: width 0.25s ease;
+    background-color: inherit;
+}
+
+.metrics-carousel .metrics-box .metrics-progress .progress-bar.progress-bar-success {
+    background-color: var(--cor-indicador-sucesso) !important;
+}
+
+.metrics-carousel .metrics-box .metrics-progress .progress-bar.progress-bar-info {
+    background-color: var(--cor-indicador-info) !important;
+}
+
+.metrics-carousel .metrics-box .metrics-progress .progress-bar.progress-bar-danger {
+    background-color: var(--cor-indicador-perigo) !important;
+}
+
+.metrics-carousel .metrics-box .count {
+    width: auto;
+    min-width: 2.5em;
+    max-width: 4em;
+    text-align: right;
+}
+
+.metrics-carousel .metrics-box:not(:last-child)::before,
+.metrics-carousel .metrics-box:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -12px;
+    width: 2px;
+    height: 50%;
+    background-color: var(--cor-borda-suave);
+    transform-origin: right center;
+}
+
+.metrics-carousel .metrics-box::before {
+    transform: translateY(-100%) rotate(-15deg);
+    margin-top: 2px;
+}
+
+.metrics-carousel .metrics-box::after {
+    transform: rotate(15deg);
+    margin-top: -2px;
+}
+/* Setas */
+.carousel-arrow {
+    background: transparent;
+    border: none;
+/*    font-size: 20px;*/
+    cursor: pointer;
+    padding: 10px;
+}
+
+.carousel-arrow:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Carrossel ativo: track pode receber width via JS para scroll correto */
+.metrics-carousel:not(.static) .metrics-track {
+    min-width: 100%;
+}
+
+/* DESABILITA CARROSSEL */
+.metrics-carousel.static .metrics-track {
+    transform: none !important;
+    width: 100%;
+}
+
+.metrics-carousel.static + .carousel-arrow,
+.carousel-arrow.disabled {
+    display: none;
+}
+
+.difusor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* No último card: remove apenas o difusor branco (gradiente); "Ver mais etapas" e setas ficam */
+.difusor.difusor-at-end::after {
+    display: none;
+}
+
+/* lado superior do chevron */
+
+    .difusor::after {
+        content: '';
+        position: absolute;
+        top: -40px;
+        left: -217px;
+        width: 221px;
+        height: 132px;
+        z-index: 9;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0), var(--cor-superficie));
+    }
+.box-end {
+    width: 221px;
+}
+
+.modal.show .modal-dialog {
+    transform: none;
+}
+
+.modal.fade .modal-dialog {
+    transform: translate(0, -50px);
+    transition: transform var(--transicao-lenta);
+}
+.modal-dialog-centered {
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+    transform: translate(0, 0) !important;
+    display: flex;
+    justify-content: center;
+}
+    .modal-dialog-centered.modal-fullscreen .modal-content {
+      width:100%;
+      min-height:100vh;
+    }
+    .modal-dialog-centered.modal-fullscreen .modal-body {
+        width: 100%;
+        height: 100%;
+    }
+.modal-dialog {
+    position: relative;
+    width: auto;
+    margin: var(--bs-modal-margin);
+
+}
+
+.modal-dialog-centered.modal-fullscreen .tab-content > .active {
+    overflow-y: auto;
+    height: calc(100vh - 128px);
+    padding:0;
+}
+
+.modal-dialog-centered.modal-fullscreen .tab-content {
+    background-color: var(--cor-superficie);
+    border-top: 1px solid var(--cor-borda-discreta);
+    padding: 0px !important;
+    height: 100%;
+}
+
+/* Toggle colapsável no header do .panel (listagens / métricas) */
+.panel .panel-toggle {
+    font-size: 15px;
+    width: 100%;
+    flex: 1 1 auto !important;
+    display: flex;
+    flex-direction: row;
+    cursor:pointer;
+    color:var(--cor-texto-secundario)!important;
+    text-decoration:none;
+}
+
+/* Collapses da aba "Dados da NF-e" no modal Detalhes (NFeEntrada_Beta) */
+[data-testid="modal-detalhes-container"] .modal-detalhes-panel {
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--cor-borda-suave);
+    background-color: var(--cor-superficie);
+}
+[data-testid="modal-detalhes-container"] .modal-detalhes-panel .panel-header {
+    padding: 12px 16px;
+    transition: background-color 0.2s ease;
+    background-color: var(--cor-superficie);
+}
+[data-testid="modal-detalhes-container"] .modal-detalhes-panel--collapsed .panel-header {
+    background-color: var(--cor-superficie);
+}
+[data-testid="modal-detalhes-container"] .modal-detalhes-panel--expanded .panel-header {
+    background-color: var(--cor-superficie);
+}
+[data-testid="modal-detalhes-container"] .modal-detalhes-panel .modal-detalhes-panel-toggle {
+    font-size: 15px;
+    width: 100%;
+    flex: 1 1 auto !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    color: var(--cor-texto-secundario) !important;
+    text-decoration: none;
+}
+[data-testid="modal-detalhes-container"] .modal-detalhes-panel .modal-detalhes-panel-toggle:hover {
+    color: var(--cor-texto-corpo-forte) !important;
+}
+[data-testid="modal-detalhes-container"] .modal-detalhes-chevron {
+    margin-left: auto;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+    color: var(--cor-texto-secundario);
+}
+[data-testid="modal-detalhes-container"] .modal-detalhes-panel .panel-content {
+    overflow: hidden;
+    padding: 12px 16px 16px;
+    background-color: var(--cor-superficie);
+}
+
+/* Títulos de seção no modal (padrão: ícone + texto em negrito, igual a "Dados do Emitente") */
+[data-testid="modal-detalhes-container"] .modal-detalhes-titulo-secao {
+    color: var(--cor-texto-corpo-forte);
+}
+[data-testid="modal-detalhes-container"] .modal-detalhes-titulo-secao i.fa {
+    color: inherit;
+}
+
+/* Tabs do modal Detalhes – mesmo estilo dos collapses (ícone, texto, espaçamento) */
+[data-testid="modal-detalhes-container"] .modal-detalhes-tabs > li > a {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    color: var(--cor-texto-secundario);
+    text-decoration: none;
+}
+[data-testid="modal-detalhes-container"] .modal-detalhes-tabs > li > a:hover {
+    color: var(--cor-texto-corpo-forte);
+}
+[data-testid="modal-detalhes-container"] .modal-detalhes-tabs > li > a .d-flex {
+    gap: 0.5rem;
+}
+[data-testid="modal-detalhes-container"] .modal-detalhes-tabs > li > a i.fa {
+    color: inherit;
+    font-size: 1em;
+}
+[data-testid="modal-detalhes-container"] .modal-detalhes-tabs > li.active > a,
+[data-testid="modal-detalhes-container"] .modal-detalhes-tabs > li.active > a:focus,
+[data-testid="modal-detalhes-container"] .modal-detalhes-tabs > li.active > a:hover {
+    color: var(--cor-texto-corpo-forte);
+    cursor: default;
+    background-color: var(--cor-superficie);
+    border: none !important;
+    border-bottom-color: transparent;
+}
+[data-testid="modal-detalhes-container"] .modal-detalhes-tabs > li.active > a i.fa {
+    color: inherit;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    color: var(--cor-texto-secundario);
+    cursor: default;
+    background-color: var(--cor-superficie);
+    border: none!important;
+    border-bottom-color: transparent;
+}

@@ -1,0 +1,76 @@
+                <h2 class="invoisys-ds-section-title" id="sec-alertas-visao">Visão geral</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Os <strong>alertas inline</strong> comunicam resultado de ações, avisos de validação ou estado do sistema sem abrir modal.
+                    As classes <code>.alert</code> e modificadores <code>.alert-success</code>, <code>.alert-info</code>, <code>.alert-warning</code>, <code>.alert-danger</code> e <code>.alert-neutral</code> vivem em <strong>componentes.css</strong> e usam tokens de <strong>main.css</strong> (fundos suaves, bordas e texto legível).
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Acessibilidade:</strong> para mensagens importantes que surgem dinamicamente, envolva o bloco com <code>role="alert"</code> ou <code>role="status"</code> (conforme criticidade) e associe erros de campo a <code>aria-describedby</code>. O exemplo «dispensável» usa <code>aria-label</code> no botão de fechar.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-alertas-variantes">Variantes</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Combina <code>.alert</code> com <strong>uma</strong> classe de variante. Espaçamento vertical entre vários alertas: utilitários <code>mb-2</code> / <code>mb-3</code> de <strong>tokens.css</strong>.
+                </p>
+                <div class="invoisys-ds-preview d-flex flex-column gap-3 align-items-stretch" style="max-width: 640px" data-testid="ds-alertas-preview-variantes">
+                    <div class="alert alert-success" role="status" data-testid="ds-alertas-variant-success">Operação concluída com sucesso.</div>
+                    <div class="alert alert-info" role="status" data-testid="ds-alertas-variant-info">O relatório será gerado em segundo plano; receberás uma notificação quando estiver pronto.</div>
+                    <div class="alert alert-warning" role="alert" data-testid="ds-alertas-variant-warning">A data de fim é anterior à data de início; corrige antes de guardar.</div>
+                    <div class="alert alert-danger" role="alert" data-testid="ds-alertas-variant-danger">Não foi possível validar o NIF junto da AT. Tenta novamente ou contacta o suporte.</div>
+                    <div class="alert alert-neutral" role="status" data-testid="ds-alertas-variant-neutral">Esta área só está disponível em modo leitura até concluíres a adesão.</div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-alertas-titulo-link">Título, corpo e ligação</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Use <code>.alert-heading</code> para o título e <code>.alert-link</code> para uma ação secundária (abre na mesma página ou com <code>target="_blank"</code> se for externo).
+                </p>
+                <div class="invoisys-ds-preview" style="max-width: 640px" data-testid="ds-alertas-preview-titulo-link">
+                    <div class="alert alert-info" role="status" data-testid="ds-alertas-titulo-link-info">
+                        <p class="alert-heading">Dados em revisão</p>
+                        <p class="mb-0">Seu pedido de alteração de limite está sendo analisado pela equipe de crédito.</p>
+                        <p class="mb-0 mt-2"><a href="#" class="alert-link" onclick="return false;" data-testid="ds-alertas-titulo-link-acao">Ver histórico de pedidos</a></p>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-alertas-icone">Com ícone</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Alinha ícone Font Awesome e texto com <code>d-flex</code>, <code>gap-2</code> e <code>align-items-start</code>; define <code>aria-hidden="true"</code> no ícone decorativo.
+                </p>
+                <div class="invoisys-ds-preview" style="max-width: 640px" data-testid="ds-alertas-preview-icone">
+                    <div class="alert alert-danger mb-0" role="alert" data-testid="ds-alertas-icone-danger">
+                        <div class="d-flex gap-2 align-items-start">
+                            <i class="fa fa-exclamation-circle flex-shrink-0 mt-1" aria-hidden="true"></i>
+                            <div>
+                                <p class="alert-heading">Erro ao importar arquivo</p>
+                                <p class="mb-0">O arquivo SAF-T excede o tamanho máximo permitido (10&nbsp;MB).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-alertas-dismiss">Dispensável</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Adiciona <code>.alert-dismissible</code> e um botão <code>.alert__close</code> (ícone × ou <code>fa-times</code>); em MVC remove o nó do DOM ou esconde com JS ao clicar.
+                </p>
+                <div class="invoisys-ds-preview" style="max-width: 640px" data-testid="ds-alertas-preview-dismiss">
+                    <div class="alert alert-success alert-dismissible mb-0" role="status" data-testid="ds-alertas-dismissivel">
+                        <button type="button" class="alert__close" aria-label="Fechar mensagem" data-testid="ds-alertas-dismiss-success"><i class="fa fa-times" aria-hidden="true"></i></button>
+                        Preferências guardadas.
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-alertas-snippet">HTML · Razor (exemplo)</h2>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML</span>
+                        <button type="button" data-ds-copy="pre-alertas-mvc" data-testid="ds-copy-pre-alertas-mvc"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-alertas-mvc"><code class="invoisys-ds-pre-code">&lt;div class="alert alert-danger mb-3" role="alert"&gt;
+    &lt;p class="alert-heading mb-1"&gt;Não foi possível guardar&lt;/p&gt;
+    &lt;p class="mb-0"&gt;Corrige os campos assinalados e volta a tentar.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class="alert alert-success alert-dismissible" role="status"&gt;
+    &lt;button type="button" class="alert__close" aria-label="Fechar"&gt;&lt;i class="fa fa-times" aria-hidden="true"&gt;&lt;/i&gt;&lt;/button&gt;
+    Fatura enviada para o e-Fatura.
+&lt;/div&gt;</code></pre>
+                </div>

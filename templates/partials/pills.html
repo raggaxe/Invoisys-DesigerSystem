@@ -1,0 +1,63 @@
+                <h2 class="invoisys-ds-section-title" id="sec-pills-visao">Visão geral</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    As <strong>pills</strong> mostram estados (autorizado, erro, aviso), contagens em carrosséis ou metadados compactos.
+                    A base <code>.pill</code> está em <strong>componentes.css</strong> (maiúsculas, raio 4px, altura 28px). As cores vêm de tokens em <strong>main.css</strong> (<code>--cor-pill-*</code>, <code>--cor-action-*</code>, <code>--cor-brand</code>, …).
+                </p>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Para texto ao comprimento da etiqueta (ex.: <strong>100 — AUTORIZADO</strong>), adicione <code>.pill-inline</code>.
+                    Para o quadrado de índice em métricas, mantenha <code>.pill-square</code> (como em <strong>Cards</strong>) — opcionalmente com <code>.pill-default</code> ou uma variante clara/forte abaixo.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Legado:</strong> <code>.pill-success</code>, <code>.pill-danger</code>, <code>.pill-warning</code> e <code>.pill-default</code> mantêm-se para telas já migradas; em código novo prefira as variantes nomeadas <code>.pill-light-*</code> / <code>.pill-solid-*</code> para consistência com o guia visual.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-pills-badges">Badges compactos (quadrado)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Contagem ou índice: <code>.pill.pill-square.pill-inline</code> mais uma variante de cor. Ordem sugerida na UI: neutro → semântica clara → semântica forte.
+                </p>
+                <div class="invoisys-ds-preview d-flex flex-wrap gap-2 align-items-center p-3" style="background-color: var(--cor-superficie-suave)" data-testid="ds-pills-preview-badges">
+                    <span class="pill pill-square pill-inline pill-light-white fw-bold" aria-label="Contagem 1">1</span>
+                    <span class="pill pill-square pill-inline pill-light-success fw-bold" aria-label="Contagem 1">1</span>
+                    <span class="pill pill-square pill-inline pill-light-danger fw-bold" aria-label="Contagem 1">1</span>
+                    <span class="pill pill-square pill-inline pill-light-warning fw-bold" aria-label="Contagem 1">1</span>
+                    <span class="pill pill-square pill-inline pill-light-info fw-bold" aria-label="Contagem 1">1</span>
+                    <span class="pill pill-square pill-inline pill-light-neutral fw-bold" aria-label="Contagem 1">1</span>
+                    <span class="pill pill-square pill-inline pill-solid-success fw-bold" aria-label="Contagem 1">1</span>
+                    <span class="pill pill-square pill-inline pill-solid-danger fw-bold" aria-label="Contagem 1">1</span>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-pills-estado">Pills de estado (linha)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Código + rótulo ou só rótulo: <code>.pill.pill-inline</code> com <code>.pill-light-*</code> (fundo pastel, texto escuro na mesma família) ou <code>.pill-solid-*</code> (destaque máximo). Use <code>fw-bold</code> de <strong>tokens.css</strong> quando o Figma pedir peso forte.
+                </p>
+                <div class="invoisys-ds-preview d-flex flex-column gap-2 align-items-start p-3" style="background-color: var(--cor-superficie-suave); max-width: 420px" data-testid="ds-pills-preview-estado">
+                    <span class="pill pill-inline pill-light-success fw-bold">100 — AUTORIZADO</span>
+                    <span class="pill pill-inline pill-light-danger fw-bold">100 — REJEITADO</span>
+                    <span class="pill pill-inline pill-light-warning fw-bold">100 — PENDENTE</span>
+                    <span class="pill pill-inline pill-light-info fw-bold">100 — EM ANÁLISE</span>
+                    <span class="pill pill-inline pill-light-neutral fw-bold">100 — RASCUNHO</span>
+                    <span class="pill pill-inline pill-solid-success fw-bold">100 — AUTORIZADO</span>
+                    <span class="pill pill-inline pill-solid-danger fw-bold">100 — ERRO</span>
+                    <span class="pill pill-inline pill-solid-warning fw-bold">100 — ALERTA</span>
+                    <span class="pill pill-inline pill-solid-neutral fw-bold">100 — ARQUIVADO</span>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-pills-html">HTML · exemplos</h2>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Razor / HTML</span>
+                        <button type="button" data-ds-copy="pre-pills-html" data-testid="ds-copy-pre-pills-html"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-pills-html"><code class="invoisys-ds-pre-code">&lt;!-- Badge quadrado (contagem) --&gt;
+&lt;span class="pill pill-square pill-inline pill-light-success fw-bold" aria-label="Fase 1"&gt;1&lt;/span&gt;
+
+&lt;!-- Estado em linha --&gt;
+&lt;span class="pill pill-inline pill-light-success fw-bold"&gt;100 — AUTORIZADO&lt;/span&gt;
+&lt;span class="pill pill-inline pill-solid-danger fw-bold"&gt;100 — ERRO&lt;/span&gt;</code></pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-pills-tokens">Tokens de cor</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    As variantes claras de sucesso, perigo e aviso usam sobretudo <code>--cor-pill-successo</code> / <code>--cor-pill-successo-texto</code>, <code>--cor-danger-fundo-claro</code> / <code>--cor-pill-danger-texto</code> e <code>--cor-pill-warning</code> / <code>--cor-pill-warning-texto</code>.
+                    A variante informação usa <code>--cor-action-fundo</code> e <code>--cor-action-texto</code>. Detalhe tabular na página <a href="#sec-cores-estados">Cores · estados e pills</a>.
+                </p>

@@ -1,0 +1,289 @@
+                <h2 class="invoisys-ds-section-title" id="sec-espacamento-visao">Visão geral</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Os utilitários abaixo vivem em <strong>tokens.css</strong> e seguem uma escala numérica <strong>0–5</strong> em <code>rem</code> (como no ecossistema Bootstrap),
+                    úteis diretamente no HTML. Para layouts ou componentes em CSS sob medida, você pode combinar com os tokens semânticos
+                    <code>--espacamento-*</code> em <strong>main.css</strong> (valores em <code>px</code>) — não são a mesma escala; escolhe um sistema por contexto.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong><code>ms-*</code> / <code>me-*</code>:</strong> usam <code>margin-inline-start</code> e <code>margin-inline-end</code> (respeitam direção de escrita).
+                    <strong><code>px-*</code>:</strong> <code>padding-inline</code>. <strong><code>ps-*</code> / <code>pe-*</code>:</strong> <code>padding-left</code> / <code>padding-right</code> no arquivo atual.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-espacamento-root">Variáveis em <code>:root</code> (<code>main.css</code>)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Composição exacta dos tokens semânticos de espaçamento (e <code>--none</code>) definidos no bloco «Espaçamento e layout» de <strong>main.css</strong>.
+                    São valores em <code>px</code> (excepto <code>--none</code>); usas-nos em CSS sob medida com <code>var(--espacamento-md)</code>, etc. — independentemente da escala <code>rem</code> dos utilitários <code>.p-*</code> / <code>.m-*</code>.
+                </p>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Variável</th>
+                                <th scope="col">Valor em <code>main.css</code></th>
+                                <th scope="col">Amostra (largura = token)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Zero explícito (reset / ausência)</td>
+                                <td><code>--none</code></td>
+                                <td class="invoisys-ds-hex"><code>0</code></td>
+                                <td class="invoisys-ds-hex text-muted">—</td>
+                            </tr>
+                            <tr>
+                                <td>Passo extra pequeno</td>
+                                <td><code>--espacamento-xs</code></td>
+                                <td class="invoisys-ds-hex"><code>8px</code></td>
+                                <td class="invoisys-ds-td-swatch"><span class="invoisys-ds-root-space-swatch" style="width:var(--espacamento-xs)"></span></td>
+                            </tr>
+                            <tr>
+                                <td>Pequeno (gaps apertados, ícones)</td>
+                                <td><code>--espacamento-sm</code></td>
+                                <td class="invoisys-ds-hex"><code>12px</code></td>
+                                <td class="invoisys-ds-td-swatch"><span class="invoisys-ds-root-space-swatch" style="width:var(--espacamento-sm)"></span></td>
+                            </tr>
+                            <tr>
+                                <td>Médio (padding interno habitual)</td>
+                                <td><code>--espacamento-md</code></td>
+                                <td class="invoisys-ds-hex"><code>16px</code></td>
+                                <td class="invoisys-ds-td-swatch"><span class="invoisys-ds-root-space-swatch" style="width:var(--espacamento-md)"></span></td>
+                            </tr>
+                            <tr>
+                                <td>Intermédio (entre <code>md</code> e <code>xl</code>; grids)</td>
+                                <td><code>--espacamento-lg</code></td>
+                                <td class="invoisys-ds-hex"><code>20px</code></td>
+                                <td class="invoisys-ds-td-swatch"><span class="invoisys-ds-root-space-swatch" style="width:var(--espacamento-lg)"></span></td>
+                            </tr>
+                            <tr>
+                                <td>Amplo (seções, cartões)</td>
+                                <td><code>--espacamento-xl</code></td>
+                                <td class="invoisys-ds-hex"><code>24px</code></td>
+                                <td class="invoisys-ds-td-swatch"><span class="invoisys-ds-root-space-swatch" style="width:var(--espacamento-xl)"></span></td>
+                            </tr>
+                            <tr>
+                                <td>Muito amplo</td>
+                                <td><code>--espacamento-xxl</code></td>
+                                <td class="invoisys-ds-hex"><code>32px</code></td>
+                                <td class="invoisys-ds-td-swatch"><span class="invoisys-ds-root-space-swatch" style="width:var(--espacamento-xxl)"></span></td>
+                            </tr>
+                            <tr>
+                                <td>Extra amplo</td>
+                                <td><code>--espacamento-xxxl</code></td>
+                                <td class="invoisys-ds-hex"><code>40px</code></td>
+                                <td class="invoisys-ds-td-swatch"><span class="invoisys-ds-root-space-swatch" style="width:var(--espacamento-xxxl)"></span></td>
+                            </tr>
+                            <tr>
+                                <td>Máximo da escala (hero / separações grandes)</td>
+                                <td><code>--espacamento-xxxxl</code></td>
+                                <td class="invoisys-ds-hex"><code>64px</code></td>
+                                <td class="invoisys-ds-td-swatch"><span class="invoisys-ds-root-space-swatch" style="width:var(--espacamento-xxxxl)"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="invoisys-ds-subsection-title">Letter-spacing (mesmo bloco em <code>main.css</code>)</h3>
+                <p class="invoisys-ds-lead" style="margin-top:0">Não são “espaçamento” de caixa, mas vivem a seguir aos tokens de <code>--espacamento-*</code> no arquivo.</p>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Variável</th>
+                                <th scope="col">Valor</th>
+                                <th scope="col">Exemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>--letter-spacing-sm</code></td>
+                                <td class="invoisys-ds-hex"><code>-0.5px</code></td>
+                                <td><span style="letter-spacing:var(--letter-spacing-sm);font-size:var(--tamanho-md)">Invoisys título</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>--letter-spacing-md</code></td>
+                                <td class="invoisys-ds-hex"><code>0px</code></td>
+                                <td><span style="letter-spacing:var(--letter-spacing-md);font-size:var(--tamanho-md)">Invoisys título</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>--letter-spacing-lg</code></td>
+                                <td class="invoisys-ds-hex"><code>0.5px</code></td>
+                                <td><span style="letter-spacing:var(--letter-spacing-lg);font-size:var(--tamanho-md)">Invoisys título</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-espacamento-passo">Passo da escala (0–5)</h2>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Classe (sufixo)</th>
+                                <th scope="col">Valor (<code>tokens.css</code>)</th>
+                                <th scope="col">Nota (root 16px)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>0</code></td><td class="invoisys-ds-hex"><code>0</code></td><td>—</td></tr>
+                            <tr><td><code>1</code></td><td class="invoisys-ds-hex"><code>.25rem</code></td><td>4px</td></tr>
+                            <tr><td><code>2</code></td><td class="invoisys-ds-hex"><code>.5rem</code></td><td>8px</td></tr>
+                            <tr><td><code>3</code></td><td class="invoisys-ds-hex"><code>1rem</code></td><td>16px</td></tr>
+                            <tr><td><code>4</code></td><td class="invoisys-ds-hex"><code>1.5rem</code></td><td>24px</td></tr>
+                            <tr><td><code>5</code></td><td class="invoisys-ds-hex"><code>3rem</code></td><td>48px</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-espacamento-padding">Padding</h2>
+
+                <h3 class="invoisys-ds-subsection-title"><code>.p-*</code> — todos os lados</h3>
+                <div class="invoisys-ds-space-grid">
+                    {% for n in range(6) %}
+                    <div class="invoisys-ds-space-pad-wrap">
+                        <div class="invoisys-ds-space-pad-body p-{{ n }}"><span class="invoisys-ds-space-chip">.p-{{ n }}</span></div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <h3 class="invoisys-ds-subsection-title"><code>.px-*</code> — inline (esquerda + direita)</h3>
+                <div class="invoisys-ds-space-grid">
+                    {% for n in range(6) %}
+                    <div class="invoisys-ds-space-pad-wrap">
+                        <div class="invoisys-ds-space-pad-body px-{{ n }} py-2"><span class="invoisys-ds-space-chip">.px-{{ n }}</span></div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <h3 class="invoisys-ds-subsection-title"><code>.py-*</code> — bloco (topo + fundo)</h3>
+                <div class="invoisys-ds-space-grid">
+                    {% for n in range(6) %}
+                    <div class="invoisys-ds-space-pad-wrap">
+                        <div class="invoisys-ds-space-pad-body py-{{ n }} px-2"><span class="invoisys-ds-space-chip">.py-{{ n }}</span></div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <h3 class="invoisys-ds-subsection-title"><code>.pt-*</code> · <code>.pb-*</code></h3>
+                <div class="invoisys-ds-space-grid">
+                    {% for n in range(6) %}
+                    <div class="invoisys-ds-space-pad-wrap">
+                        <div class="invoisys-ds-space-pad-body pt-{{ n }} px-2 pb-2"><span class="invoisys-ds-space-chip">.pt-{{ n }}</span></div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="invoisys-ds-space-grid" style="margin-top:var(--espacamento-md)">
+                    {% for n in range(6) %}
+                    <div class="invoisys-ds-space-pad-wrap">
+                        <div class="invoisys-ds-space-pad-body pb-{{ n }} px-2 pt-2"><span class="invoisys-ds-space-chip">.pb-{{ n }}</span></div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <h3 class="invoisys-ds-subsection-title"><code>.ps-*</code> · <code>.pe-*</code> (padding físico left / right)</h3>
+                <div class="invoisys-ds-space-grid">
+                    {% for n in range(6) %}
+                    <div class="invoisys-ds-space-pad-wrap">
+                        <div class="invoisys-ds-space-pad-body ps-{{ n }} py-2 pe-2"><span class="invoisys-ds-space-chip">.ps-{{ n }}</span></div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="invoisys-ds-space-grid" style="margin-top:var(--espacamento-md)">
+                    {% for n in range(6) %}
+                    <div class="invoisys-ds-space-pad-wrap">
+                        <div class="invoisys-ds-space-pad-body pe-{{ n }} py-2 ps-2"><span class="invoisys-ds-space-chip">.pe-{{ n }}</span></div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-espacamento-margin">Margin</h2>
+
+                <h3 class="invoisys-ds-subsection-title"><code>.m-*</code> — todos os lados</h3>
+                <div class="invoisys-ds-space-grid">
+                    {% for n in range(6) %}
+                    <div class="invoisys-ds-space-margin-bed">
+                        <div class="invoisys-ds-space-margin-inner d-inline-block m-{{ n }}"><span class="invoisys-ds-space-chip">.m-{{ n }}</span></div>
+                    </div>
+                    {% endfor %}
+                    <div class="invoisys-ds-space-margin-bed invoisys-ds-space-margin-bed--auto">
+                        <div class="invoisys-ds-space-margin-inner d-block m-auto" style="width:min(140px,70%)"><span class="invoisys-ds-space-chip">.m-auto</span></div>
+                    </div>
+                </div>
+
+                <h3 class="invoisys-ds-subsection-title"><code>.mx-*</code> · <code>.my-*</code></h3>
+                <div class="invoisys-ds-space-grid">
+                    {% for n in range(6) %}
+                    <div class="invoisys-ds-space-margin-bed">
+                        <div class="invoisys-ds-space-margin-inner d-inline-block mx-{{ n }}"><span class="invoisys-ds-space-chip">.mx-{{ n }}</span></div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="invoisys-ds-space-grid" style="margin-top:var(--espacamento-md)">
+                    {% for n in range(6) %}
+                    <div class="invoisys-ds-space-margin-bed invoisys-ds-space-margin-bed--tall text-center">
+                        <div class="invoisys-ds-space-margin-inner d-inline-block my-{{ n }}"><span class="invoisys-ds-space-chip">.my-{{ n }}</span></div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <h3 class="invoisys-ds-subsection-title"><code>.mt-*</code> · <code>.mb-*</code></h3>
+                <div class="invoisys-ds-space-grid">
+                    {% for n in range(6) %}
+                    <div class="invoisys-ds-space-margin-bed invoisys-ds-space-margin-bed--stack text-center">
+                        <div class="invoisys-ds-space-margin-inner d-inline-block mt-{{ n }}"><span class="invoisys-ds-space-chip">.mt-{{ n }}</span></div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="invoisys-ds-space-grid" style="margin-top:var(--espacamento-md)">
+                    {% for n in range(6) %}
+                    <div class="invoisys-ds-space-margin-bed invoisys-ds-space-margin-bed--stack text-center" style="padding-top:8px">
+                        <div class="invoisys-ds-space-margin-inner d-inline-block mb-{{ n }}"><span class="invoisys-ds-space-chip">.mb-{{ n }}</span></div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <h3 class="invoisys-ds-subsection-title"><code>.ms-*</code> · <code>.me-*</code></h3>
+                <div class="invoisys-ds-space-grid">
+                    {% for n in range(6) %}
+                    <div class="invoisys-ds-space-margin-bed invoisys-ds-space-margin-bed--ms">
+                        <div class="invoisys-ds-space-margin-inner d-inline-block ms-{{ n }}"><span class="invoisys-ds-space-chip">.ms-{{ n }}</span></div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="invoisys-ds-space-grid" style="margin-top:var(--espacamento-md)">
+                    {% for n in range(6) %}
+                    <div class="invoisys-ds-space-margin-bed invoisys-ds-space-margin-bed--me">
+                        <div class="invoisys-ds-space-margin-inner d-inline-block me-{{ n }}"><span class="invoisys-ds-space-chip">.me-{{ n }}</span></div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-espacamento-gap"><code>.gap-*</code> (flex e grid)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">Aplica-se ao contêiner com <code>display: flex</code> ou <code>grid</code>; o espaço fica <em>entre</em> os filhos.</p>
+                {% for n in range(6) %}
+                <div class="invoisys-ds-space-gap-block">
+                    <span class="invoisys-ds-space-gap-label">.gap-{{ n }}</span>
+                    <div class="d-flex flex-wrap gap-{{ n }}">
+                        <span class="invoisys-ds-space-gap-pill">A</span>
+                        <span class="invoisys-ds-space-gap-pill">B</span>
+                        <span class="invoisys-ds-space-gap-pill">C</span>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <h2 class="invoisys-ds-section-title" id="sec-espacamento-snippet">Snippet</h2>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML / CSS</span>
+                        <button type="button" data-ds-copy="pre-espacamento" data-testid="ds-copy-pre-espacamento"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-espacamento">&lt;div class="d-flex flex-wrap gap-3 p-4 mb-3"&gt;
+  &lt;div class="px-2 py-1"&gt;…&lt;/div&gt;
+&lt;/div&gt;
+
+/* CSS sob medida com tokens do main.css */
+.card {
+  padding: var(--espacamento-md);
+  gap: var(--espacamento-sm);
+}</pre>
+                </div>

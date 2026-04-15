@@ -1,0 +1,121 @@
+                <h1 id="quick-start">Quick start</h1>
+                <p class="invoisys-ds-lead">
+                    Comandos para correr <strong>esta documentação</strong> localmente, a ordem dos <code>&lt;link&gt;</code> no MVC, um exemplo mínimo de view e ligações para
+                    <strong>descarregar</strong> os ficheiros do stack CSS (e utilitários do repositório doc).
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-quickstart-servidor-doc">Servidor local desta documentação</h2>
+                <p class="color-text font-normal" style="max-width:min(100%,90ch); line-height:1.65">
+                    Na raiz do repositório Git (onde está <code>app.py</code>), com Python 3 e dependências instaladas:
+                </p>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Terminal</span>
+                        <button type="button" data-ds-copy="pre-quickstart-terminal" data-testid="ds-copy-pre-quickstart-terminal"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-quickstart-terminal">python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+python app.py</pre>
+                </div>
+                <p class="invoisys-ds-callout" style="margin-top:var(--espacamento-md)">
+                    Por defeito o servidor escuta em <strong>http://127.0.0.1:8080</strong> (altere com a variável de ambiente <code>PORT</code>).
+                    Abra <a href="/" target="_blank" rel="noopener">/</a> no browser para navegar pela documentação.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-quickstart-css-layout">Arquivos CSS no <code>_Layout.cshtml</code> (MVC)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Copie estes quatro <code>&lt;link&gt;</code> para o layout (ou secção equivalente), na ordem indicada em
+                    <a href="#sec-introducao-cascade">Introdução — ordem de cascade nas views</a>. Se a view não usar tabelas, pode omitir <code>table.css</code>.
+                </p>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Razor / HTML · só as folhas</span>
+                        <button type="button" data-ds-copy="pre-intro-mvc" data-testid="ds-copy-pre-intro-mvc"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-intro-mvc">&lt;link href="~/Content/Css/main.css" rel="stylesheet" /&gt;
+&lt;link href="~/Content/Css/tokens.css" rel="stylesheet" /&gt;
+&lt;link href="~/Content/Css/table.css" rel="stylesheet" /&gt;
+&lt;link href="~/Content/Css/componentes.css" rel="stylesheet" /&gt;</pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-quickstart-preview">Pré-visualização mínima (só classes do DS)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Em MVC, o mesmo bloco vive na sua <code>.cshtml</code> depois de referenciar as folhas no layout.
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-intro-quickstart-preview">
+                    <div class="main-content w-100">
+                        <div class="page-content">
+                            <div class="header d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+                                <h2 class="heading-md mb-0">Título da página</h2>
+                                <button type="button" class="btn btn-primary" data-testid="ds-intro-quickstart-btn-primario">Ação principal</button>
+                            </div>
+                            <p class="text-label mb-3">Subtítulo ou descrição curta da área de trabalho.</p>
+                            <div class="d-flex flex-wrap gap-2">
+                                <button type="button" class="btn btn-secondary" data-testid="ds-intro-quickstart-btn-secundario">Secundário</button>
+                                <button type="button" class="btn btn-canceled" data-testid="ds-intro-quickstart-btn-cancelar">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-quickstart-snippet-mvc">Snippet completo (Lato + layout + view)</h2>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>MVC — layout + exemplo de view</span>
+                        <button type="button" data-ds-copy="pre-intro-quickstart" data-testid="ds-copy-pre-intro-quickstart"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-intro-quickstart">&lt;!-- _Layout.cshtml (ou seção de estilos): Lato + stack CSS --&gt;
+&lt;link rel="preconnect" href="https://fonts.googleapis.com" /&gt;
+&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,400&amp;display=swap" rel="stylesheet" /&gt;
+&lt;link href="~/Content/Css/main.css" rel="stylesheet" /&gt;
+&lt;link href="~/Content/Css/tokens.css" rel="stylesheet" /&gt;
+&lt;link href="~/Content/Css/table.css" rel="stylesheet" /&gt;
+&lt;link href="~/Content/Css/componentes.css" rel="stylesheet" /&gt;
+
+&lt;!-- Exemplo de corpo numa view (.cshtml) --&gt;
+&lt;div class="main-content"&gt;
+  &lt;div class="page-content"&gt;
+    &lt;div class="header d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3"&gt;
+      &lt;h2 class="heading-md mb-0"&gt;Título da página&lt;/h2&gt;
+      &lt;button type="button" class="btn btn-primary"&gt;Ação principal&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;p class="text-label mb-3"&gt;Subtítulo ou descrição curta da área de trabalho.&lt;/p&gt;
+    &lt;div class="d-flex flex-wrap gap-2"&gt;
+      &lt;button type="button" class="btn btn-secondary"&gt;Secundário&lt;/button&gt;
+      &lt;button type="button" class="btn btn-canceled"&gt;Cancelar&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-quickstart-downloads">Descarregar ficheiros</h2>
+                <p class="color-text font-normal" style="max-width:min(100%,90ch); line-height:1.65">
+                    Os ficheiros abaixo são as <strong>cópias servidas por esta documentação</strong> em <code>/static/…</code> (úteis para comparar versões ou anexar a um ticket).
+                    No projeto MVC do portal, continue a usar os paths do vosso <code>Content/Css</code> — estes links não substituem o controlo de versão do produto.
+                </p>
+                <h3 class="invoisys-ds-subsection-title" id="sec-quickstart-downloads-css">CSS do design system (portal)</h3>
+                <ul class="invoisys-ds-doc-download-list color-text font-normal">
+                    <li><a href="{{ url_for('static', filename='css/main.css') }}" download="main.css" data-testid="ds-download-main-css">main.css</a> — tokens <code>:root</code></li>
+                    <li><a href="{{ url_for('static', filename='css/tokens.css') }}" download="tokens.css" data-testid="ds-download-tokens-css">tokens.css</a> — utilitários</li>
+                    <li><a href="{{ url_for('static', filename='css/table.css') }}" download="table.css" data-testid="ds-download-table-css">table.css</a> — listagens / DataTables</li>
+                    <li><a href="{{ url_for('static', filename='css/componentes.css') }}" download="componentes.css" data-testid="ds-download-componentes-css">componentes.css</a> — componentes UI</li>
+                </ul>
+                <h3 class="invoisys-ds-subsection-title" id="sec-quickstart-downloads-scripts">Scripts de exemplo (doc)</h3>
+                <ul class="invoisys-ds-doc-download-list color-text font-normal">
+                    <li><a href="{{ url_for('static', filename='scripts/table-init.js') }}" download="table-init.js" data-testid="ds-download-table-init-js">scripts/table-init.js</a> — ilustrativo (integração em <code>Scripts/Tabelas</code> no MVC)</li>
+                </ul>
+                <h3 class="invoisys-ds-subsection-title" id="sec-quickstart-downloads-repo">Raiz deste repositório (servidor Flask)</h3>
+                <ul class="invoisys-ds-doc-download-list color-text font-normal">
+                    <li><a href="{{ url_for('repo_download', name='requirements.txt') }}" download="requirements.txt" data-testid="ds-download-requirements">requirements.txt</a></li>
+                    <li><a href="{{ url_for('repo_download', name='app.py') }}" download="app.py" data-testid="ds-download-app-py">app.py</a></li>
+                    <li><a href="{{ url_for('repo_download', name='.gitignore') }}" download=".gitignore" data-testid="ds-download-gitignore">.gitignore</a></li>
+                </ul>
+                <p class="invoisys-ds-callout" style="margin-top:var(--espacamento-md)">
+                    <strong>Ligações externas úteis:</strong>
+                    <a href="https://playwright.dev/" target="_blank" rel="noopener noreferrer">Playwright</a> ·
+                    <a href="https://fonts.google.com/specimen/Lato" target="_blank" rel="noopener noreferrer">Lato (Google Fonts)</a> ·
+                    <a href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" target="_blank" rel="noopener noreferrer">Font Awesome 4.7 (CDN)</a>
+                    (o mesmo stack de referência descrito na página <strong>Ícones</strong>).
+                </p>

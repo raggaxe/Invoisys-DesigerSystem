@@ -1,0 +1,70 @@
+                <h2 class="invoisys-ds-section-title" id="sec-skeletons-visao">Visão geral</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Estados de <strong>carregamento em bloco</strong> usam uma animação de <strong>pulse</strong> no fundo (cinza claro ↔ branco), alinhada a <strong>table.css</strong>
+                    (<code>.loading-table</code>, <code>.loading-panel</code>) e a placeholders como <code>.loading-select-item</code>.
+                    Para <strong>qualquer card ou zona de conteúdo</strong> sem ser só grade, você pode aplicar a classe utilitária <code>.skeleton-pulse</code> em <strong>componentes.css</strong>.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Acessibilidade:</strong> no contêiner em carregamento, use <code>aria-busy="true"</code> e, se não houver texto visível, <code>aria-label</code> ou <code>role="status"</code> com mensagem (ex.: «Carregando…»). Remova <code>aria-busy</code> quando os dados estiverem prontos.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-skeletons-bloco">Bloco (card / área)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Coloca <code>skeleton-pulse</code> num elemento vazio (ou que vá ser substituído) e define altura e cantos com utilitários (<code>w-100</code>, <code>rounded</code>, <code>mb-*</code>) ou estilo inline mínimo.
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-skeletons-preview-bloco">
+                    <div class="border rounded p-3 w-100" style="max-width: 420px; box-sizing: border-box; background-color: var(--cor-superficie)">
+                        <p class="text-label mb-2">Pré-visualização de card</p>
+                        <div class="skeleton-pulse w-100 rounded" style="min-height: 96px" role="status" aria-label="Conteúdo a carregar"></div>
+                        <div class="d-flex gap-2 mt-2">
+                            <div class="skeleton-pulse rounded flex-grow-1" style="height: 12px" aria-hidden="true"></div>
+                            <div class="skeleton-pulse rounded" style="width: 64px; height: 12px" aria-hidden="true"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML</span>
+                        <button type="button" data-ds-copy="pre-skeletons-bloco" data-testid="ds-copy-pre-skeletons-bloco"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-skeletons-bloco"><code class="invoisys-ds-pre-code">&lt;div class="border rounded p-3" aria-busy="true" aria-label="A carregar"&gt;
+    &lt;div class="skeleton-pulse w-100 rounded" style="min-height:96px" role="status"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-skeletons-campo">Campo (input / select / textarea)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    A classe <code>.skeleton-pulse--field</code> junta de <code>.form-control</code>: o valor fica invisível e o fundo pulsa (útil enquanto opções ou defaults vêm da API).
+                    Para <strong>Select2</strong> na toolbar, o portal usa o wrap <code>.dm-empresa-select-wrap--loading</code> — mantenha esse padrão quando o plugin já está montado.
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-skeletons-preview-campo">
+                    <div class="invoisys-ds-field-stack">
+                        <div class="form-group mb-0">
+                            <label class="control-label" for="ds-skeleton-input-demo">Nome</label>
+                            <input type="text" class="form-control skeleton-pulse--field" id="ds-skeleton-input-demo" name="ds-skeleton-input-demo" value="Valor oculto em skeleton" readonly aria-busy="true" aria-label="Campo a carregar" data-testid="ds-skeletons-demo-input" />
+                        </div>
+                        <div class="form-group mb-0">
+                            <label class="control-label" for="ds-skeleton-select-demo">Estado</label>
+                            <select class="form-control skeleton-pulse--field" id="ds-skeleton-select-demo" name="ds-skeleton-select-demo" aria-busy="true" aria-label="Lista a carregar" data-testid="ds-skeletons-demo-select">
+                                <option>Opcional</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML</span>
+                        <button type="button" data-ds-copy="pre-skeletons-field" data-testid="ds-copy-pre-skeletons-field"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-skeletons-field"><code class="invoisys-ds-pre-code">&lt;input type="text" class="form-control skeleton-pulse--field" aria-busy="true" aria-label="A carregar" /&gt;
+&lt;select class="form-control skeleton-pulse--field" aria-busy="true" aria-label="A carregar"&gt;&lt;/select&gt;</code></pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-skeletons-listagens">Listagens e toolbar (<code>table.css</code>)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Em páginas DataTables, o overlay e painéis usam <code>.loading-table</code> e <code>.loading-panel</code> (já com <code>loading-pulse</code>); o padrão com <code>loader.gif</code> e texto está em <a href="#loading">Loading</a>. A barra de filtros pode usar <code>.loading-select-item</code> ou o estado <code>.dm-empresa-select-wrap--loading</code> em <strong>componentes.css</strong>.
+                    Carrega <strong>table.css</strong> nessas views para herdar o mesmo comportamento.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Documentação:</strong> o layout deste storybook inclua <code>table.css</code> (alinhado à cascade em <a href="#sec-introducao-cascade">Introdução — ordem de cascade nas views</a>). Os exemplos de campo acima usam <strong>componentes.css</strong>; o pulse compartilha <code>@keyframes loading-pulse</code> com <strong>table.css</strong> / listagens.
+                </p>

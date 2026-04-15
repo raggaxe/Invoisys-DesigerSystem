@@ -1,0 +1,294 @@
+                <h2 class="invoisys-ds-section-title" id="sec-tabs-visao">Visão geral</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Há <strong>dois padrões</strong> principais: (1) a <strong>tab bar</strong> em fundo branco com <code>.invoisys-tabbar</code> (Figma / telas gerais) e (2) as <strong>abas do modal Detalhes</strong> em <code>ul.nav.nav-tabs.modal-detalhes-tabs</code> dentro de <code>data-testid="modal-detalhes-container"</code>, com Bootstrap 3 (<code>data-toggle="tab"</code>) no portal.
+                    No primeiro caso (<code>.invoisys-tabbar</code>), o item <strong>ativo</strong> usa texto escuro, negrito e linha inferior — o snippet copiável está na secção <a href="#sec-tabs-snippet">HTML · tab bar Figma</a>. O exemplo interativo desta página usa <strong>só</strong> o padrão do <strong>modal Detalhes</strong> (<code>nav-tabs</code>), como nas restantes abas do portal.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Figma vs CSS:</strong> no arquivo do Figma costuma aparecer uma moldura roxa tracejada, largura fixa (<code>1184px</code>) e <code>order</code> / <code>flex-grow</code> do auto-layout — isso serve para o frame de desenho, <strong>não</strong> para produção.
+                    No portal usa-se só o markup e as classes abaixo; largura e margens vêm do layout da página.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tabs-modal-detalhes">Exemplo interativo · modal Detalhes (<code>nav-tabs</code>)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Na tela <strong>Detalhes do documento</strong>, as abas seguem o markup clássico do Bootstrap 3: <code>ul.nav.nav-tabs</code> com <code>nav-primary</code> e <code>modal-detalhes-tabs</code>, ícone Font Awesome + texto em negrito no link, e <code>data-toggle="tab"</code> apontando para <code>div.tab-pane</code> em <code>.tab-content</code>.
+                    Em produção, o antecessor <code>data-testid="modal-detalhes-container"</code> é <strong>obrigatório</strong> para os seletores em <strong>componentes.css</strong>; nesta doc a pré-visualização usa <code>data-testid="ds-modal-detalhes-tabs-container"</code> para não duplicar o mesmo valor no HTML (regras equivalentes em <strong>design-system-docs.css</strong>).
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Storybook:</strong> a folha <strong>design-system-docs.css</strong> acrescenta disposição em linha das abas, realce da aba ativa e troca de painéis na pré-visualização; o <strong>design-system-docs.js</strong> simula o clique sem o <code>bootstrap.js</code> completo. Em MVC mantenha o init oficial do Bootstrap 3.
+                </p>
+                <p class="invoisys-ds-callout">
+                    Os painéis <strong>colapsáveis</strong> por baixo das abas (Dados do Emitente, …) estão na página <a href="#colapso">Colapso</a> (<code>.modal-detalhes-panel</code>).
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-tabs-preview-modal-detalhes">
+                    <div data-testid="ds-modal-detalhes-tabs-container" class="invoisys-ds-modal-detalhes-doc invoisys-ds-modal-detalhes-tabs-demo-wide w-100">
+                        <ul id="ds-doc-modal-detalhes-tabs" class="nav nav-tabs nav-primary modal-detalhes-tabs" role="tablist" data-testid="modal-detalhes-abas">
+                            <li class="active" role="presentation">
+                                <a href="#ds-doc-modtab-1" data-toggle="tab" role="tab" data-testid="modal-detalhes-aba-dados">
+                                    <div class="d-flex flex-fill justify-content-start align-items-center gap-2">
+                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                        <b>Dados da NF-e</b>
+                                    </div>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#ds-doc-modtab-3" data-toggle="tab" role="tab" data-testid="modal-detalhes-aba-itens">
+                                    <div class="d-flex flex-fill justify-content-start align-items-center gap-2">
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                        <b>Itens</b>
+                                    </div>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#ds-doc-modtab-5" data-toggle="tab" role="tab" data-testid="modal-detalhes-aba-anexos">
+                                    <div class="d-flex flex-fill justify-content-start align-items-center gap-2">
+                                        <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                        <b>Anexos</b>
+                                    </div>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#ds-doc-modtab-4" data-toggle="tab" role="tab" data-testid="modal-detalhes-aba-comentarios">
+                                    <div class="d-flex flex-fill justify-content-start align-items-center gap-2">
+                                        <i class="fa fa-comment-o" aria-hidden="true"></i>
+                                        <b>Comentários</b>
+                                    </div>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#ds-doc-modtab-2" data-toggle="tab" role="tab" data-testid="modal-detalhes-aba-eventos">
+                                    <div class="d-flex flex-fill justify-content-start align-items-center gap-2">
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                        <b>Eventos</b>
+                                    </div>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#ds-doc-modtab-6" data-toggle="tab" role="tab" data-testid="modal-detalhes-aba-fluxo">
+                                    <div class="d-flex flex-fill justify-content-start align-items-center gap-2">
+                                        <i class="fa fa-sitemap" aria-hidden="true"></i>
+                                        <b>Fluxo de Trabalho</b>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content invoisys-ds-modal-detalhes-tabpanes">
+                            <div id="ds-doc-modtab-1" class="tab-pane active" role="tabpanel" data-testid="ds-tabs-pane-dados">
+                                <p class="mb-0 color-text font-normal">Conteúdo da aba «Dados da NF-e» (exemplo).</p>
+                            </div>
+                            <div id="ds-doc-modtab-2" class="tab-pane" role="tabpanel" hidden data-testid="ds-tabs-pane-eventos">
+                                <p class="mb-0 color-text font-normal">Eventos.</p>
+                            </div>
+                            <div id="ds-doc-modtab-3" class="tab-pane" role="tabpanel" hidden data-testid="ds-tabs-pane-itens">
+                                <p class="mb-0 color-text font-normal">Itens.</p>
+                            </div>
+                            <div id="ds-doc-modtab-4" class="tab-pane" role="tabpanel" hidden data-testid="ds-tabs-pane-comentarios">
+                                <p class="mb-0 color-text font-normal">Comentários.</p>
+                            </div>
+                            <div id="ds-doc-modtab-5" class="tab-pane" role="tabpanel" hidden data-testid="ds-tabs-pane-anexos">
+                                <p class="mb-0 color-text font-normal">Anexos.</p>
+                            </div>
+                            <div id="ds-doc-modtab-6" class="tab-pane" role="tabpanel" hidden data-testid="ds-tabs-pane-fluxo">
+                                <p class="mb-0 color-text font-normal">
+                                    Lista de passos com datas e painéis colapsáveis — ver a página <strong>Timeline</strong> na documentação (<code>ol.listEventosWorkflow</code>, marcação com <code>&lt;time&gt;</code> no cabeçalho).
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="invoisys-ds-lead" style="margin-top: var(--espacamento-lg)">
+                    <strong>Snippet copiável</strong> — o mesmo padrão da caixa acima, com <code>data-testid="modal-detalhes-container"</code> (produção) e <code>href</code> / <code>id</code> alinhados ao portal (<code>#tab-1</code>, <code>#tab-3</code>, …). Ajusta textos e <code>tab-pane</code> ao teu Razor.
+                </p>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Razor / HTML · abas + painéis</span>
+                        <button type="button" data-ds-copy="pre-tabs-modal-detalhes-completo" data-testid="ds-copy-pre-tabs-modal-detalhes-completo"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-tabs-modal-detalhes-completo"><code class="invoisys-ds-pre-code">&lt;div data-testid="modal-detalhes-container"&gt;
+    &lt;ul id="tabs" class="nav nav-tabs nav-primary modal-detalhes-tabs" role="tablist" data-testid="modal-detalhes-abas"&gt;
+        &lt;li id="firstLI" class="active" role="presentation"&gt;
+            &lt;a href="#tab-1" data-toggle="tab" role="tab" data-testid="modal-detalhes-aba-dados"&gt;
+                &lt;div class="d-flex flex-fill justify-content-start align-items-center gap-2"&gt;
+                    &lt;i class="fa fa-file-text-o" aria-hidden="true"&gt;&lt;/i&gt;
+                    &lt;b&gt;Dados da NF-e&lt;/b&gt;
+                &lt;/div&gt;
+            &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li role="presentation"&gt;
+            &lt;a id="itensLink" href="#tab-3" data-toggle="tab" role="tab" data-testid="modal-detalhes-aba-itens"&gt;
+                &lt;div class="d-flex flex-fill justify-content-start align-items-center gap-2"&gt;
+                    &lt;i class="fa fa-shopping-cart" aria-hidden="true"&gt;&lt;/i&gt;
+                    &lt;b&gt;Itens&lt;/b&gt;
+                &lt;/div&gt;
+            &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li role="presentation"&gt;
+            &lt;a id="anexos" href="#tab-5" data-toggle="tab" role="tab" data-testid="modal-detalhes-aba-anexos"&gt;
+                &lt;div class="d-flex flex-fill justify-content-start align-items-center gap-2"&gt;
+                    &lt;i class="fa fa-paperclip" aria-hidden="true"&gt;&lt;/i&gt;
+                    &lt;b&gt;Anexos&lt;/b&gt;
+                &lt;/div&gt;
+            &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li role="presentation"&gt;
+            &lt;a href="#tab-4" data-toggle="tab" id="comentarios" role="tab" data-testid="modal-detalhes-aba-comentarios"&gt;
+                &lt;div class="d-flex flex-fill justify-content-start align-items-center gap-2"&gt;
+                    &lt;i class="fa fa-comment-o" aria-hidden="true"&gt;&lt;/i&gt;
+                    &lt;b&gt;Comentários&lt;/b&gt;
+                &lt;/div&gt;
+            &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li role="presentation"&gt;
+            &lt;a href="#tab-2" data-toggle="tab" role="tab" data-testid="modal-detalhes-aba-eventos"&gt;
+                &lt;div class="d-flex flex-fill justify-content-start align-items-center gap-2"&gt;
+                    &lt;i class="fa fa-info-circle" aria-hidden="true"&gt;&lt;/i&gt;
+                    &lt;b&gt;Eventos&lt;/b&gt;
+                &lt;/div&gt;
+            &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li role="presentation"&gt;
+            &lt;a href="#tab-6" data-toggle="tab" role="tab" data-testid="modal-detalhes-aba-fluxo"&gt;
+                &lt;div class="d-flex flex-fill justify-content-start align-items-center gap-2"&gt;
+                    &lt;i class="fa fa-sitemap" aria-hidden="true"&gt;&lt;/i&gt;
+                    &lt;b&gt;Fluxo de Trabalho&lt;/b&gt;
+                &lt;/div&gt;
+            &lt;/a&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;div class="tab-content"&gt;
+        &lt;div id="tab-1" class="tab-pane active" role="tabpanel"&gt;&lt;!-- conteúdo Dados da NF-e --&gt;&lt;/div&gt;
+        &lt;div id="tab-2" class="tab-pane" role="tabpanel" hidden&gt;&lt;!-- Eventos --&gt;&lt;/div&gt;
+        &lt;div id="tab-3" class="tab-pane" role="tabpanel" hidden&gt;&lt;!-- Itens --&gt;&lt;/div&gt;
+        &lt;div id="tab-4" class="tab-pane" role="tabpanel" hidden&gt;&lt;!-- Comentários --&gt;&lt;/div&gt;
+        &lt;div id="tab-5" class="tab-pane" role="tabpanel" hidden&gt;&lt;!-- Anexos --&gt;&lt;/div&gt;
+        &lt;div id="tab-6" class="tab-pane" role="tabpanel" hidden&gt;&lt;!-- Fluxo de Trabalho --&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tabs-disabled">Estado desativado</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    No mesmo padrão <code>nav-tabs</code> do modal, um separador inativo usa <code>&lt;li class="disabled" role="presentation"&gt;</code> em volta do <code>&lt;a&gt;</code>, com <code>href="#"</code>, <code>onclick="return false;"</code>, <code>aria-disabled="true"</code> e <code>tabindex="-1"</code> (Bootstrap 3).
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-tabs-preview-disabled">
+                    <div data-testid="ds-modal-detalhes-tabs-container-disabled" class="invoisys-ds-modal-detalhes-doc invoisys-ds-modal-detalhes-tabs-demo-wide w-100">
+                        <ul class="nav nav-tabs nav-primary modal-detalhes-tabs" role="tablist" aria-label="Exemplo com aba desativada" data-testid="ds-tabs-bar-disabled">
+                            <li class="active" role="presentation">
+                                <a href="#ds-dis-tab-1" data-toggle="tab" role="tab" data-testid="ds-tabs-disabled-aba-dados">
+                                    <div class="d-flex flex-fill justify-content-start align-items-center gap-2">
+                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                        <b>Dados da NF-e</b>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="disabled" role="presentation">
+                                <a href="#" onclick="return false;" role="tab" aria-disabled="true" tabindex="-1" data-testid="ds-tabs-disabled-aba-itens">
+                                    <div class="d-flex flex-fill justify-content-start align-items-center gap-2">
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                        <b>Itens</b>
+                                    </div>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#ds-dis-tab-3" data-toggle="tab" role="tab" data-testid="ds-tabs-disabled-aba-anexos">
+                                    <div class="d-flex flex-fill justify-content-start align-items-center gap-2">
+                                        <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                        <b>Anexos</b>
+                                    </div>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#ds-dis-tab-4" data-toggle="tab" role="tab" data-testid="ds-tabs-disabled-aba-comentarios">
+                                    <div class="d-flex flex-fill justify-content-start align-items-center gap-2">
+                                        <i class="fa fa-comment-o" aria-hidden="true"></i>
+                                        <b>Comentários</b>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content invoisys-ds-modal-detalhes-tabpanes">
+                            <div id="ds-dis-tab-1" class="tab-pane active" role="tabpanel" data-testid="ds-tabs-disabled-pane-dados">
+                                <p class="mb-0 color-text font-normal">Aba ativa (exemplo).</p>
+                            </div>
+                            <div id="ds-dis-tab-3" class="tab-pane" role="tabpanel" hidden data-testid="ds-tabs-disabled-pane-anexos">
+                                <p class="mb-0 color-text font-normal">Anexos.</p>
+                            </div>
+                            <div id="ds-dis-tab-4" class="tab-pane" role="tabpanel" hidden data-testid="ds-tabs-disabled-pane-comentarios">
+                                <p class="mb-0 color-text font-normal">Comentários.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="invoisys-ds-lead" style="margin-top: var(--espacamento-lg)">
+                    <strong>Snippet resumido</strong> — copiar só o <code>&lt;li&gt;</code> desativado e repetir o mesmo padrão por cada separador bloqueado (mantém <code>nav-tabs</code> + ícone + <code>&lt;b&gt;</code> como nas abas ativas).
+                </p>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Razor / HTML · aba desativada (<code>li.disabled</code>)</span>
+                        <button type="button" data-ds-copy="pre-tabs-disabled-resumido" data-testid="ds-copy-pre-tabs-disabled-resumido"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-tabs-disabled-resumido"><code class="invoisys-ds-pre-code">&lt;li class="disabled" role="presentation"&gt;
+    &lt;a href="#" onclick="return false;" role="tab" aria-disabled="true" tabindex="-1" data-testid="modal-detalhes-aba-itens"&gt;
+        &lt;div class="d-flex flex-fill justify-content-start align-items-center gap-2"&gt;
+            &lt;i class="fa fa-shopping-cart" aria-hidden="true"&gt;&lt;/i&gt;
+            &lt;b&gt;Itens&lt;/b&gt;
+        &lt;/div&gt;
+    &lt;/a&gt;
+&lt;/li&gt;</code></pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tabs-snippet">Outro padrão: tab bar Figma (<code>invoisys-tabbar</code>)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Isto <strong>não</strong> é o mesmo que as abas do <strong>modal Detalhes</strong> (as de cima, com ícones e <code>nav-tabs</code>). É um <strong>segundo padrão</strong> do design system: a barra clara do Figma para <strong>secções dentro de uma página ou módulo</strong> (ex.: alternar «Resumo», «Detalhes», «Histórico» numa área de trabalho), usando só <code>div</code> + <code>button</code> e as classes <code>.invoisys-tabbar</code> / <code>.invoisys-tabbar__tab</code> definidas em <strong>componentes.css</strong>.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>O que fazer com este bloco:</strong> copia o HTML/Razor para a tua view quando o layout for <strong>tab bar Figma</strong>. Não há pré-visualização aqui porque o exemplo interativo desta página foi unificado com o <strong>modal</strong>; o snippet serve só como <strong>referência copiável</strong> deste outro padrão.
+                </p>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Razor / HTML</span>
+                        <button type="button" data-ds-copy="pre-tabs-mvc" data-testid="ds-copy-pre-tabs-mvc"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-tabs-mvc"><code class="invoisys-ds-pre-code">&lt;div class="invoisys-tabbar" role="tablist" aria-label="Secções da área de trabalho"&gt;
+    &lt;div class="invoisys-tabbar__track"&gt;
+        &lt;button type="button" class="invoisys-tabbar__tab invoisys-tabbar__tab--active" role="tab" aria-selected="true"&gt;Resumo&lt;/button&gt;
+        &lt;button type="button" class="invoisys-tabbar__tab" role="tab" aria-selected="false"&gt;Detalhes&lt;/button&gt;
+        &lt;button type="button" class="invoisys-tabbar__tab" role="tab" aria-selected="false"&gt;Histórico&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+                <p class="invoisys-ds-callout">
+                    <strong>Comportamento (tab bar):</strong> em MVC, troca <code>invoisys-tabbar__tab--active</code> e <code>aria-selected</code> no servidor ou via JavaScript ao mudar de separador; mantenha o foco e o painel associado alinhados às <a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/" rel="noopener noreferrer" target="_blank">práticas ARIA de tabs</a> se você ligar a <code>tabpanel</code>.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tabs-snippet-modal">HTML · Modal Detalhes (trecho mínimo)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Versão resumida só da <code>&lt;ul&gt;</code> — o bloco <strong>completo</strong> (com <code>.tab-content</code> e <code>data-testid="modal-detalhes-container"</code>) está em <a href="#sec-tabs-modal-detalhes">Exemplo interativo · modal Detalhes</a> (botão <strong>Copiar</strong> logo abaixo da pré-visualização).
+                </p>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Razor / HTML · só lista de abas</span>
+                        <button type="button" data-ds-copy="pre-tabs-modal-detalhes-mvc" data-testid="ds-copy-pre-tabs-modal-detalhes-mvc"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-tabs-modal-detalhes-mvc"><code class="invoisys-ds-pre-code">&lt;ul id="tabs" class="nav nav-tabs nav-primary modal-detalhes-tabs" role="tablist" data-testid="modal-detalhes-abas"&gt;
+    &lt;li id="firstLI" class="active" role="presentation"&gt;
+        &lt;a href="#tab-1" data-toggle="tab" role="tab" data-testid="modal-detalhes-aba-dados"&gt;
+            &lt;div class="d-flex flex-fill justify-content-start align-items-center gap-2"&gt;
+                &lt;i class="fa fa-file-text-o" aria-hidden="true"&gt;&lt;/i&gt;
+                &lt;b&gt;Dados da NF-e&lt;/b&gt;
+            &lt;/div&gt;
+        &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li role="presentation"&gt;
+        &lt;a id="itensLink" href="#tab-3" data-toggle="tab" role="tab" data-testid="modal-detalhes-aba-itens"&gt;
+            &lt;div class="d-flex flex-fill justify-content-start align-items-center gap-2"&gt;
+                &lt;i class="fa fa-shopping-cart" aria-hidden="true"&gt;&lt;/i&gt;
+                &lt;b&gt;Itens&lt;/b&gt;
+            &lt;/div&gt;
+        &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;!-- … Anexos, Comentários, Eventos, Fluxo de Trabalho — mesmo padrão --&gt;
+&lt;/ul&gt;</code></pre>
+                </div>
+                <p class="invoisys-ds-callout">
+                    Os <code>href</code> (<code>#tab-1</code>, …) devem corresponder aos <code>id</code> dos <code>.tab-pane</code> no <code>.tab-content</code> irmão; ajusta os números ao markup real da view. Os <code>data-testid</code> mantêm-se estáveis para testes (Playwright, Cypress).
+                </p>

@@ -1,0 +1,173 @@
+                <h2 class="invoisys-ds-section-title" id="sec-timeline-visao">Visão geral</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O <strong>fluxo de trabalho</strong> na aba homónima do modal de detalhes (NF-e, etc.) usa uma lista ordenada
+                    <code>ol.listEventosWorkflow</code> com painéis colapsáveis (<code>.panel</code>, <code>.panel-header</code>, <code>.panel-toggle</code>, <code>.panel-content</code>).
+                    Os estilos de grelha e lista vivem em <strong>table.css</strong>; o espaçamento da aba em <strong>componentes.css</strong> (<code>#tab-6 #workflow</code>).
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Data cronológica em vez de «Fase N»:</strong> no cabeçalho de cada passo, use o mesmo espaço onde antes ia
+                    <code>Fase 1</code> / <code>Fase 2</code> para mostrar o <strong>carimbo de data/hora</strong> do evento (ex.: <code>26-01-2026 12:54:14.997</code>), em tipografia secundária (<code>.text-muted</code>, tamanho pequeno).
+                    O título do passo (ex.: <code>138 - Recebido via API</code>) mantém-se na área principal à direita da data, com <code>.text-truncate</code> se precisar de elipse em linha única.
+                    Em Razor, formate no servidor (<code>ToString("dd-MM-yyyy HH:mm:ss.fff")</code>) ou exponha ISO em <code>&lt;time datetime="…"&gt;</code> e formate para exibição.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-timeline-preview">Pré-visualização (datas + títulos)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Variante <code>listEventosWorkflow-colored</code> com números manuais em <code>.workflow-step-num</code> (o <code>::before</code> da lista fica oculto).
+                    Clique no cabeçalho para expandir ou recolher cada passo — o comportamento de colapso nesta página é tratado pelo script da documentação (<code>data-ds-workflow-toggle</code>).
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-timeline-preview">
+                    <div class="invoisys-ds-doc-workflow-demo" data-testid="ds-timeline-demo">
+                        <div id="workflow" class="invoisys-ds-doc-workflow-root">
+                            <ol class="listEventosWorkflow listEventosWorkflow-colored invoisys-ds-doc-workflow-ol pb-4 mb-0" role="list">
+                                <li class="workflow-step-fase invoisys-ds-doc-workflow-li" role="listitem">
+                                    <div class="d-flex align-items-center w-100 invoisys-ds-doc-workflow-row gap-2">
+                                        <div class="invoisys-ds-doc-workflow-track flex-shrink-0" aria-hidden="true">
+                                            <span class="workflow-step-num invoisys-ds-doc-workflow-num invoisys-ds-doc-workflow-num--on">1</span>
+                                        </div>
+                                        <div class="flex-fill min-w-0">
+                                            <div class="panel w-100 status-pending mb-0 invoisys-ds-doc-workflow-panel">
+                                                <div class="panel-header invoisys-ds-doc-workflow-panel-header invoisys-ds-doc-workflow-panel-header--active">
+                                                    <a href="#" class="panel-toggle d-block w-100 invoisys-ds-doc-workflow-toggle" data-ds-workflow-toggle="" role="button" aria-expanded="true" aria-controls="ds-wf-panel-1" id="ds-wf-toggle-1" data-testid="ds-timeline-toggle-1">
+                                                        <div class="d-flex justify-content-between align-items-center gap-2 w-100 min-w-0">
+                                                            <div class="d-flex align-items-center min-w-0 flex-fill invoisys-ds-doc-workflow-head-main">
+                                                                <time class="workflow-step-role invoisys-ds-doc-workflow-time text-nowrap flex-shrink-0" datetime="2026-01-26T12:54:14.997">26-01-2026 12:54:14.997</time>
+                                                                <span class="invoisys-ds-doc-workflow-divider" aria-hidden="true"></span>
+                                                                <span class="invoisys-ds-doc-workflow-title invoisys-ds-doc-workflow-title--active text-truncate min-w-0">138 — Recebido via API</span>
+                                                            </div>
+                                                            <i class="fa fa-chevron-up icon-toggle invoisys-ds-doc-workflow-chev flex-shrink-0" aria-hidden="true"></i>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="panel-content invoisys-ds-doc-workflow-panel-content" id="ds-wf-panel-1" role="region" aria-labelledby="ds-wf-toggle-1">
+                                                    <div class="status-log-content color-text font-normal">Plugin Associar Pedido Compra executado com sucesso!</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="workflow-step-fase invoisys-ds-doc-workflow-li" role="listitem">
+                                    <div class="d-flex align-items-center w-100 invoisys-ds-doc-workflow-row gap-2">
+                                        <div class="invoisys-ds-doc-workflow-track flex-shrink-0" aria-hidden="true">
+                                            <span class="workflow-step-num invoisys-ds-doc-workflow-num">2</span>
+                                        </div>
+                                        <div class="flex-fill min-w-0">
+                                            <div class="panel w-100 status-pending mb-0 invoisys-ds-doc-workflow-panel">
+                                                <div class="panel-header invoisys-ds-doc-workflow-panel-header">
+                                                    <a href="#" class="panel-toggle d-block w-100 invoisys-ds-doc-workflow-toggle" data-ds-workflow-toggle="" role="button" aria-expanded="false" aria-controls="ds-wf-panel-2" id="ds-wf-toggle-2" data-testid="ds-timeline-toggle-2">
+                                                        <div class="d-flex justify-content-between align-items-center gap-2 w-100 min-w-0">
+                                                            <div class="d-flex align-items-center min-w-0 flex-fill invoisys-ds-doc-workflow-head-main">
+                                                                <time class="workflow-step-role invoisys-ds-doc-workflow-time text-nowrap flex-shrink-0" datetime="2026-01-26T12:55:01.200">26-01-2026 12:55:01.200</time>
+                                                                <span class="invoisys-ds-doc-workflow-divider" aria-hidden="true"></span>
+                                                                <span class="invoisys-ds-doc-workflow-title text-truncate min-w-0">Script Tag Resumo Nfe x Pedido</span>
+                                                            </div>
+                                                            <i class="fa fa-chevron-down icon-toggle invoisys-ds-doc-workflow-chev flex-shrink-0" aria-hidden="true"></i>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="panel-content invoisys-ds-doc-workflow-panel-content" id="ds-wf-panel-2" role="region" aria-labelledby="ds-wf-toggle-2" hidden>
+                                                    <div class="status-log-content color-text font-normal"><span class="text-muted">Nenhum log</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="workflow-step-fase invoisys-ds-doc-workflow-li" role="listitem">
+                                    <div class="d-flex align-items-center w-100 invoisys-ds-doc-workflow-row gap-2">
+                                        <div class="invoisys-ds-doc-workflow-track flex-shrink-0" aria-hidden="true">
+                                            <span class="workflow-step-num invoisys-ds-doc-workflow-num">3</span>
+                                        </div>
+                                        <div class="flex-fill min-w-0">
+                                            <div class="panel w-100 status-pending mb-0 invoisys-ds-doc-workflow-panel">
+                                                <div class="panel-header invoisys-ds-doc-workflow-panel-header">
+                                                    <a href="#" class="panel-toggle d-block w-100 invoisys-ds-doc-workflow-toggle" data-ds-workflow-toggle="" role="button" aria-expanded="false" aria-controls="ds-wf-panel-3" id="ds-wf-toggle-3" data-testid="ds-timeline-toggle-3">
+                                                        <div class="d-flex justify-content-between align-items-center gap-2 w-100 min-w-0">
+                                                            <div class="d-flex align-items-center min-w-0 flex-fill invoisys-ds-doc-workflow-head-main">
+                                                                <time class="workflow-step-role invoisys-ds-doc-workflow-time text-nowrap flex-shrink-0" datetime="2026-01-26T12:56:00.000">26-01-2026 12:56:00.000</time>
+                                                                <span class="invoisys-ds-doc-workflow-divider" aria-hidden="true"></span>
+                                                                <span class="invoisys-ds-doc-workflow-title text-truncate min-w-0">Plugin PO Validação</span>
+                                                            </div>
+                                                            <i class="fa fa-chevron-down icon-toggle invoisys-ds-doc-workflow-chev flex-shrink-0" aria-hidden="true"></i>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="panel-content invoisys-ds-doc-workflow-panel-content" id="ds-wf-panel-3" role="region" aria-labelledby="ds-wf-toggle-3" hidden>
+                                                    <div class="status-log-content color-text font-normal"><span class="text-muted">Nenhum log</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="workflow-step-fase invoisys-ds-doc-workflow-li" role="listitem">
+                                    <div class="d-flex align-items-center w-100 invoisys-ds-doc-workflow-row gap-2">
+                                        <div class="invoisys-ds-doc-workflow-track flex-shrink-0" aria-hidden="true">
+                                            <span class="workflow-step-num invoisys-ds-doc-workflow-num">4</span>
+                                        </div>
+                                        <div class="flex-fill min-w-0">
+                                            <div class="panel w-100 status-pending mb-0 invoisys-ds-doc-workflow-panel">
+                                                <div class="panel-header invoisys-ds-doc-workflow-panel-header">
+                                                    <a href="#" class="panel-toggle d-block w-100 invoisys-ds-doc-workflow-toggle" data-ds-workflow-toggle="" role="button" aria-expanded="false" aria-controls="ds-wf-panel-4" id="ds-wf-toggle-4" data-testid="ds-timeline-toggle-4">
+                                                        <div class="d-flex justify-content-between align-items-center gap-2 w-100 min-w-0">
+                                                            <div class="d-flex align-items-center min-w-0 flex-fill invoisys-ds-doc-workflow-head-main">
+                                                                <time class="workflow-step-role invoisys-ds-doc-workflow-time text-nowrap flex-shrink-0" datetime="2026-01-26T12:57:30.000">26-01-2026 12:57:30.000</time>
+                                                                <span class="invoisys-ds-doc-workflow-divider" aria-hidden="true"></span>
+                                                                <span class="invoisys-ds-doc-workflow-title text-truncate min-w-0">Resumo Validação PO</span>
+                                                            </div>
+                                                            <i class="fa fa-chevron-down icon-toggle invoisys-ds-doc-workflow-chev flex-shrink-0" aria-hidden="true"></i>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="panel-content invoisys-ds-doc-workflow-panel-content" id="ds-wf-panel-4" role="region" aria-labelledby="ds-wf-toggle-4" hidden>
+                                                    <div class="status-log-content color-text font-normal"><span class="text-muted">Nenhum log</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-timeline-snippet">HTML · Razor (referência)</h2>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Razor / HTML · cabeçalho com data</span>
+                        <button type="button" data-ds-copy="pre-timeline-workflow" data-testid="ds-copy-pre-timeline-workflow"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-timeline-workflow"><code class="invoisys-ds-pre-code">&lt;div id="workflow"&gt;
+    &lt;ol class="listEventosWorkflow listEventosWorkflow-colored pb-4 mb-0" role="list"&gt;
+        &lt;li class="workflow-step-fase" role="listitem"&gt;
+            &lt;div class="d-flex align-items-center w-100 gap-2"&gt;
+                &lt;div class="flex-shrink-0" style="width:32px;display:flex;justify-content:center"&gt;
+                    &lt;span class="workflow-step-num" style="background-color:#4FB73B;color:#fff;border-radius:4px;width:27px;height:27px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;"&gt;1&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;div class="flex-fill min-w-0"&gt;
+                    &lt;div class="panel w-100 status-pending mb-0"&gt;
+                        &lt;div class="panel-header" style="border:1px solid rgba(79,183,59,.35);border-left:4px solid #4FB73B;background:rgba(79,183,59,.11);border-radius:0 5px 5px 0"&gt;
+                            &lt;a href="#" class="panel-toggle d-block w-100" data-toggle="collapse" data-target="#wfLog1"&gt;
+                                &lt;div class="d-flex justify-content-between align-items-center gap-2 w-100 min-w-0"&gt;
+                                    &lt;div class="d-flex align-items-center min-w-0 flex-fill"&gt;
+                                        &lt;time class="workflow-step-role text-muted text-nowrap flex-shrink-0" style="font-size:11px;font-weight:500" datetime="2026-01-26T12:54:14.997"&gt;26-01-2026 12:54:14.997&lt;/time&gt;
+                                        &lt;span style="width:1px;height:1.1rem;margin:0 8px 0 10px;background:#c5c5c5;flex-shrink:0" aria-hidden="true"&gt;&lt;/span&gt;
+                                        &lt;span class="text-truncate min-w-0" style="font-size:14px;font-weight:700"&gt;138 — Recebido via API&lt;/span&gt;
+                                    &lt;/div&gt;
+                                    &lt;i class="fa fa-chevron-down icon-toggle flex-shrink-0" style="font-size:14px;color:#666" aria-hidden="true"&gt;&lt;/i&gt;
+                                &lt;/div&gt;
+                            &lt;/a&gt;
+                        &lt;/div&gt;
+                        &lt;div id="wfLog1" class="panel-content collapse in"&gt;
+                            &lt;div class="status-log-content"&gt;…&lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/li&gt;
+        &lt;!-- Repetir &lt;li&gt;: alinhar a tokens do portal (ex.: badge var(--cor-texto-secundario), fundo var(--cor-superficie-nuvem), bordas var(--cor-borda)) --&gt;
+    &lt;/ol&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+                <p class="invoisys-ds-callout">
+                    <strong>No portal MVC:</strong> o colapso pode usar <strong>Bootstrap 3</strong> (<code>data-toggle="collapse"</code>) como noutros painéis; aqui na doc usamos <code>data-ds-workflow-toggle</code> só para o storybook.
+                    Garanta <strong>table.css</strong> na cascade quando esta lista vive no contexto de listagem/modal com o resto do portal.
+                </p>

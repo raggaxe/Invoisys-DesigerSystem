@@ -1,0 +1,300 @@
+                <h1 id="sec-tabelas-cabecalho-titulo">Tabelas · cabeçalho da listagem</h1>
+                <p class="invoisys-ds-lead">
+                    Padrão de <strong>duas linhas</strong> na toolbar acima da grade: na primeira ficam o filtro “âncora” (muitas vezes datas), a pesquisa, o atalho para <strong>totalizados / KPIs</strong> e os <strong>botões só ícone</strong> (atualizar, ColVis, etc.);
+                    na segunda, um <strong>filtro contextual</strong> importante, um <strong>espaço reservado</strong> para chips ou ações leves e o chip <strong>Filtrar por</strong> que abre o painel avançado.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tabelas-cabecalho-organizacao">Uma página ou várias?</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Mantivemos <strong>tudo neste painel</strong>, com o eixo <strong>linha 1 → linha 2</strong> e depois <strong>subsecções por bloco</strong>. Assim quem implementa percorre na mesma ordem em que o usuário vê a tela; o detalhe fino (daterangepicker, Select2, <code>startTable</code>) continua nas páginas já existentes, com links a partir daqui.
+                </p>
+                <p class="invoisys-ds-callout mb-3">
+                    Contrato do painel da grade (<code>data-table</code>, <code>.table-wrap</code>): <a href="#sec-tabelas-visao-titulo">Tabelas · visão geral</a>.
+                    ColVis, busca e <code>ajax</code>: <a href="#sec-tabelas-util-barra">Tabelas · utilitários</a>.
+                    <strong>Exemplo visual completo</strong> (duas linhas): <a href="#sec-tabelas-cabecalho-exemplo-completo">secção abaixo</a>.
+                    <strong>Cabeçalho + tabela no mesmo bloco:</strong> <a href="#sec-tabelas-listagem-completa-titulo">Tabelas · listagem completa</a>.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tabelas-cabecalho-mapas">Mapa mental das duas linhas</h2>
+                <div class="invoisys-ds-doc-tabelas-toolbar-sketch mb-3" role="img" aria-label="Esquema simplificado da toolbar em duas linhas" data-testid="ds-tabelas-cabecalho-sketch">
+                    <p class="small color-text mb-2" style="margin-top:0"><strong>1.ª linha</strong> — leitura esquerda → direita</p>
+                    <div class="invoisys-ds-doc-tabelas-toolbar-sketch__row">
+                        <span class="invoisys-ds-doc-tabelas-toolbar-sketch__slot">Filtro principal<br /><span class="invoisys-ds-doc-tabelas-toolbar-sketch__muted">(ex.: data emissão)</span></span>
+                        <span class="invoisys-ds-doc-tabelas-toolbar-sketch__slot invoisys-ds-doc-tabelas-toolbar-sketch__slot--grow">Campo “Pesquisar…”</span>
+                        <span class="invoisys-ds-doc-tabelas-toolbar-sketch__slot">Mostrar painel<br /><span class="invoisys-ds-doc-tabelas-toolbar-sketch__muted">(KPIs / métricas)</span></span>
+                        <span class="invoisys-ds-doc-tabelas-toolbar-sketch__slot">Ações da tabela<br /><span class="invoisys-ds-doc-tabelas-toolbar-sketch__muted">(menu · atualizar · ColVis)</span></span>
+                    </div>
+                    <p class="small color-text mb-2"><strong>2.ª linha</strong> — 2.º filtro (ex.: empresa) · reserva · painel de filtros</p>
+                    <div class="invoisys-ds-doc-tabelas-toolbar-sketch__row">
+                        <span class="invoisys-ds-doc-tabelas-toolbar-sketch__slot">Select empresa<br /><span class="invoisys-ds-doc-tabelas-toolbar-sketch__muted">(Select2)</span></span>
+                        <span class="invoisys-ds-doc-tabelas-toolbar-sketch__slot invoisys-ds-doc-tabelas-toolbar-sketch__slot--flex1">Espaço livre<br /><span class="invoisys-ds-doc-tabelas-toolbar-sketch__muted">(chips, exportar…)</span></span>
+                        <span class="invoisys-ds-doc-tabelas-toolbar-sketch__slot">Filtrar por<br /><span class="invoisys-ds-doc-tabelas-toolbar-sketch__muted">(painel avançado)</span></span>
+                    </div>
+                </div>
+                <p class="color-text font-normal mb-3" style="max-width:min(100%,90ch); line-height:1.65">
+                    No portal, a primeira linha costuma ser um <code>.d-flex</code> com <code>data-testid="nfeentrada-toolbar"</code> (ou equivalente na tela), <code>.combo-container</code> para o bloco de datas, <code>.filter-buttons</code> para a pesquisa e <code>.panel-card-btn.nfeentrada-toolbar-btn</code> para os chips — ver <strong>table.css</strong> em <code>:is(.nfeentrada-layout, .layout-datatable-page) [data-testid="nfeentrada-toolbar"]</code>.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tabelas-cabecalho-exemplo-completo">Exemplo completo (prévia)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Pré-visualização com <strong>classes canónicas</strong> de <code>table.css</code> / toolbar (<code>layout-datatable-page</code>, <code>.combo-container</code>, <code>.filter-buttons</code>, <code>.square-button</code>, chips <code>.nfeentrada-toolbar-btn</code>). O <strong>intervalo de datas</strong> usa <strong>Moment + bootstrap-daterangepicker</strong> (init ao abrir este painel), como em <a href="#sec-inputs-daterange">Inputs · intervalo de datas</a>. A pesquisa continua <strong>estática</strong> (só leitura). O <strong>Select2</strong> de empresa inicia com <strong>Todas as empresas</strong> selecionadas — <strong>sem rótulo visível</strong>. A grade e o <code>startTable</code> ficam fora para o exemplo caber na doc.
+                    O botão <strong>Filtrar por</strong> usa a classe só de doc <code>invoisys-ds-doc-cabecalho-btn-filtrar-plain</code> para ficar plano (fundo branco, sem borda nem sombra) nesta prévia.
+                </p>
+                <div class="invoisys-ds-preview border rounded mb-3 invoisys-ds-preview--toolbar-cards invoisys-ds-preview--select2-portal invoisys-ds-preview--daterange-portal invoisys-ds-doc-tabelas-cabecalho-full-demo-host" data-testid="ds-tabelas-cabecalho-preview-host" style="background:var(--cor-superficie-nuvem); border-color:var(--cor-borda); padding:var(--espacamento-md); width:100%; max-width:100%; box-sizing:border-box">
+                    <div class="layout-datatable-page page-content invoisys-ds-doc-tabelas-cabecalho-full-demo">
+                        <section class="panel mb-0" data-table="#tblDocCabecalhoDemo" data-testid="ds-tabelas-cabecalho-demo-panel">
+                            <div class="d-flex flex-wrap align-items-center gap-2" data-testid="nfeentrada-toolbar" role="toolbar" aria-label="Toolbar da listagem (exemplo)">
+                                <div class="combo-container">
+                                    <div class="d-flex justify-content-between align-items-center w-100">
+                                        <label class="form-label mb-0" for="docCabecalhoDemoDateRange">Data emissão NF-e</label>
+                                        <div class="combo-container invoisys-ds-daterange-demo invoisys-ds-daterange-demo--portal">
+                                            <div class="date-range-container">
+                                                <div class="prepend-icon dm-toolbar-date-range">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    <input id="docCabecalhoDemoDateRange" type="text" class="form-control date-range-input" autocomplete="off" aria-label="Intervalo de datas (data emissão NF-e)" data-testid="ds-tabelas-cabecalho-demo-daterange" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="filter-buttons invoisys-ds-search-demo">
+                                    <input type="search" id="docCabecalhoDemoSearch" class="form-control search-input" placeholder="Pesquisar…" autocomplete="off" readonly aria-label="Campo de pesquisa (exemplo estático)" data-testid="ds-tabelas-cabecalho-demo-search" />
+                                </div>
+                                <button type="button" class="panel-card-btn nfeentrada-toolbar-btn" aria-expanded="false" aria-controls="idPainelKpisDocCabecalhoDemo" data-testid="ds-tabelas-cabecalho-demo-metricas">
+                                    <span class="heading-sm mb-0">Mostrar painel</span>
+                                    <i class="fa fa-eye flex-shrink-0" aria-hidden="true"></i>
+                                </button>
+                                <div class="d-flex flex-shrink-0 align-items-center gap-2" role="group" aria-label="Ações da tabela">
+                                    <button type="button" class="square-button" aria-label="Menu de ações" data-testid="ds-tabelas-cabecalho-demo-menu"><i class="fa fa-bars" aria-hidden="true"></i></button>
+                                    <button type="button" class="square-button" aria-label="Atualizar listagem" data-testid="ds-tabelas-cabecalho-demo-refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                                    <button type="button" class="square-button" aria-label="Colunas visíveis" data-testid="ds-tabelas-cabecalho-demo-colvis"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                            <div id="idPainelKpisDocCabecalhoDemo" class="d-none mt-2 w-100 invoisys-ds-doc-cabecalho-flyout-panel invoisys-ds-doc-cabecalho-kpis-panel" role="region" aria-label="Totalizados (prévia)" aria-hidden="true" data-testid="ds-tabelas-cabecalho-panel-kpis">
+                                <div class="invoisys-ds-kpi-dashboard" role="group" aria-label="Totalizadores de exemplo">
+                                    <div class="invoisys-ds-kpi-tile">
+                                        <p class="invoisys-ds-kpi-value">10</p>
+                                        <p class="invoisys-ds-kpi-label">Em trânsito</p>
+                                        <div class="invoisys-ds-kpi-footer">
+                                            <i class="fa fa-truck" aria-hidden="true"></i>
+                                            <span class="invoisys-ds-kpi-pct">29,8%</span>
+                                        </div>
+                                    </div>
+                                    <div class="invoisys-ds-kpi-tile">
+                                        <p class="invoisys-ds-kpi-value">8</p>
+                                        <p class="invoisys-ds-kpi-label">Entrega realizada</p>
+                                        <div class="invoisys-ds-kpi-footer">
+                                            <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                            <span class="invoisys-ds-kpi-pct">21,2%</span>
+                                        </div>
+                                    </div>
+                                    <div class="invoisys-ds-kpi-tile">
+                                        <p class="invoisys-ds-kpi-value">7</p>
+                                        <p class="invoisys-ds-kpi-label">Em atraso</p>
+                                        <div class="invoisys-ds-kpi-footer">
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                            <span class="invoisys-ds-kpi-pct">20,7%</span>
+                                        </div>
+                                    </div>
+                                    <div class="invoisys-ds-kpi-tile">
+                                        <p class="invoisys-ds-kpi-value">0</p>
+                                        <p class="invoisys-ds-kpi-label">Não entregue</p>
+                                        <div class="invoisys-ds-kpi-footer">
+                                            <i class="fa fa-ban" aria-hidden="true"></i>
+                                            <span class="invoisys-ds-kpi-pct">0%</span>
+                                        </div>
+                                    </div>
+                                    <div class="invoisys-ds-kpi-tile">
+                                        <p class="invoisys-ds-kpi-value">5</p>
+                                        <p class="invoisys-ds-kpi-label">Enviado para sistema destino</p>
+                                        <div class="invoisys-ds-kpi-footer invoisys-ds-kpi-footer--empty" aria-hidden="true">
+                                            <i class="fa fa-truck" aria-hidden="true"></i>
+                                            <span class="invoisys-ds-kpi-pct">0%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="invoisys-ds-doc-cabecalho-linha2 mt-2" data-testid="ds-doc-cabecalho-linha-2">
+                                <div class="d-flex flex-wrap align-items-center w-100 gap-2">
+                                    <div class="invoisys-ds-doc-cabecalho-empresa-wrap flex-shrink-0">
+                                        <div class="form-group mb-0 invoisys-ds-select2-demo invoisys-ds-select2-demo--portal">
+                                            <select id="docCabecalhoDemoEmpresaSelect" name="docCabecalhoDemoEmpresaSelect" class="form-control" aria-label="Empresa (filtro da listagem)" data-testid="ds-tabelas-cabecalho-demo-empresa-select">
+                                                <option value="" selected>Todas as empresas</option>
+                                                <option value="a">Empresa A — Holding</option>
+                                                <option value="b">Empresa B — Filial SP</option>
+                                                <option value="c">Empresa C — Matriz</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="invoisys-ds-doc-cabecalho-linha2-spacer flex-grow-1" aria-hidden="true"></div>
+                                    <div class="flex-shrink-0">
+                                        <button type="button" class="panel-card-btn nfeentrada-toolbar-btn invoisys-ds-doc-cabecalho-btn-filtrar-plain" aria-expanded="false" aria-controls="idPainelFiltrosDocCabecalhoDemo" data-testid="ds-tabelas-cabecalho-demo-filtrar">
+                                            <i class="fa fa-filter flex-shrink-0" aria-hidden="true"></i>
+                                            <span class="heading-sm mb-0">Filtrar por</span>
+                                            <i class="fa fa-chevron-down flex-shrink-0" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="idPainelFiltrosDocCabecalhoDemo" class="d-none mt-2 w-100 invoisys-ds-doc-cabecalho-flyout-panel invoisys-ds-doc-cabecalho-filtros-panel" role="region" aria-label="Filtros avançados (prévia)" aria-hidden="true" data-testid="ds-tabelas-cabecalho-panel-filtros">
+                                <div class="invoisys-ds-doc-cabecalho-filtros-grid">
+                                    <div class="form-group mb-0">
+                                        <label class="control-label mb-1" for="docCabecalhoDemoFiltroDestinatario">Destinatário</label>
+                                        <input type="text" id="docCabecalhoDemoFiltroDestinatario" class="form-control" autocomplete="off" placeholder="Informe o CNPJ/CPF ou Razão Social do destinatário" data-testid="ds-tabelas-cabecalho-demo-filtro-destinatario" />
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <label class="control-label mb-1" for="docCabecalhoDemoFiltroCategoria">Categoria</label>
+                                        <select id="docCabecalhoDemoFiltroCategoria" class="form-control" aria-label="Categoria (demo)" data-testid="ds-tabelas-cabecalho-demo-filtro-categoria">
+                                            <option value="" selected>Todas as categorias</option>
+                                            <option value="1">Categoria A</option>
+                                            <option value="2">Categoria B</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <label class="control-label mb-1" for="docCabecalhoDemoFiltroStatus">Status</label>
+                                        <select id="docCabecalhoDemoFiltroStatus" class="form-control" aria-label="Status (demo)" data-testid="ds-tabelas-cabecalho-demo-filtro-status">
+                                            <option value="" selected>Todos</option>
+                                            <option value="1">Autorizada</option>
+                                            <option value="2">Cancelada</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <label class="control-label mb-1" for="docCabecalhoDemoFiltroDateEntrega">Data entrega</label>
+                                        <div class="combo-container invoisys-ds-daterange-demo invoisys-ds-daterange-demo--portal">
+                                            <div class="date-range-container">
+                                                <div class="prepend-icon dm-toolbar-date-range">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    <input id="docCabecalhoDemoFiltroDateEntrega" type="text" class="form-control date-range-input" autocomplete="off" placeholder="Selecione um intervalo" aria-label="Data entrega (intervalo)" data-testid="ds-tabelas-cabecalho-demo-filtro-daterange-entrega" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <label class="control-label mb-1" for="docCabecalhoDemoFiltroDateRecusa">Data recusa</label>
+                                        <div class="combo-container invoisys-ds-daterange-demo invoisys-ds-daterange-demo--portal">
+                                            <div class="date-range-container">
+                                                <div class="prepend-icon dm-toolbar-date-range">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    <input id="docCabecalhoDemoFiltroDateRecusa" type="text" class="form-control date-range-input" autocomplete="off" placeholder="Selecione um intervalo" aria-label="Data recusa (intervalo)" data-testid="ds-tabelas-cabecalho-demo-filtro-daterange-recusa" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <label class="control-label mb-1" for="docCabecalhoDemoFiltroTransportadora">Transportadora</label>
+                                        <input type="text" id="docCabecalhoDemoFiltroTransportadora" class="form-control" autocomplete="off" placeholder="Informe o CNPJ/CPF ou Razão Social da transportadora" data-testid="ds-tabelas-cabecalho-demo-filtro-transportadora" />
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end flex-wrap gap-2 mt-3">
+                                    <button type="button" class="btn btn-canceled m-0" data-testid="ds-tabelas-cabecalho-demo-filtro-limpar">Limpar filtros</button>
+                                    <button type="button" class="btn btn-primary m-0" data-testid="ds-tabelas-cabecalho-demo-filtro-aplicar">Aplicar filtros</button>
+                                </div>
+                            </div>
+                            <p class="small color-text mb-0 mt-3 pt-2 border-top" style="border-color:var(--cor-borda)">O painel de <strong>totalizadores</strong> (KPIs) abre-se entre a 1.ª e a 2.ª linha da toolbar, com a mesma faixa de métricas que em <a href="#sec-cards-kpi">Cards · KPIs / totalizadores</a> (<code>invoisys-ds-kpi-dashboard</code>); <strong>Filtrar por</strong> abre abaixo da 2.ª linha um painel em <strong>grelha de 3 colunas</strong> (<code>.form-control</code>, <code>.date-range-input</code> + daterangepicker, ações à direita). Na view real seguem <code>aria-controls</code>, <code>#wrapFiltrarPor</code> / <code>#filtersList</code> e a <code>&lt;table&gt;</code> — ver <a href="#sec-tabelas-visao-titulo">Visão geral</a>, <a href="#sec-inputs-daterange">Inputs · intervalo de datas</a> e <a href="#sec-inputs-switch-isolado">Inputs · switch</a>.</p>
+                        </section>
+                    </div>
+                </div>
+                <div class="invoisys-ds-code-wrap mb-3">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Esqueleto Razor/HTML (toolbar + linha de filtros, abreviado)</span>
+                        <button type="button" data-ds-copy="pre-tabelas-cabecalho-completo" data-testid="ds-copy-pre-tabelas-cabecalho-completo"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-tabelas-cabecalho-completo"><code class="invoisys-ds-pre-code">&lt;div class="page-content layout-datatable-page"&gt;
+  &lt;section class="panel" data-table="#tblMinhaLista"&gt;
+    &lt;!-- 1.ª linha: data · pesquisa · KPIs · ações --&gt;
+    &lt;div class="d-flex flex-wrap align-items-center gap-2" data-testid="nfeentrada-toolbar" role="toolbar"&gt;
+      &lt;div class="combo-container"&gt;
+        &lt;div class="d-flex justify-content-between align-items-center w-100"&gt;
+          &lt;label class="form-label mb-0" for="idDateRange"&gt;Data emissão NF-e&lt;/label&gt;
+          &lt;div class="combo-container"&gt;&lt;!-- daterangepicker + Moment; prepend-icon + calendário --&gt;
+            &lt;div class="date-range-container"&gt;
+              &lt;div class="prepend-icon dm-toolbar-date-range"&gt;
+                &lt;i class="fa fa-calendar" aria-hidden="true"&gt;&lt;/i&gt;
+                &lt;input id="idDateRange" type="text" class="form-control date-range-input" autocomplete="off" /&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="filter-buttons"&gt;
+        &lt;input type="search" id="customSearch" class="form-control search-input" placeholder="Pesquisar…" /&gt;
+      &lt;/div&gt;
+      &lt;button type="button" class="panel-card-btn nfeentrada-toolbar-btn" aria-expanded="false" aria-controls="idPainelKpis"&gt;
+        &lt;span class="heading-sm mb-0"&gt;Mostrar painel&lt;/span&gt;&lt;i class="fa fa-eye flex-shrink-0" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/button&gt;
+      &lt;div class="d-flex gap-2" role="group" aria-label="Ações da tabela"&gt;
+        &lt;button type="button" class="square-button" aria-label="Menu"&gt;&lt;i class="fa fa-bars"&gt;&lt;/i&gt;&lt;/button&gt;
+        &lt;button type="button" class="square-button" aria-label="Atualizar"&gt;&lt;i class="fa fa-refresh"&gt;&lt;/i&gt;&lt;/button&gt;
+        &lt;button type="button" class="square-button" aria-label="Colunas"&gt;&lt;i class="fa fa-ellipsis-v"&gt;&lt;/i&gt;&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;!-- Totalizadores: #idPainelKpis entre 1.ª e 2.ª linha; role="region" + aria-label; na doc: faixa invoisys-ds-kpi-* (ver Cards · KPIs) --&gt;
+    &lt;div id="idPainelKpis" class="d-none mt-2 w-100" role="region" aria-label="Totalizados"&gt;…&lt;/div&gt;
+    &lt;!-- 2.ª linha: empresa (Select2, sem label visível) · espaço · Filtrar por --&gt;
+    &lt;div class="mt-2"&gt;
+      &lt;div class="d-flex flex-wrap align-items-center w-100 gap-2"&gt;
+        &lt;div class="flex-shrink-0"&gt;&lt;!-- na view: largura máx. estável (ex. ~385px) para não empurrar «Filtrar por» --&gt;
+          &lt;div class="form-group mb-0"&gt;
+            &lt;select id="idEmpresa" class="form-control" aria-label="Empresa"&gt;
+              &lt;option value="" selected&gt;Todas as empresas&lt;/option&gt;
+              &lt;option value="1"&gt;Empresa A&lt;/option&gt;
+            &lt;/select&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="flex-grow-1" aria-hidden="true"&gt;&lt;/div&gt;&lt;!-- chips, exportar, … --&gt;
+        &lt;button type="button" class="panel-card-btn nfeentrada-toolbar-btn invoisys-ds-doc-cabecalho-btn-filtrar-plain" aria-expanded="false" aria-controls="idPainelFiltros"&gt;
+          &lt;i class="fa fa-filter flex-shrink-0"&gt;&lt;/i&gt;
+          &lt;span class="heading-sm mb-0"&gt;Filtrar por&lt;/span&gt;
+          &lt;i class="fa fa-chevron-down flex-shrink-0"&gt;&lt;/i&gt;
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;!-- #idPainelFiltros após 2.ª linha; loading, .panel-content.pagination2, .table-wrap … --&gt;
+  &lt;/section&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tabelas-cabecalho-linha-1">Primeira linha</h2>
+
+                <h3 class="invoisys-ds-subsection-title" id="sec-tabelas-cabecalho-l1-filtro-principal">Filtro principal (geralmente data)</h3>
+                <p class="color-text font-normal mb-3" style="max-width:min(100%,90ch); line-height:1.65">
+                    Bloco à esquerda com rótulo + intervalo de datas (<code>.combo-container</code>, <code>.date-range-container</code>, <code>.date-range-input</code>). É o filtro que mais reduz volume no servidor; mantém largura estável para não empurrar a pesquisa para fora da linha em viewports médias.
+                    Vendor e acessibilidade: <a href="#sec-inputs-titulo">Inputs</a> (daterangepicker, Select2 quando for o caso).
+                </p>
+
+                <h3 class="invoisys-ds-subsection-title" id="sec-tabelas-cabecalho-l1-pesquisa">Barra de pesquisa</h3>
+                <p class="color-text font-normal mb-3" style="max-width:min(100%,90ch); line-height:1.65">
+                    Fica junto ao filtro principal, na área <code>.filter-buttons</code>, com input dedicado (ex.: id alinhado ao <code>startTable(..., $('#…'))</code> ou <code>#customSearch</code>).
+                    Comportamento servidor vs. filtro só na página: <a href="#sec-tabelas-util-busca">Utilitários · busca</a> e <a href="#sec-tabelas-util-busca-cliente"><code>searchClientSideOnly</code></a>.
+                </p>
+
+                <h3 class="invoisys-ds-subsection-title" id="sec-tabelas-cabecalho-l1-kpis">Painel de totalizados (KPIs)</h3>
+                <p class="color-text font-normal mb-3" style="max-width:min(100%,90ch); line-height:1.65">
+                    Chip estilo <code>.panel-card-btn.nfeentrada-toolbar-btn</code> com texto do tipo “Mostrar métricas” / “Mostrar painel” e ícone de olho (<code>fa-eye</code>), <code>aria-expanded</code> e <code>aria-controls</code> a apontar para o bloco de totalizadores.
+                    Na <a href="#sec-tabelas-cabecalho-exemplo-completo">prévia</a> o painel abre <strong>entre a 1.ª e a 2.ª linha</strong> da toolbar, com a faixa <code>invoisys-ds-kpi-dashboard</code> (igual a <a href="#sec-cards-kpi">Cards · KPIs</a>; sem título visível — a região usa <code>aria-label</code>).
+                    Referência visual e HTML: <a href="#sec-botoes-toolbar-nfe">Botões · toolbar (Métricas / Filtrar por)</a>, <a href="#sec-cards-kpi">Cards · KPIs</a> e <a href="#sec-cards-toolbar">Cards · toolbar compacta</a>.
+                </p>
+
+                <h3 class="invoisys-ds-subsection-title" id="sec-tabelas-cabecalho-l1-acoes">Botões de ação da tabela</h3>
+                <p class="color-text font-normal mb-3" style="max-width:min(100%,90ch); line-height:1.65">
+                    À direita: grupo compacto — menu (<code>fa-bars</code>), <strong>atualizar</strong> (<code>fa-refresh</code> em <code>.square-button</code> ou <code>.btn.btn-outline-icon</code>), <strong>ColVis</strong> (muitas vezes <code>fa-ellipsis-v</code> ou gatilho com <code>colvisTriggerSelector</code>).
+                    Ícones só contorno: <a href="#sec-botoes-icone-contorno">Botões · só ícone · contorno</a>. Ligação ao motor: <a href="#sec-tabelas-util-colvis">Utilitários · ColVis</a> e <a href="#sec-tabelas-util-atualizar">atualizar com <code>ajax.reload</code></a>.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tabelas-cabecalho-linha-2">Segunda linha</h2>
+
+                <h3 class="invoisys-ds-subsection-title" id="sec-tabelas-cabecalho-l2-filtro">Segundo filtro importante</h3>
+                <p class="color-text font-normal mb-3" style="max-width:min(100%,90ch); line-height:1.65">
+                    Normalmente um <strong>select</strong> largo (empresa, filial, status agregado) com <code>flex: 0 0 auto</code> ou largura máxima definida na view, para não competir com o “Filtrar por” à direita. Se for Select2, mantenha o dropdown ancorado ao body em grades estreitas (padrão já documentado em Inputs).
+                    No <a href="#sec-tabelas-cabecalho-exemplo-completo">exemplo completo</a> acima o select de empresa aparece <strong>sem rótulo HTML</strong> (apenas <code>aria-label</code> no <code>&lt;select&gt;</code>), alinhado ao padrão da toolbar.
+                </p>
+
+                <h3 class="invoisys-ds-subsection-title" id="sec-tabelas-cabecalho-l2-espaco">Espaçamento / área livre</h3>
+                <p class="color-text font-normal mb-3" style="max-width:min(100%,90ch); line-height:1.65">
+                    Zona central com <code>flex-grow</code> ou <code>margin-left: auto</code> no bloco da direita, para inserir chips de filtro rápido, contador, exportação leve ou atalhos sem refazer a primeira linha. Se não houver nada, o espaço respira e alinha o “Filtrar por” ao canto direito como na captura de referência.
+                </p>
+
+                <h3 class="invoisys-ds-subsection-title" id="sec-tabelas-cabecalho-l2-filtrar-por">Painel “Filtrar por”</h3>
+                <p class="color-text font-normal mb-0" style="max-width:min(100%,90ch); line-height:1.65">
+                    Chip com <code>fa-filter</code>, texto “Filtrar por” e <code>fa-chevron-down</code>; abre o painel de filtros avançados (<code>#wrapFiltrarPor</code> / <code>#filtersList</code> conforme a view). Na <a href="#sec-tabelas-cabecalho-exemplo-completo">prévia</a>, o conteúdo é um exemplo em <strong>três colunas</strong> (texto, <code>select</code>, intervalos com o mesmo markup que <a href="#sec-inputs-daterange">Inputs · intervalo de datas</a>) e <strong>rodapé de ações</strong> com <code>btn btn-canceled</code> + <code>btn btn-primary</code>. Mesmas classes <code>.panel-card-btn.nfeentrada-toolbar-btn</code> e estados de painel aberto: <a href="#sec-botoes-toolbar-nfe">Botões · toolbar</a>.
+                </p>

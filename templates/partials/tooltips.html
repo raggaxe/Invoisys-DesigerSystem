@@ -1,0 +1,93 @@
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    No portal (<strong>ASP.NET MVC</strong>) os tooltips seguem em geral o <strong>Bootstrap 3</strong> com <strong>jQuery</strong>:
+                    <code>data-toggle="tooltip"</code>, <code>data-placement</code> (<code>top</code>, <code>bottom</code>, <code>left</code>, <code>right</code>) e <code>title</code> (ou <code>data-original-title</code> após init).
+                    Para o aspecto de cartão branco com texto e contorno verdes (como o botão <strong>Importar XML</strong>), use a classe <code>invoisys-tooltip-brand</code> em <strong>componentes.css</strong> no elemento externo do tooltip (ver snippets abaixo).
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Bootstrap 5.3:</strong> a API muda para <code>data-bs-toggle="tooltip"</code>, <code>data-bs-placement</code>, <code>data-bs-title</code> e <code>data-bs-custom-class</code>; o JavaScript expõe <code>bootstrap.Tooltip</code> (com Popper).
+                    Documentação oficial:
+                    <a href="https://getbootstrap.com/docs/5.3/components/tooltips/" target="_blank" rel="noopener noreferrer">Bootstrap 5.3 · Tooltips</a>.
+                    Esta página de design system <strong>não</strong> carrega o bundle BS5 no <code>index.html</code> (evite conflitos com o markup legado); o exemplo interativo de posições e do «Importar XML» está num arquivo estático com CDN, embutido abaixo num <code>iframe</code>.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Rede:</strong> o iframe pede CSS/JS ao jsDelivr. Sem internet, o bloco não inicializa os tooltips — mantenha o snippet HTML/JS copiável para o seu ambiente.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tooltips-demo-bs5">Demo interativa (Bootstrap 5.3)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Passe o mouse sobre os botões: os quatro de posição e o «Importar XML» usam <code>data-bs-custom-class="invoisys-tooltip-brand"</code> (fundo branco, texto e borda verdes). No BS5 também existem <code>start</code> / <code>end</code> em vez de <code>left</code> / <code>right</code> quando quiser alinhamento à direção do texto.
+                </p>
+                <iframe
+                    class="invoisys-ds-demo-iframe"
+                    src="{{ url_for('static', filename='demos/tooltip-bootstrap5.html') }}"
+                    title="Demonstração de tooltips Bootstrap 5.3"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    data-testid="ds-tooltips-iframe-bs5"
+                ></iframe>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tooltips-portal-bs3">Portal · Bootstrap 3 + jQuery</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Marque o gatilho com <code>data-toggle="tooltip"</code> e <code>data-placement</code>. Para aplicar <code>invoisys-tooltip-brand</code>, passe um <code>template</code> cujo elemento raiz tenha <code>class="tooltip invoisys-tooltip-brand"</code> (o Bootstrap 3 injeta o conteúdo em <code>.tooltip-inner</code>).
+                    Use <code>container: 'body'</code> quando o tooltip estiver dentro de contêineres com <code>overflow</code> recortado.
+                </p>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML do gatilho</span>
+                        <button type="button" data-ds-copy="pre-tooltips-bs3-html" data-testid="ds-copy-pre-tooltips-bs3-html"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-tooltips-bs3-html">&lt;button type="button" class="btn btn-secondary"
+        data-toggle="tooltip" data-placement="top"
+        title="Importar NF-e a partir de um arquivo XML"
+        data-testid="tooltip-importar-xml"&gt;
+    Importar XML
+&lt;/button&gt;</pre>
+                </div>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>JavaScript (init)</span>
+                        <button type="button" data-ds-copy="pre-tooltips-bs3-js" data-testid="ds-copy-pre-tooltips-bs3-js"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-tooltips-bs3-js">var tpl =
+    '&lt;div class="tooltip invoisys-tooltip-brand" role="tooltip"&gt;' +
+    '&lt;div class="tooltip-arrow"&gt;&lt;/div&gt;' +
+    '&lt;div class="tooltip-inner"&gt;&lt;/div&gt;' +
+    '&lt;/div&gt;';
+
+$('#meuBotao').tooltip({
+    template: tpl,
+    container: 'body',
+    html: false
+});</pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tooltips-bs5-markup">Bootstrap 5.3 · marcação e init</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Depois de incluir o <code>bootstrap.bundle.min.js</code> (já com Popper), inicialize os nós com <code>data-bs-toggle="tooltip"</code> ou construa <code>new bootstrap.Tooltip(elemento, { container: document.body })</code>.
+                </p>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML + JS mínimo</span>
+                        <button type="button" data-ds-copy="pre-tooltips-bs5" data-testid="ds-copy-pre-tooltips-bs5"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-tooltips-bs5">&lt;button type="button" class="btn btn-light border"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        data-bs-custom-class="invoisys-tooltip-brand"
+        data-bs-title="Importar NF-e a partir de um arquivo XML"
+        data-testid="tooltip-importar-xml"&gt;
+    Importar XML
+&lt;/button&gt;
+
+&lt;script&gt;
+document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
+    new bootstrap.Tooltip(el, { container: document.body });
+});
+&lt;/script&gt;</pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tooltips-posicoes">Posições</h2>
+                <ul class="color-text font-normal" style="margin:0 0 var(--espacamento-lg); padding-left:1.25rem; max-width:min(100%,90ch); line-height:1.65">
+                    <li class="mb-2"><strong>Bootstrap 3:</strong> <code>data-placement="top"</code> | <code>bottom</code> | <code>left</code> | <code>right</code>.</li>
+                    <li class="mb-0"><strong>Bootstrap 5.3:</strong> <code>data-bs-placement</code> com os mesmos valores; <code>start</code> / <code>end</code> substituem <code>left</code> / <code>right</code> em modo LTR (ver documentação).</li>
+                </ul>

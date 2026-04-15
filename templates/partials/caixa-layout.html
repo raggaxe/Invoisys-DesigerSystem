@@ -1,0 +1,102 @@
+                <h2 class="invoisys-ds-section-title" id="sec-caixa-visao">Visão geral</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Utilitários de <strong>tokens.css</strong> para largura, altura máxima, overflow e posicionamento.
+                    Combinam com a página <strong>Flexbox</strong> (ex.: <code>.min-w-0</code> com <code>.text-truncate</code> em filhos flex).
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-caixa-dimensoes">Largura e altura</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">Classes <code>.w-*</code>, <code>.mw-100</code>, <code>.min-w-0</code>, <code>.h-100</code>.</p>
+
+                <h3 class="invoisys-ds-subsection-title"><code>.w-100</code></h3>
+                <p class="text-label mb-2">O filho ocupa 100% da largura do contêiner.</p>
+                <div class="invoisys-ds-caixa-ruler">
+                    <div class="w-100 py-2 px-3 rounded text-center" style="background:var(--cor-action-fundo);color:var(--cor-action-texto);font-size:var(--tamanho-xs)">.w-100</div>
+                </div>
+
+                <h3 class="invoisys-ds-subsection-title"><code>.w-auto</code></h3>
+                <p class="text-label mb-2">Largura automática (útil para resets ou dentro de flex).</p>
+                <div class="invoisys-ds-caixa-ruler d-flex gap-2">
+                    <span class="w-auto py-2 px-3 rounded d-inline-block" style="background:var(--cor-action-fundo);color:var(--cor-action-texto);font-size:var(--tamanho-xs)">.w-auto</span>
+                </div>
+
+                <h3 class="invoisys-ds-subsection-title"><code>.mw-100</code></h3>
+                <p class="text-label mb-2">Impede que o conteúdo ultrapasse o contêiner (max-width: 100%).</p>
+                <div class="invoisys-ds-caixa-ruler" style="max-width:280px">
+                    <div class="mw-100 py-2 px-2 rounded" style="background:var(--cor-action-fundo);color:var(--cor-action-texto);font-size:var(--tamanho-xs);width:420px">.mw-100 (largura declarada maior que o pai)</div>
+                </div>
+
+                <h3 class="invoisys-ds-subsection-title"><code>.min-w-0</code> + <code>.text-truncate</code></h3>
+                <p class="text-label mb-2">Em flex, por padrão o item não encolhe abaixo do conteúdo; <code>.min-w-0</code> permite truncar.</p>
+                <div class="d-flex gap-2 rounded border p-2" style="max-width:280px;border-color:var(--cor-borda)">
+                    <span class="invoisys-ds-flex-pill flex-shrink-0">Fixo</span>
+                    <div class="min-w-0 text-truncate text-start" style="font-size:var(--tamanho-sm);color:var(--cor-texto-principal)">Texto muito longo que seria empurrado para fora sem min-w-0</div>
+                </div>
+
+                <h3 class="invoisys-ds-subsection-title"><code>.h-100</code></h3>
+                <p class="text-label mb-2">Altura 100% do pai — o pai precisa de altura definida.</p>
+                <div class="invoisys-ds-caixa-ruler" style="height:100px">
+                    <div class="h-100 d-flex align-items-center justify-content-center rounded" style="background:var(--cor-action-fundo);color:var(--cor-action-texto);font-size:var(--tamanho-xs)">.h-100</div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-caixa-overflow">Overflow</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">Controla barras de scroll ou corte do conteúdo que extravasa.</p>
+                <div class="invoisys-ds-space-grid">
+                    {% for c in ['overflow-auto', 'overflow-hidden', 'overflow-visible', 'overflow-scroll'] %}
+                    <div>
+                        <p class="invoisys-ds-flex-demo-label mb-1">.{{ c }}</p>
+                        <div class="{{ c }} rounded border p-2" style="height:72px;border-color:var(--cor-borda);background:var(--cor-superficie-suave);font-size:var(--tamanho-xs);color:var(--cor-texto-principal)">
+                            Linha 1<br />Linha 2<br />Linha 3<br />Linha 4<br />Linha 5
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-caixa-posicao">Posicionamento</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">Classes <code>.position-*</code>. <code>fixed</code> ancora ao viewport — usar com critério (modais, toasts).</p>
+
+                <h3 class="invoisys-ds-subsection-title"><code>.position-relative</code> + <code>.position-absolute</code></h3>
+                <div class="position-relative rounded border p-3 mb-3" style="min-height:100px;border-color:var(--cor-borda);background:var(--cor-superficie)">
+                    <span class="text-label d-block mb-1">Contentor <code>.position-relative</code></span>
+                    <span class="position-absolute py-1 px-2 rounded" style="top:8px;right:8px;background:var(--cor-brand);color:var(--cor-texto-sobre-brand);font-size:var(--tamanho-xs)">.position-absolute</span>
+                </div>
+
+                <h3 class="invoisys-ds-subsection-title"><code>.position-sticky</code></h3>
+                <p class="text-label mb-2">Barra que cola ao topo do contêiner com scroll (pai com <code>overflow: auto</code>).</p>
+                <div class="invoisys-ds-sticky-scroll">
+                    <div class="position-sticky py-2 px-2 mb-2 rounded" style="top:0;background:var(--cor-action-fundo);color:var(--cor-action-texto);font-size:var(--tamanho-xs);z-index:1;border:1px solid var(--cor-action-border)">.position-sticky (top: 0 no estilo)</div>
+                    {% for _ in range(8) %}<p class="mb-2" style="font-size:var(--tamanho-sm);color:var(--cor-texto-principal);margin:0">Parágrafo {{ loop.index }} — faz scroll para ver o sticky.</p>{% endfor %}
+                </div>
+
+                <div class="invoisys-ds-table-wrap" style="margin-top:var(--espacamento-lg)">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Classe</th>
+                                <th scope="col">Efeito</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>.position-static</code></td><td><code>position: static</code> (fluxo normal)</td></tr>
+                            <tr><td><code>.position-relative</code></td><td><code>position: relative</code> — origem para filhos <code>absolute</code></td></tr>
+                            <tr><td><code>.position-absolute</code></td><td><code>position: absolute</code></td></tr>
+                            <tr><td><code>.position-fixed</code></td><td><code>position: fixed</code> relativamente ao viewport</td></tr>
+                            <tr><td><code>.position-sticky</code></td><td><code>position: sticky</code> — requer contexto de scroll</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-caixa-snippet">Snippet</h2>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML</span>
+                        <button type="button" data-ds-copy="pre-caixa-layout" data-testid="ds-copy-pre-caixa-layout"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-caixa-layout">&lt;div class="d-flex gap-2" style="max-width: 320px"&gt;
+  &lt;span class="flex-shrink-0"&gt;…&lt;/span&gt;
+  &lt;div class="min-w-0 overflow-hidden text-truncate"&gt;…&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="position-relative"&gt;
+  &lt;span class="position-absolute" style="top:0;right:0"&gt;…&lt;/span&gt;
+&lt;/div&gt;</pre>
+                </div>

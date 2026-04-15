@@ -1,0 +1,185 @@
+                <h2 class="invoisys-ds-section-title" id="sec-flexbox-visao">Visão geral</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Estas classes vivem em <strong>tokens.css</strong> (padrão próximo do Bootstrap). Combinam-se com <code>.gap-*</code>, <code>.p-*</code> e <code>.m-*</code> —
+                    a escala de <code>gap</code> está detalhada na página <strong>Espaçamento</strong>.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong><code>.d-flex</code> vs <code>.flex</code>:</strong> ambos aplicam <code>display: flex</code>; use o que o projeto já adotou nas views. Para grades CSS, veja <code>.d-grid</code> abaixo.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-flexbox-display">Display</h2>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Classe</th>
+                                <th scope="col">Efeito</th>
+                                <th scope="col">Nota</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>.d-none</code></td><td><code>display: none</code></td><td>Oculta o nó (layout e leitores dependem do contexto).</td></tr>
+                            <tr><td><code>.d-block</code></td><td><code>display: block</code></td><td>Bloco em largura total do contêiner.</td></tr>
+                            <tr><td><code>.d-inline</code></td><td><code>display: inline</code></td><td>Fluxo inline.</td></tr>
+                            <tr><td><code>.d-inline-block</code></td><td><code>display: inline-block</code></td><td>Caixa inline com propriedades de bloco.</td></tr>
+                            <tr><td><code>.d-flex</code></td><td><code>display: flex</code></td><td>Flex contêiner (principal na doc).</td></tr>
+                            <tr><td><code>.d-inline-flex</code></td><td><code>display: inline-flex</code></td><td>Flex dentro do fluxo de linha.</td></tr>
+                            <tr><td><code>.d-grid</code></td><td><code>display: grid</code></td><td>Grade; define <code>grid-template-*</code> em CSS ou estilo inline.</td></tr>
+                            <tr><td><code>.flex</code></td><td><code>display: flex</code></td><td>Alias útil; mesmo papel que <code>.d-flex</code>.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-label mb-2">Exemplo: <code>.d-inline-flex</code> no meio de texto</p>
+                <div class="invoisys-ds-preview">
+                    <p class="mb-0" style="font-size:var(--tamanho-sm);color:var(--cor-texto-principal)">
+                        Texto antes
+                        <span class="d-inline-flex gap-1 align-items-center px-2 py-1 rounded" style="background:var(--cor-action-fundo);color:var(--cor-action-texto);vertical-align:middle">
+                            <span class="invoisys-ds-flex-pill" style="padding:2px 6px">A</span>
+                            <span class="invoisys-ds-flex-pill" style="padding:2px 6px">B</span>
+                        </span>
+                        texto a seguir.
+                    </p>
+                </div>
+                <p class="text-label mb-2">Exemplo: <code>.d-grid</code> + <code>.gap-2</code></p>
+                <div class="invoisys-ds-preview">
+                    <div class="d-grid gap-2" style="grid-template-columns:repeat(3,minmax(0,1fr));max-width:360px">
+                        <span class="invoisys-ds-flex-pill text-center d-block">1</span>
+                        <span class="invoisys-ds-flex-pill text-center d-block">2</span>
+                        <span class="invoisys-ds-flex-pill text-center d-block">3</span>
+                        <span class="invoisys-ds-flex-pill text-center d-block">4</span>
+                        <span class="invoisys-ds-flex-pill text-center d-block">5</span>
+                        <span class="invoisys-ds-flex-pill text-center d-block">6</span>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-flexbox-direcao">Direção</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0"><code>.flex-row</code> é o valor padrão do browser; as outras classes alteram o eixo principal.</p>
+                {% for pair in [
+                    ('flex-row', 'Linha (esquerda → direita)'),
+                    ('flex-row-reverse', 'Linha invertida'),
+                    ('flex-column', 'Coluna (topo → fundo)'),
+                    ('flex-column-reverse', 'Coluna invertida')
+                ] %}
+                <div class="invoisys-ds-flex-row-block">
+                    <p class="invoisys-ds-flex-demo-label">.{{ pair[0] }} — {{ pair[1] }}</p>
+                    <div class="invoisys-ds-flex-demo d-flex gap-2 {{ pair[0] }}">
+                        <span class="invoisys-ds-flex-pill">A</span>
+                        <span class="invoisys-ds-flex-pill">B</span>
+                        <span class="invoisys-ds-flex-pill">C</span>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <h2 class="invoisys-ds-section-title" id="sec-flexbox-wrap">Quebra de linha</h2>
+                <div class="invoisys-ds-flex-row-block">
+                    <p class="invoisys-ds-flex-demo-label"><code>.flex-wrap</code> (vários itens, contêiner estreito)</p>
+                    <div class="invoisys-ds-flex-demo d-flex flex-wrap gap-2" style="max-width:200px">
+                        {% for _ in range(8) %}<span class="invoisys-ds-flex-pill">{{ loop.index }}</span>{% endfor %}
+                    </div>
+                </div>
+                <div class="invoisys-ds-flex-row-block">
+                    <p class="invoisys-ds-flex-demo-label"><code>.flex-nowrap</code> (mesma largura; sem quebra)</p>
+                    <div class="invoisys-ds-flex-demo d-flex flex-nowrap gap-2 overflow-auto" style="max-width:200px">
+                        {% for _ in range(8) %}<span class="invoisys-ds-flex-pill flex-shrink-0">{{ loop.index }}</span>{% endfor %}
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-flexbox-justify">Justificação do eixo principal (<code>justify-content</code>)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">Contentor <code>.d-flex</code> com três cápsulas; muda só a classe de justificação.</p>
+                {% for c in ['justify-content-start', 'justify-content-end', 'justify-content-center', 'justify-content-between', 'justify-content-around', 'justify-content-evenly'] %}
+                <div class="invoisys-ds-flex-row-block">
+                    <p class="invoisys-ds-flex-demo-label">.{{ c }}</p>
+                    <div class="invoisys-ds-flex-demo d-flex flex-nowrap gap-2 {{ c }}" style="min-height:48px">
+                        <span class="invoisys-ds-flex-pill">A</span>
+                        <span class="invoisys-ds-flex-pill">B</span>
+                        <span class="invoisys-ds-flex-pill">C</span>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <h2 class="invoisys-ds-section-title" id="sec-flexbox-align-items">Alinhamento no eixo transversal (<code>align-items</code>)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">Contentor com altura mínima; cápsulas com alturas diferentes (excepto <code>stretch</code>).</p>
+                {% for c in ['align-items-start', 'align-items-end', 'align-items-center', 'align-items-baseline', 'align-items-stretch'] %}
+                <div class="invoisys-ds-flex-row-block">
+                    <p class="invoisys-ds-flex-demo-label">.{{ c }}</p>
+                    <div class="invoisys-ds-flex-demo d-flex flex-nowrap gap-2 {{ c }}" style="min-height:88px">
+                        <span class="invoisys-ds-flex-pill invoisys-ds-flex-pill--short">A</span>
+                        <span class="invoisys-ds-flex-pill invoisys-ds-flex-pill--tall"{% if c == 'align-items-baseline' %} style="font-size:1.35rem"{% endif %}>B</span>
+                        <span class="invoisys-ds-flex-pill">C</span>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <h2 class="invoisys-ds-section-title" id="sec-flexbox-align-self"><code>align-self</code> (um filho)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">Contentor com <code>.align-items-start</code>; só o item do meio altera o alinhamento próprio.</p>
+                {% for c in ['align-self-auto', 'align-self-start', 'align-self-end', 'align-self-center', 'align-self-stretch', 'align-self-baseline'] %}
+                <div class="invoisys-ds-flex-row-block">
+                    <p class="invoisys-ds-flex-demo-label">Item central: <code>.{{ c }}</code></p>
+                    <div class="invoisys-ds-flex-demo d-flex flex-nowrap gap-2 align-items-start" style="min-height:88px">
+                        <span class="invoisys-ds-flex-pill invoisys-ds-flex-pill--tall">A</span>
+                        <span class="invoisys-ds-flex-pill invoisys-ds-flex-pill--tall {{ c }}"{% if c == 'align-self-baseline' %} style="font-size:1.35rem"{% endif %}>B</span>
+                        <span class="invoisys-ds-flex-pill invoisys-ds-flex-pill--tall">C</span>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <h2 class="invoisys-ds-section-title" id="sec-flexbox-grow">Crescimento e encolhimento</h2>
+                <div class="invoisys-ds-flex-row-block">
+                    <p class="invoisys-ds-flex-demo-label"><code>.flex-grow-1</code> no meio (os lados mantêm largura intrínseca)</p>
+                    <div class="invoisys-ds-flex-demo d-flex flex-nowrap gap-2 align-items-stretch" style="min-height:44px">
+                        <span class="invoisys-ds-flex-pill">Fixo</span>
+                        <span class="invoisys-ds-flex-pill flex-grow-1 text-center">.flex-grow-1</span>
+                        <span class="invoisys-ds-flex-pill">Fixo</span>
+                    </div>
+                </div>
+                <div class="invoisys-ds-flex-row-block">
+                    <p class="invoisys-ds-flex-demo-label"><code>.flex-shrink-0</code> nos itens (contêiner estreito + <code>overflow-auto</code>)</p>
+                    <div class="invoisys-ds-flex-demo d-flex flex-nowrap gap-1 overflow-auto" style="max-width:220px">
+                        {% for _ in range(6) %}<span class="invoisys-ds-flex-pill flex-shrink-0">{{ loop.index }}</span>{% endfor %}
+                    </div>
+                </div>
+                <div class="invoisys-ds-flex-row-block">
+                    <p class="invoisys-ds-flex-demo-label"><code>.flex-fill</code> (<code>flex: 1 1 auto</code>) — reparte espaço entre filhos</p>
+                    <div class="invoisys-ds-flex-demo d-flex flex-nowrap gap-2 align-items-stretch" style="min-height:44px">
+                        <span class="invoisys-ds-flex-pill flex-fill text-center">.flex-fill</span>
+                        <span class="invoisys-ds-flex-pill flex-fill text-center">.flex-fill</span>
+                    </div>
+                </div>
+                <p class="text-label mb-0">Também existem <code>.flex-grow-0</code>, <code>.flex-grow-1</code>, <code>.flex-shrink-0</code>, <code>.flex-shrink-1</code> como utilitários isolados (veja <code>tokens.css</code>).</p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-flexbox-gap">Espaço entre filhos (<code>gap</code>)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Classes <code>.gap-0</code> … <code>.gap-5</code> funcionam com <code>.d-flex</code> ou <code>.d-grid</code>.
+                    Tabela e swatches completos na página <strong>Espaçamento</strong> (navegação à esquerda).
+                </p>
+                <div class="invoisys-ds-preview">
+                    <div class="d-flex flex-wrap gap-3 align-items-end">
+                        <div>
+                            <span class="text-label d-block mb-1">.gap-2</span>
+                            <div class="d-flex gap-2">
+                                <span class="invoisys-ds-flex-pill">A</span><span class="invoisys-ds-flex-pill">B</span><span class="invoisys-ds-flex-pill">C</span>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-label d-block mb-1">.gap-4</span>
+                            <div class="d-flex gap-4">
+                                <span class="invoisys-ds-flex-pill">A</span><span class="invoisys-ds-flex-pill">B</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-flexbox-snippet">Snippet</h2>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML</span>
+                        <button type="button" data-ds-copy="pre-flexbox" data-testid="ds-copy-pre-flexbox"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-flexbox">&lt;header class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3"&gt;
+  &lt;h1 class="heading-md mb-0"&gt;Título&lt;/h1&gt;
+  &lt;div class="d-flex gap-2"&gt;
+    &lt;button type="button" class="btn btn-secondary"&gt;Secundário&lt;/button&gt;
+    &lt;button type="button" class="btn btn-primary"&gt;Principal&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</pre>
+                </div>

@@ -1,0 +1,96 @@
+                <h2 class="invoisys-ds-section-title" id="sec-colapso-visao">Visão geral</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Os blocos <strong>acordeão</strong> do modal «Detalhes do documento» (ex.: NF-e) usam <code>.panel</code> com modificadores
+                    <code>.modal-detalhes-panel</code>, <code>.modal-detalhes-panel--expanded</code> e <code>.modal-detalhes-panel--collapsed</code>, cabeçalho clicável
+                    <code>.modal-detalhes-panel-toggle</code> e ícone <code>.modal-detalhes-chevron</code>. Os estilos em <strong>componentes.css</strong> aplicam-se quando o antecessor tem
+                    <code>data-testid="modal-detalhes-container"</code> (o mesmo padrão das <a href="#sec-tabs-modal-detalhes">abas do modal</a> na página <strong>Tabs</strong>).
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>JavaScript:</strong> na aplicação MVC, o recolher/expandir costuma estar no script do modal (atributo <code>data-modal-collapse-trigger</code> no exemplo abaixo).
+                    Neste storybook, o ficheiro <strong>design-system-docs.js</strong> trata o clique só para a pré-visualização.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Conteúdo recolhido:</strong> quando a classe <code>modal-detalhes-panel--collapsed</code> está ativa, o painel de conteúdo fica oculto nesta doc via <strong>design-system-docs.css</strong> (em produção confirme o mesmo comportamento no vosso JS/CSS).
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-colapso-preview">Pré-visualização</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Dois painéis: o primeiro <strong>expandido</strong>, o segundo <strong>recolhido</strong>. Clica no cabeçalho para alternar.
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-colapso-preview-modal-detalhes">
+                    <div data-testid="modal-detalhes-container" class="invoisys-ds-modal-detalhes-doc w-100" style="max-width: 640px">
+                        <div class="panel modal-detalhes-panel modal-detalhes-panel--expanded" data-testid="ds-colapso-panel-emitente">
+                            <div class="panel-header">
+                                <div class="panel-btn-controls-inverted">
+                                    <a href="#" class="modal-detalhes-panel-toggle pull-right" role="button" aria-expanded="true" aria-label="Recolher Dados do Emitente" title="Recolher" data-modal-collapse-trigger="">
+                                        <div class="d-flex flex-fill justify-content-start align-items-center gap-2">
+                                            <i class="fa fa-building-o" aria-hidden="true"></i>
+                                            <b>Dados do Emitente</b>
+                                        </div>
+                                        <i class="fa fa-chevron-up modal-detalhes-chevron" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="panel-content">
+                                <div class="d-flex flex-wrap align-items-baseline gap-1 mb-1" id="ds-colapso-emit-razao">
+                                    <span class="fw-bold color-text">Razão Social</span>
+                                    <span class="font-normal color-text">:&nbsp;INVOISYS SISTEMAS LTDA</span>
+                                </div>
+                                <div class="d-flex flex-wrap align-items-baseline gap-1 mb-1" id="ds-colapso-emit-cnpj">
+                                    <span class="fw-bold color-text">CNPJ</span>
+                                    <span class="font-normal color-text">:&nbsp;76.780.358/0001-46</span>
+                                </div>
+                                <div class="d-flex flex-wrap align-items-baseline gap-1 mb-0" id="ds-colapso-emit-ie">
+                                    <span class="fw-bold color-text">Inscrição Estadual</span>
+                                    <span class="font-normal color-text">:&nbsp;18001360</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel modal-detalhes-panel modal-detalhes-panel--collapsed" data-testid="ds-colapso-panel-documento">
+                            <div class="panel-header">
+                                <div class="panel-btn-controls-inverted">
+                                    <a href="#" class="modal-detalhes-panel-toggle pull-right" role="button" aria-expanded="false" aria-label="Expandir Dados do Documento" title="Expandir" data-modal-collapse-trigger="">
+                                        <div class="d-flex flex-fill justify-content-start align-items-center gap-2">
+                                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                            <b>Dados do Documento</b>
+                                        </div>
+                                        <i class="fa fa-chevron-down modal-detalhes-chevron" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="panel-content">
+                                <p class="mb-0 color-text font-normal">Conteúdo exemplo (visível quando expandido).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-colapso-snippet">HTML · Razor (referência)</h2>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Razor / HTML</span>
+                        <button type="button" data-ds-copy="pre-colapso-mvc" data-testid="ds-copy-pre-colapso-mvc"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-colapso-mvc"><code class="invoisys-ds-pre-code">&lt;div data-testid="modal-detalhes-container"&gt;
+    &lt;div class="panel modal-detalhes-panel modal-detalhes-panel--expanded"&gt;
+        &lt;div class="panel-header"&gt;
+            &lt;div class="panel-btn-controls-inverted"&gt;
+                &lt;a href="#" class="modal-detalhes-panel-toggle pull-right" role="button" aria-expanded="true"
+                   aria-label="Recolher Dados do Emitente" title="Recolher" data-modal-collapse-trigger=""&gt;
+                    &lt;div class="d-flex flex-fill justify-content-start align-items-center gap-2"&gt;
+                        &lt;i class="fa fa-building-o" aria-hidden="true"&gt;&lt;/i&gt;
+                        &lt;b&gt;Dados do Emitente&lt;/b&gt;
+                    &lt;/div&gt;
+                    &lt;i class="fa fa-chevron-up modal-detalhes-chevron icon-custom f-12" aria-hidden="true"&gt;&lt;/i&gt;
+                &lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="panel-content"&gt;
+            &lt;!-- linhas chave/valor --&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+                <p class="invoisys-ds-callout">
+                    Prefira utilitários de <strong>tokens.css</strong> (<code>fw-bold</code>, <code>font-normal</code>, <code>d-flex</code>) em vez de <code>style=""</code> nas linhas de detalhe, mantendo o mesmo conteúdo.
+                </p>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt" class="invoisys-ds-doc-html">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Invoisys — Design system (documentação)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,400&amp;display=swap" rel="stylesheet" />
+    <!-- Select2: folha base (cópia local + fallback CDN); depois main/tokens/table/componentes sobrescrevem -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vendor/select2-4.0.13.min.css') }}" />
+    <!-- bootstrap-daterangepicker — folha do pacote (demos na página Inputs) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vendor/daterangepicker-3.1.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tokens.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/componentes.css') }}" />
+    <!-- DataTables (base das grades no portal) — só folha core; extensões Select/Buttons carregam nas views MVC -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/docs/design-system-docs.css') }}" />
+</head>
+<body class="invoisys-ds-doc" data-testid="ds-doc-body">
+    <header class="invoisys-ds-topbar" role="banner" data-testid="ds-topbar">
+        <a href="https://sandbox-portal.invoisys.com.br/" class="invoisys-ds-topbar-brand" target="_blank" rel="noopener noreferrer" title="Abrir o portal Invoisys (sandbox)" data-testid="ds-topbar-link-portal">
+            <img src="https://sandbox-portal.invoisys.com.br/Images/logo-flat.png" alt="Invoisys" class="invoisys-ds-topbar-logo" width="180" height="40" loading="lazy" decoding="async" />
+        </a>
+        <span class="invoisys-ds-topbar-version" aria-label="Versão da documentação do design system" title="Versão em desenvolvimento" data-testid="ds-topbar-version">v1.0</span>
+    </header>
+    <div class="invoisys-ds-layout" data-testid="ds-layout">
+        <aside class="invoisys-ds-sidebar" aria-label="Navegação do design system" data-testid="ds-sidebar">
+            <div class="invoisys-ds-brand">
+                <p class="invoisys-ds-brand-title">Invoisys</p>
+                <p class="invoisys-ds-brand-sub">Design system · documentação viva</p>
+            </div>
+
+            <nav class="invoisys-ds-nav-group" data-testid="ds-nav-group-ux-ui">
+                <p class="invoisys-ds-nav-heading">
+                    <span class="invoisys-ds-nav-heading-icon" aria-hidden="true"><i class="fa fa-paint-brush"></i></span>
+                    UX · UI · Designer
+                </p>
+                <ul class="invoisys-ds-nav-list">
+                    <li><button type="button" data-ds-target="ux-ui-area" data-testid="ds-nav-ux-ui-area">Área</button></li>
+                    <li><button type="button" data-ds-target="manifesto-praticas" data-testid="ds-nav-manifesto-praticas">Manifesto de UX e cultura da equipe</button></li>
+                    <li><button type="button" data-ds-target="ux-ui-kanban" data-testid="ds-nav-ux-ui-kanban">Kanban</button></li>
+                    <li><button type="button" data-ds-target="ux-ui-resultados" data-testid="ds-nav-ux-ui-resultados">Resultados</button></li>
+                </ul>
+            </nav>
+
+            <nav class="invoisys-ds-nav-group">
+                <p class="invoisys-ds-nav-heading">
+                    <span class="invoisys-ds-nav-heading-icon" aria-hidden="true"><i class="fa fa-rocket"></i></span>
+                    Começar
+                </p>
+                <ul class="invoisys-ds-nav-list">
+                    <li><button type="button" data-ds-target="introducao" data-testid="ds-nav-introducao">Introdução</button></li>
+                    <li><button type="button" data-ds-target="testes-playwright" data-testid="ds-nav-testes-playwright">Testes · Playwright</button></li>
+                    <li><button type="button" data-ds-target="quick-start" data-testid="ds-nav-quick-start">Quick start</button></li>
+                    <li><button type="button" data-ds-target="proximas-entregas" data-testid="ds-nav-proximas-entregas">Próximas entregas</button></li>
+                </ul>
+            </nav>
+
+            <nav class="invoisys-ds-nav-group">
+                <p class="invoisys-ds-nav-heading">
+                    <span class="invoisys-ds-nav-heading-icon" aria-hidden="true"><i class="fa fa-cubes"></i></span>
+                    Fundações
+                </p>
+                <ul class="invoisys-ds-nav-list">
+                    <li><button type="button" data-ds-target="caixa-layout" data-testid="ds-nav-caixa-layout">Caixa e layout</button></li>
+                    <li><button type="button" data-ds-target="cores" data-testid="ds-nav-cores">Cores</button></li>
+                    <li><button type="button" data-ds-target="espacamento" data-testid="ds-nav-espacamento">Espaçamento</button></li>
+                    <li><button type="button" data-ds-target="flexbox" data-testid="ds-nav-flexbox">Flexbox</button></li>
+                    <li><button type="button" data-ds-target="icones" data-testid="ds-nav-icones">Ícones (Font Awesome)</button></li>
+                    <li><button type="button" data-ds-target="logo" data-testid="ds-nav-logo">Logo</button></li>
+                    <li><button type="button" data-ds-target="sombras-raios" data-testid="ds-nav-sombras-raios">Sombras, raios e camadas</button></li>
+                    <li><button type="button" data-ds-target="texto-alinhamento" data-testid="ds-nav-texto-alinhamento">Texto e quebra</button></li>
+                    <li><button type="button" data-ds-target="tipografia" data-testid="ds-nav-tipografia">Tipografia</button></li>
+                </ul>
+            </nav>
+
+            <nav class="invoisys-ds-nav-group">
+                <p class="invoisys-ds-nav-heading">
+                    <span class="invoisys-ds-nav-heading-icon" aria-hidden="true"><i class="fa fa-puzzle-piece"></i></span>
+                    Componentes
+                </p>
+                <ul class="invoisys-ds-nav-list">
+                    <li><button type="button" data-ds-target="alertas" data-testid="ds-nav-alertas">Alertas</button></li>
+                    <li><button type="button" data-ds-target="botoes" data-testid="ds-nav-botoes">Botões</button></li>
+                    <li><button type="button" data-ds-target="cabecalho" data-testid="ds-nav-cabecalho">Cabeçalho</button></li>
+                    <li><button type="button" data-ds-target="colapso" data-testid="ds-nav-colapso">Colapso</button></li>
+                    <li><button type="button" data-ds-target="cards" data-testid="ds-nav-cards">Cards</button></li>
+                    <li><button type="button" data-ds-target="inputs" data-testid="ds-nav-inputs">Inputs</button></li>
+                    <li><button type="button" data-ds-target="loading" data-testid="ds-nav-loading">Loading</button></li>
+                    <li><button type="button" data-ds-target="menu" data-testid="ds-nav-menu">Menu</button></li>
+                    <li><button type="button" data-ds-target="modais" data-testid="ds-nav-modais">Modais</button></li>
+                    <li><button type="button" data-ds-target="pills" data-testid="ds-nav-pills">Pills</button></li>
+                    <li><button type="button" data-ds-target="skeletons" data-testid="ds-nav-skeletons">Skeletons</button></li>
+                    <li><button type="button" data-ds-target="tabs" data-testid="ds-nav-tabs">Tabs</button></li>
+                    <li><button type="button" data-ds-target="timeline" data-testid="ds-nav-timeline">Timeline</button></li>
+                    <li><button type="button" data-ds-target="tooltips" data-testid="ds-nav-tooltips">Tooltips</button></li>
+                </ul>
+            </nav>
+
+            <nav class="invoisys-ds-nav-group">
+                <p class="invoisys-ds-nav-heading">
+                    <span class="invoisys-ds-nav-heading-icon" aria-hidden="true"><i class="fa fa-table"></i></span>
+                    Tabelas
+                </p>
+                <ul class="invoisys-ds-nav-list">
+                    <li><button type="button" data-ds-target="tabelas-visao" data-testid="ds-nav-tabelas-visao">Visão geral</button></li>
+                    <li><button type="button" data-ds-target="tabelas-cabecalho" data-testid="ds-nav-tabelas-cabecalho">Cabeçalho da listagem</button></li>
+                    <li><button type="button" data-ds-target="tabelas-listagem-completa" data-testid="ds-nav-tabelas-listagem-completa">Listagem completa</button></li>
+                    <li><button type="button" data-ds-target="tabelas-utilitarios" data-testid="ds-nav-tabelas-utilitarios">Utilitários</button></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="invoisys-ds-layout-inner" data-testid="ds-layout-inner">
+        <main class="invoisys-ds-main" id="conteudo-principal" data-testid="ds-main">
+            <!-- UX · UI · Designer — Área -->
+            <article class="invoisys-ds-panel invoisys-ds-doc-ux-ui-area" id="panel-ux-ui-area" data-testid="ds-panel-ux-ui-area" hidden>
+                {% include 'partials/doc-ux-ui-area.html' %}
+            </article>
+
+            <!-- UX · UI · Designer — Manifesto de UX e cultura da equipe -->
+            <article class="invoisys-ds-panel invoisys-ds-doc-manifesto" id="panel-manifesto-praticas" data-testid="ds-panel-manifesto-praticas" hidden>
+                {% include 'partials/doc-manifesto-praticas.html' %}
+            </article>
+
+            <!-- UX · UI · Designer — Kanban -->
+            <article class="invoisys-ds-panel" id="panel-ux-ui-kanban" data-testid="ds-panel-ux-ui-kanban" hidden>
+                {% include 'partials/doc-ux-ui-kanban.html' %}
+            </article>
+
+            <!-- UX · UI · Designer — Resultados -->
+            <article class="invoisys-ds-panel" id="panel-ux-ui-resultados" data-testid="ds-panel-ux-ui-resultados" hidden>
+                {% include 'partials/doc-ux-ui-resultados.html' %}
+            </article>
+
+            <!-- Começar — Introdução -->
+            <article class="invoisys-ds-panel" id="panel-introducao" data-testid="ds-panel-introducao" hidden>
+                {% include 'partials/doc-introducao.html' %}
+            </article>
+
+            <!-- Começar — Testes · Playwright -->
+            <article class="invoisys-ds-panel" id="panel-testes-playwright" data-testid="ds-panel-testes-playwright" hidden>
+                {% include 'partials/doc-testes-playwright.html' %}
+            </article>
+
+            <!-- Começar — Quick start -->
+            <article class="invoisys-ds-panel" id="panel-quick-start" data-testid="ds-panel-quick-start" hidden>
+                {% include 'partials/doc-quick-start.html' %}
+            </article>
+
+            <!-- Começar — Próximas entregas (roadmap do produto DS) -->
+            <article class="invoisys-ds-panel" id="panel-proximas-entregas" data-testid="ds-panel-proximas-entregas" hidden>
+                {% include 'partials/doc-proximas-entregas.html' %}
+            </article>
+
+            <!-- Cores -->
+            <article class="invoisys-ds-panel" id="panel-cores" data-testid="ds-panel-cores" hidden>
+                <h1 id="sec-cores-titulo">Cores</h1>
+                {% include 'partials/cores.html' %}
+            </article>
+
+            <!-- Tipografia -->
+            <article class="invoisys-ds-panel" id="panel-tipografia" data-testid="ds-panel-tipografia" hidden>
+                <h1 id="sec-tipografia-titulo">Tipografia</h1>
+                {% include 'partials/tipografia.html' %}
+            </article>
+
+            <!-- Logo -->
+            <article class="invoisys-ds-panel" id="panel-logo" data-testid="ds-panel-logo" hidden>
+                <h1 id="sec-logo-titulo">Logo</h1>
+                {% include 'partials/logo.html' %}
+            </article>
+
+            <!-- Espaçamento -->
+            <article class="invoisys-ds-panel" id="panel-espacamento" data-testid="ds-panel-espacamento" hidden>
+                <h1 id="sec-espacamento-titulo">Espaçamento</h1>
+                {% include 'partials/espacamento.html' %}
+            </article>
+
+            <!-- Flexbox -->
+            <article class="invoisys-ds-panel" id="panel-flexbox" data-testid="ds-panel-flexbox" hidden>
+                <h1 id="sec-flexbox-titulo">Flexbox</h1>
+                {% include 'partials/flexbox.html' %}
+            </article>
+
+            <!-- Caixa e layout -->
+            <article class="invoisys-ds-panel" id="panel-caixa-layout" data-testid="ds-panel-caixa-layout" hidden>
+                <h1 id="sec-caixa-titulo">Caixa e layout</h1>
+                {% include 'partials/caixa-layout.html' %}
+            </article>
+
+            <!-- Texto e quebra -->
+            <article class="invoisys-ds-panel" id="panel-texto-alinhamento" data-testid="ds-panel-texto-alinhamento" hidden>
+                <h1 id="sec-texto-titulo">Texto e quebra</h1>
+                {% include 'partials/texto-alinhamento.html' %}
+            </article>
+
+            <!-- Sombras, raios e camadas -->
+            <article class="invoisys-ds-panel" id="panel-sombras-raios" data-testid="ds-panel-sombras-raios" hidden>
+                <h1 id="sec-sombras-titulo">Sombras, raios e camadas</h1>
+                {% include 'partials/sombras-raios.html' %}
+            </article>
+
+            <!-- Ícones -->
+            <article class="invoisys-ds-panel" id="panel-icones" data-testid="ds-panel-icones" hidden>
+                <h1 id="sec-icones-titulo">Ícones (Font Awesome)</h1>
+                {% include 'partials/icones.html' %}
+            </article>
+
+            <!-- Cabeçalho -->
+            <article class="invoisys-ds-panel" id="panel-cabecalho" data-testid="ds-panel-cabecalho" hidden>
+                <h1 id="sec-cabecalho-titulo">Cabeçalho</h1>
+                {% include 'partials/cabecalho.html' %}
+            </article>
+
+            <!-- Colapso (modal detalhes / acordeão) -->
+            <article class="invoisys-ds-panel" id="panel-colapso" data-testid="ds-panel-colapso" hidden>
+                <h1 id="sec-colapso-titulo">Colapso</h1>
+                {% include 'partials/colapso.html' %}
+            </article>
+
+            <!-- Tabs (tab bar) -->
+            <article class="invoisys-ds-panel" id="panel-tabs" data-testid="ds-panel-tabs" hidden>
+                <h1 id="sec-tabs-titulo">Tabs</h1>
+                {% include 'partials/tabs.html' %}
+            </article>
+
+            <!-- Timeline / fluxo de trabalho (modal) -->
+            <article class="invoisys-ds-panel" id="panel-timeline" data-testid="ds-panel-timeline" hidden>
+                <h1 id="sec-timeline-titulo">Timeline</h1>
+                {% include 'partials/timeline.html' %}
+            </article>
+
+            <!-- Inputs / formulário -->
+            <article class="invoisys-ds-panel" id="panel-inputs" data-testid="ds-panel-inputs" hidden>
+                <h1 id="sec-inputs-titulo">Inputs</h1>
+                {% include 'partials/inputs.html' %}
+            </article>
+
+            <!-- Loading (grade / overlay) -->
+            <article class="invoisys-ds-panel" id="panel-loading" data-testid="ds-panel-loading" hidden>
+                <h1 id="sec-loading-titulo">Loading</h1>
+                {% include 'partials/loading.html' %}
+            </article>
+
+            <!-- Skeletons / loading pulse -->
+            <article class="invoisys-ds-panel" id="panel-skeletons" data-testid="ds-panel-skeletons" hidden>
+                <h1 id="sec-skeletons-titulo">Skeletons</h1>
+                {% include 'partials/skeletons.html' %}
+            </article>
+
+            <!-- Cards (KPI, cliente, painel) -->
+            <article class="invoisys-ds-panel" id="panel-cards" data-testid="ds-panel-cards" hidden>
+                <h1 id="sec-cards-titulo">Cards</h1>
+                {% include 'partials/cards.html' %}
+            </article>
+
+            <!-- Alertas -->
+            <article class="invoisys-ds-panel" id="panel-alertas" data-testid="ds-panel-alertas" hidden>
+                <h1 id="sec-alertas-titulo">Alertas</h1>
+                {% include 'partials/alertas.html' %}
+            </article>
+
+            <!-- Pills (estado / badges) -->
+            <article class="invoisys-ds-panel" id="panel-pills" data-testid="ds-panel-pills" hidden>
+                <h1 id="sec-pills-titulo">Pills</h1>
+                {% include 'partials/pills.html' %}
+            </article>
+
+            <!-- Menu (placeholder) -->
+            <article class="invoisys-ds-panel" id="panel-menu" data-testid="ds-panel-menu" hidden>
+                <h1 id="sec-menu-aplicacao-titulo">Menu</h1>
+                <p class="invoisys-ds-lead">
+                    Seção reservada para navegação lateral ou menus de aplicação — envia um screenshot ou HTML de referência e encaixamos o snippet copiável.
+                    A <strong>tab bar</strong> (fundo claro, Figma) está documentada em <strong>Tabs</strong> (<code>.invoisys-tabbar</code>); o legado <code>.tabs-header</code> / <code>.tab-invoisys</code> mantém-se em <strong>componentes.css</strong> para telas que já o usam.
+                </p>
+                <p class="invoisys-ds-callout">
+                    Os exemplos futuros seguirão as regras em <a href="#manifesto-praticas">Manifesto de UX e cultura da equipe</a>: replicação só com o CSS canônico do portal (e utilitários de <strong>tokens.css</strong>), sem estilos ad hoc na view.
+                </p>
+            </article>
+
+            <!-- Tabelas — visão geral -->
+            <article class="invoisys-ds-panel" id="panel-tabelas-visao" data-testid="ds-panel-tabelas-visao" hidden>
+                {% include 'partials/doc-tabelas-visao.html' %}
+            </article>
+
+            <!-- Tabelas — cabeçalho da listagem (toolbar em duas linhas) -->
+            <article class="invoisys-ds-panel" id="panel-tabelas-cabecalho" data-testid="ds-panel-tabelas-cabecalho" hidden>
+                {% include 'partials/doc-tabelas-cabecalho-listagem.html' %}
+            </article>
+
+            <!-- Tabelas — listagem completa (toolbar + KPIs + filtros + grade) -->
+            <article class="invoisys-ds-panel" id="panel-tabelas-listagem-completa" data-testid="ds-panel-tabelas-listagem-completa" hidden>
+                {% include 'partials/doc-tabelas-listagem-completa.html' %}
+            </article>
+
+            <!-- Tabelas — utilitários -->
+            <article class="invoisys-ds-panel" id="panel-tabelas-utilitarios" data-testid="ds-panel-tabelas-utilitarios" hidden>
+                {% include 'partials/doc-tabelas-utilitarios.html' %}
+            </article>
+
+            <!-- Botões -->
+            <article class="invoisys-ds-panel" id="panel-botoes" data-testid="ds-panel-botoes" hidden>
+                <h1 id="sec-botoes-titulo">Botões</h1>
+                {% include 'partials/botoes.html' %}
+            </article>
+
+            <!-- Tooltips -->
+            <article class="invoisys-ds-panel" id="panel-tooltips" data-testid="ds-panel-tooltips" hidden>
+                <h1 id="sec-tooltips-titulo">Tooltips</h1>
+                {% include 'partials/tooltips.html' %}
+            </article>
+
+            <!-- Modais -->
+            <article class="invoisys-ds-panel" id="panel-modais" data-testid="ds-panel-modais" hidden>
+                <h1 id="sec-modais-titulo">Modais</h1>
+                {% include 'partials/modais.html' %}
+            </article>
+        </main>
+
+        <aside class="invoisys-ds-toc" aria-label="Nesta página" data-testid="ds-toc-aside">
+            <p class="invoisys-ds-toc-title">Nesta página</p>
+            <div class="invoisys-ds-toc-rule" aria-hidden="true"></div>
+            <nav id="invoisys-ds-toc-nav" class="invoisys-ds-toc-nav" data-testid="ds-toc-nav"></nav>
+        </aside>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/vendor/jquery-3.7.1.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ url_for('static', filename='js/vendor/moment-2.29.4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/vendor/daterangepicker-3.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/vendor/select2-4.0.13.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='css/docs/design-system-docs.js') }}"></script>
+</body>
+</html>

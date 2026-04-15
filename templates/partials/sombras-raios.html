@@ -1,0 +1,141 @@
+                <h2 class="invoisys-ds-section-title" id="sec-sombras-visao">Visão geral</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Sombras, raios de canto, bordas, empilhamento (<code>z-index</code>), transições e anel de foco vivem em <strong>main.css</strong> como variáveis <code>:root</code>.
+                    As classes <code>.rounded*</code>, <code>.border-0</code>, <code>.shadow*</code> aplicam esses tokens em <strong>tokens.css</strong>.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-sombras-elevacao">Sombras (<code>main.css</code>)</h2>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Variável</th>
+                                <th scope="col">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>--sombra-leve</code></td><td class="invoisys-ds-hex"><code>0 2px 4px rgba(0, 0, 0, 0.1)</code></td></tr>
+                            <tr><td><code>--sombra-media</code></td><td class="invoisys-ds-hex"><code>0 4px 8px rgba(0, 0, 0, 0.15)</code></td></tr>
+                            <tr><td><code>--sombra-forte</code></td><td class="invoisys-ds-hex"><code>0 8px 16px rgba(0, 0, 0, 0.2)</code></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-label mb-2">Utilitários <code>.shadow-sm</code> → <code>--sombra-leve</code>; <code>.shadow</code> → <code>--sombra-media</code></p>
+                <div class="invoisys-ds-shadow-row">
+                    <div class="invoisys-ds-shadow-card border">Sem classe de sombra</div>
+                    <div class="invoisys-ds-shadow-card shadow-sm">.shadow-sm</div>
+                    <div class="invoisys-ds-shadow-card shadow">.shadow</div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-sombras-raios">Raios e bordas (<code>main.css</code>)</h2>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Variável</th>
+                                <th scope="col">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>--borda-arredondada</code></td><td class="invoisys-ds-hex"><code>5px</code></td></tr>
+                            <tr><td><code>--radius-sm</code></td><td class="invoisys-ds-hex"><code>2px</code></td></tr>
+                            <tr><td><code>--radius-md</code></td><td class="invoisys-ds-hex"><code>var(--borda-arredondada)</code></td></tr>
+                            <tr><td><code>--radius-lg</code></td><td class="invoisys-ds-hex"><code>8px</code></td></tr>
+                            <tr><td><code>--borda-media</code></td><td class="invoisys-ds-hex"><code>2px solid #dee2e6</code></td></tr>
+                            <tr><td><code>--borda-fina</code></td><td class="invoisys-ds-hex"><code>1px solid #dee2e6</code></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-label mb-2">Utilitários em <code>tokens.css</code></p>
+                <div class="d-flex flex-wrap gap-3 align-items-center">
+                    <span class="py-2 px-3 rounded-0 border d-inline-block" style="border-color:var(--cor-borda);background:var(--cor-superficie-suave);font-size:var(--tamanho-xs)">.rounded-0</span>
+                    <span class="py-2 px-3 rounded border d-inline-block" style="border-color:var(--cor-borda);background:var(--cor-superficie-suave);font-size:var(--tamanho-xs)">.rounded</span>
+                    <span class="py-2 px-3 border d-inline-block border-0" style="background:var(--cor-action-fundo);color:var(--cor-action-texto);font-size:var(--tamanho-xs);box-shadow:inset 0 0 0 1px var(--cor-action-border)">.border-0 (sem borda; contorno só para ver)</span>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-sombras-zindex">Empilhamento (<code>z-index</code>)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">Valores estáveis para dropdowns, sticky, modais e overlays. O Select2 usa valor alto por anexar ao <code>body</code>.</p>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Variável</th>
+                                <th scope="col">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>--z-dropdown</code></td><td class="invoisys-ds-hex"><code>1000</code></td></tr>
+                            <tr><td><code>--z-sticky</code></td><td class="invoisys-ds-hex"><code>1020</code></td></tr>
+                            <tr><td><code>--z-fixed</code></td><td class="invoisys-ds-hex"><code>1030</code></td></tr>
+                            <tr><td><code>--z-modal-backdrop</code></td><td class="invoisys-ds-hex"><code>1040</code></td></tr>
+                            <tr><td><code>--z-modal</code></td><td class="invoisys-ds-hex"><code>1050</code></td></tr>
+                            <tr><td><code>--z-popover</code></td><td class="invoisys-ds-hex"><code>1060</code></td></tr>
+                            <tr><td><code>--z-tooltip</code></td><td class="invoisys-ds-hex"><code>1070</code></td></tr>
+                            <tr><td><code>--z-select2-dropdown</code></td><td class="invoisys-ds-hex"><code>10050</code></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-sombras-transicao">Transições</h2>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Variável</th>
+                                <th scope="col">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>--transicao-rapida</code></td><td class="invoisys-ds-hex"><code>0.15s ease</code></td></tr>
+                            <tr><td><code>--transicao-padrao</code></td><td class="invoisys-ds-hex"><code>0.2s ease</code></td></tr>
+                            <tr><td><code>--transicao-lenta</code></td><td class="invoisys-ds-hex"><code>0.35s ease</code></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-sombras-foco">Foco acessível</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">Usar com <code>:focus-visible</code> em links e controles (ver <strong>componentes.css</strong>).</p>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Variável</th>
+                                <th scope="col">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>--focus-ring-cor</code></td><td class="invoisys-ds-hex"><code>rgba(79, 183, 59, 0.45)</code></td></tr>
+                            <tr><td><code>--focus-ring-offset</code></td><td class="invoisys-ds-hex"><code>2px</code></td></tr>
+                            <tr><td><code>--focus-ring-largura</code></td><td class="invoisys-ds-hex"><code>2px</code></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-sombras-compat">Compatibilidade</h2>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Variável</th>
+                                <th scope="col">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>--bs-modal-margin</code></td><td class="invoisys-ds-hex"><code>30px auto</code></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-sombras-snippet">Snippet (CSS sob medida)</h2>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>CSS</span>
+                        <button type="button" data-ds-copy="pre-sombras-raios" data-testid="ds-copy-pre-sombras-raios"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-sombras-raios">.cartao {
+  border-radius: var(--radius-md);
+  box-shadow: var(--sombra-leve);
+  transition: box-shadow var(--transicao-padrao);
+  z-index: var(--z-sticky);
+}</pre>
+                </div>

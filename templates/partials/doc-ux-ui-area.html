@@ -1,0 +1,209 @@
+                <h1 id="ux-ui-area">Área</h1>
+                <p class="invoisys-ds-lead">
+                    Contexto da <strong>equipe de UX, UI e design</strong> no portal Invoisys — definição dos papéis em
+                    <a href="#sec-ux-area-ux-vs-ui">UX, UI e designer — visão única</a>; como os componentes chegam às equipes de desenvolvimento mais abaixo.
+                    O fluxo prático de uma nova tela está em
+                    <a href="#sec-ux-area-nascimento-tela">Como nasce uma tela hoje</a>.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-ux-area-ux-vs-ui">UX, UI e designer — visão única</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Três papéis que caminham juntos e <strong>não são intercambiáveis</strong>. Use esta secção como referência em reuniões: um slide por coluna ou a página inteira projetada.
+                </p>
+                <div class="invoisys-ds-doc-ux-ui-define" aria-label="Papéis de UX, interface e designer no Invoisys">
+                    <article class="invoisys-ds-doc-ux-ui-define__card" data-testid="ds-ux-area-define-ux">
+                        <div class="invoisys-ds-doc-ux-ui-define__badge-row">
+                            <span class="pill pill-inline pill-solid-success fw-bold" data-testid="ds-ux-area-define-ux-pill"><i class="fa fa-compass" aria-hidden="true"></i> UX</span>
+                        </div>
+                        <p class="invoisys-ds-doc-ux-ui-define__card-title">Experiência do usuário</p>
+                        <ul class="invoisys-ds-doc-ux-ui-define__list">
+                            <li><strong>Problema, jornada e tarefa</strong> — fluxos e arquitetura de informação; <strong>acessibilidade</strong> como requisito</li>
+                            <li><strong>Menos fricção</strong> no trabalho real (faturação, aprovações, listagens) e critérios quando der para ir além do «achismo»</li>
+                            <li><strong>Decisões escritas</strong> para engenharia: modais, filtros, vazios e erros definidos antes do código</li>
+                            <li>Pergunta-guia: «<strong>Isso funciona</strong> e faz sentido para quem usa o portal?»</li>
+                        </ul>
+                    </article>
+                    <article class="invoisys-ds-doc-ux-ui-define__card" data-testid="ds-ux-area-define-ui">
+                        <div class="invoisys-ds-doc-ux-ui-define__badge-row">
+                            <span class="pill pill-inline pill-solid-success fw-bold" data-testid="ds-ux-area-define-ui-pill"><i class="fa fa-paint-brush" aria-hidden="true"></i> UI</span>
+                        </div>
+                        <p class="invoisys-ds-doc-ux-ui-define__card-title">Interface do usuário</p>
+                        <ul class="invoisys-ds-doc-ux-ui-define__list">
+                            <li><strong>Visual</strong>: tipografia, cores, ícones, espaçamento e <strong>componentes</strong> com estados (hover, erro, vazio, loading)</li>
+                            <li><strong>Protótipos</strong> e telas no <strong>Figma</strong> alinhados ao CSS do design system — repasse claro ao desenvolvimento</li>
+                            <li><strong>Previsibilidade</strong> entre módulos; evitar CSS solto na view que não escala</li>
+                            <li>Pergunta-guia: «<strong>Isso está claro, consistente</strong> com a marca e fácil de escanear?»</li>
+                        </ul>
+                    </article>
+                    <article class="invoisys-ds-doc-ux-ui-define__card" data-testid="ds-ux-area-define-designer">
+                        <div class="invoisys-ds-doc-ux-ui-define__badge-row">
+                            <span class="pill pill-inline pill-solid-success fw-bold" data-testid="ds-ux-area-define-designer-pill" title="Designer"><i class="fa fa-pencil" aria-hidden="true"></i> Designer</span>
+                        </div>
+                        <p class="invoisys-ds-doc-ux-ui-define__card-title">Identidade e sistema visual</p>
+                        <ul class="invoisys-ds-doc-ux-ui-define__list">
+                            <li><strong>Marca</strong>, bibliotecas e <strong>tokens</strong> coerentes entre áreas (ex.: NF-e, compras, tesouraria)</li>
+                            <li>Costura <strong>UX + UI</strong>: do wireframe à alta fidelidade, com qualidade de entrega</li>
+                            <li><strong>Padrões reutilizáveis</strong> — o que não entra no design system não vira exceção permanente</li>
+                            <li>Pergunta-guia: «<strong>Isso está alinhado</strong> ao design system e à identidade Invoisys?»</li>
+                        </ul>
+                    </article>
+                </div>
+                <p class="invoisys-ds-callout" style="max-width:min(100%,90ch)">
+                    <strong>Em uma frase cada:</strong> <strong>UX</strong> — caminho e comportamento; <strong>UI</strong> — aparência e toque; <strong>Designer</strong> — marca e sistema que escalam. Os três precisam estar alinhados: UI bonita sem UX esconde fricção; UX boa sem UI clara cansa; sem direção de design, o portal perde consistência entre equipes e telas.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-ux-area-cartoes">Resumo da apresentação</h2>
+                <div class="invoisys-ds-doc-ux-ui-define invoisys-ds-doc-ux-ui-define--pitch-single" aria-label="Mensagens em destaque da equipe de UX, UI e design">
+                    <article class="invoisys-ds-doc-ux-ui-define__card" data-testid="ds-ux-area-pitch">
+                        <ul class="invoisys-ds-doc-ux-ui-define__list">
+                            <li data-testid="ds-ux-area-pitch-ponte"><strong>Uma ponte, não um muro</strong> — produto, design e engenharia no mesmo desenho; menos retrabalho, entregas mais rápidas.</li>
+                            <li data-testid="ds-ux-area-pitch-componentes"><strong>Componentes prontos</strong> — definição, <strong>CSS oficial</strong> e snippet copiável; evita refazer o mesmo botão ou modal em cada tela.</li>
+                            <li data-testid="ds-ux-area-pitch-linguagem"><strong>Linguagem visual única</strong> — padrões repetidos no portal (ex.: NF-e à tesouraria); mais confiança e menos esforço mental.</li>
+                            <li data-testid="ds-ux-area-pitch-doc"><strong>Documentação viva</strong> — o que vê aqui segue o <strong>MVC</strong>; regras de uso em <a href="#manifesto-praticas">Manifesto de UX e cultura da equipe</a>.</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-ux-area-nascimento-tela">Como nasce uma tela hoje</h2>
+                <p class="color-text font-normal invoisys-ds-doc-ux-ui-area-prose invoisys-ds-doc-ux-ui-fluxo-slide__tagline">
+                    <strong>Protótipo</strong> → <strong>Figma</strong> → <strong>MVC</strong>. Seis passos; no dia a dia, as fases podem se cruzar.
+                </p>
+                <div class="invoisys-ds-doc-ux-ui-topics invoisys-ds-doc-ux-ui-topics--fluxo-slide" role="list" aria-label="Passos do nascimento de uma tela">
+                    <div class="invoisys-ds-doc-ux-ui-topic" role="listitem" data-testid="ds-ux-area-fluxo-produto">
+                        <span class="invoisys-ds-doc-ux-ui-topic__icon" aria-hidden="true"><i class="fa fa-briefcase"></i></span>
+                        <div>
+                            <p class="invoisys-ds-doc-ux-ui-topic__title">1 · Produto</p>
+                            <p class="invoisys-ds-doc-ux-ui-topic__text">Feature com interações, ações e regras.</p>
+                        </div>
+                    </div>
+                    <div class="invoisys-ds-doc-ux-ui-topic" role="listitem" data-testid="ds-ux-area-fluxo-prototipo">
+                        <span class="invoisys-ds-doc-ux-ui-topic__icon" aria-hidden="true"><i class="fa fa-desktop"></i></span>
+                        <div>
+                            <p class="invoisys-ds-doc-ux-ui-topic__title">2 · Protótipo</p>
+                            <p class="invoisys-ds-doc-ux-ui-topic__text">Tela montada com componentes que já existem.</p>
+                        </div>
+                    </div>
+                    <div class="invoisys-ds-doc-ux-ui-topic" role="listitem" data-testid="ds-ux-area-fluxo-novos">
+                        <span class="invoisys-ds-doc-ux-ui-topic__icon" aria-hidden="true"><i class="fa fa-puzzle-piece"></i></span>
+                        <div>
+                            <p class="invoisys-ds-doc-ux-ui-topic__title">3 · Falta peça?</p>
+                            <p class="invoisys-ds-doc-ux-ui-topic__text">Novo componente: visual + CSS canônico + doc. <a href="#sec-ux-area-componentes-disponibilidade">Sistema</a>.</p>
+                        </div>
+                    </div>
+                    <div class="invoisys-ds-doc-ux-ui-topic" role="listitem" data-testid="ds-ux-area-fluxo-figma">
+                        <span class="invoisys-ds-doc-ux-ui-topic__icon" aria-hidden="true"><i class="fa fa-object-group"></i></span>
+                        <div>
+                            <p class="invoisys-ds-doc-ux-ui-topic__title">4 · Figma</p>
+                            <p class="invoisys-ds-doc-ux-ui-topic__text">Biblioteca da tela + estados no Figma; repasse aos desenvolvedores.</p>
+                        </div>
+                    </div>
+                    <div class="invoisys-ds-doc-ux-ui-topic" role="listitem" data-testid="ds-ux-area-fluxo-front">
+                        <span class="invoisys-ds-doc-ux-ui-topic__icon" aria-hidden="true"><i class="fa fa-code"></i></span>
+                        <div>
+                            <p class="invoisys-ds-doc-ux-ui-topic__title">5 · Front</p>
+                            <p class="invoisys-ds-doc-ux-ui-topic__text">View MVC: classes do design system + backend.</p>
+                        </div>
+                    </div>
+                    <div class="invoisys-ds-doc-ux-ui-topic" role="listitem" data-testid="ds-ux-area-fluxo-fim">
+                        <span class="invoisys-ds-doc-ux-ui-topic__icon" aria-hidden="true"><i class="fa fa-flag-checkered"></i></span>
+                        <div>
+                            <p class="invoisys-ds-doc-ux-ui-topic__title">6 · No ar</p>
+                            <p class="invoisys-ds-doc-ux-ui-topic__text">Tela no portal; testes se aplicável — <a href="#testes-playwright">Playwright</a>.</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="invoisys-ds-callout invoisys-ds-doc-ux-ui-fluxo-slide__callout">
+                    Design system no código: <a href="#introducao">Introdução</a> · <a href="#manifesto-praticas">Manifesto de UX e cultura da equipe</a>
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-ux-area-contexto">Contexto da equipe</h2>
+
+                <h3 class="invoisys-ds-subsection-title" id="sec-ux-area-o-que-e">O que é a área</h3>
+                <p class="color-text font-normal invoisys-ds-doc-ux-ui-area-prose">
+                    Em linguagem simples, <strong>front-end</strong> é o que <strong>aparece no navegador</strong> quando alguém usa o portal Invoisys: telas, botões, formulários, listas e mensagens — a parte que dá para ver e clicar, não a “máquina” dos dados por trás.
+                    A nossa frente junta <strong>produto</strong>, <strong>design</strong> e <strong>engenharia</strong> para que isso fique <strong>fácil de entender</strong>, <strong>previsível</strong> de um módulo ao outro e <strong>alinhado ao trabalho real</strong> de quem usa o sistema no dia a dia.
+                </p>
+
+                <h3 class="invoisys-ds-subsection-title" id="sec-ux-area-componentes-disponibilidade">Componentes do sistema: criação, documentação e disponibilidade</h3>
+                <p class="color-text font-normal invoisys-ds-doc-ux-ui-area-prose">
+                    Frente de <strong>componentes compartilhados</strong> (não o layout pontual de uma tela): UI + <strong>CSS oficial</strong> + <strong>doc com snippet</strong> — só assim o padrão escala.
+                </p>
+                <div class="invoisys-ds-doc-ux-ui-topics" role="list" aria-label="Temas de componentes do sistema">
+                    <div class="invoisys-ds-doc-ux-ui-topic" role="listitem" data-testid="ds-ux-area-topic-ds-criacao">
+                        <span class="invoisys-ds-doc-ux-ui-topic__icon" aria-hidden="true"><i class="fa fa-code-fork"></i></span>
+                        <div>
+                            <p class="invoisys-ds-doc-ux-ui-topic__title">Criação e evolução</p>
+                            <p class="invoisys-ds-doc-ux-ui-topic__text">Acordo com produto e revisão técnica; merge no CSS compartilhado do portal, não só neste storybook.</p>
+                        </div>
+                    </div>
+                    <div class="invoisys-ds-doc-ux-ui-topic" role="listitem" data-testid="ds-ux-area-topic-ds-devs">
+                        <span class="invoisys-ds-doc-ux-ui-topic__icon" aria-hidden="true"><i class="fa fa-plug"></i></span>
+                        <div>
+                            <p class="invoisys-ds-doc-ux-ui-topic__title">Disponível para desenvolvedores</p>
+                            <p class="invoisys-ds-doc-ux-ui-topic__text">Classes e exemplos MVC — menos «como você fez o botão X?».</p>
+                        </div>
+                    </div>
+                    <div class="invoisys-ds-doc-ux-ui-topic" role="listitem" data-testid="ds-ux-area-topic-ds-propaga">
+                        <span class="invoisys-ds-doc-ux-ui-topic__icon" aria-hidden="true"><i class="fa fa-refresh"></i></span>
+                        <div>
+                            <p class="invoisys-ds-doc-ux-ui-topic__title">Atualização em bloco</p>
+                            <p class="invoisys-ds-doc-ux-ui-topic__text">Token ou componente atualizado beneficia todas as views alinhadas ao padrão.</p>
+                        </div>
+                    </div>
+                    <div class="invoisys-ds-doc-ux-ui-topic" role="listitem" data-testid="ds-ux-area-topic-ds-comms">
+                        <span class="invoisys-ds-doc-ux-ui-topic__icon" aria-hidden="true"><i class="fa fa-bullhorn"></i></span>
+                        <div>
+                            <p class="invoisys-ds-doc-ux-ui-topic__title">Comunicar mudanças</p>
+                            <p class="invoisys-ds-doc-ux-ui-topic__text">Release notes, canais (Teams/Slack) e <code>data-testid</code> com QA — ver <a href="#testes-playwright">Testes · Playwright</a>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="invoisys-ds-subsection-title" id="sec-ux-area-colaboradores">Colaboradores e papéis</h3>
+                <p class="color-text font-normal invoisys-ds-doc-ux-ui-area-prose">
+                    <strong>8 colaboradores</strong> nesta frente — produto (squad lead), UX/UI, orientação de design, desenvolvimento front-end, coordenação técnica e QA.
+                </p>
+                <dl class="color-text font-normal invoisys-ds-doc-ux-ui-area-prose invoisys-ds-doc-ux-ui-people" style="margin:0 0 var(--espacamento-md)">
+                    <div class="invoisys-ds-doc-ux-ui-person-card">
+                        <dt>Roberto Abreu <span class="invoisys-ds-doc-ux-ui-person-role">· squad lead e produto</span></dt>
+                        <dd>É quem <strong>leva a demanda para a equipe</strong>: <strong>regras de negócio</strong>, <strong>funcionalidades</strong> e o que precisa ser construído — prioriza e alinha o backlog para UX/UI e desenvolvimento trabalharem com critérios claros.</dd>
+                    </div>
+                    <div class="invoisys-ds-doc-ux-ui-person-card">
+                        <dt>Rafael Almeida</dt>
+                        <dd>Lead <strong>UX-Designer</strong>; responsável pelo <strong>front-end</strong> e por suas ramificações (views MVC, alinhamento ao design system, articulação com produto e engenharia).</dd>
+                    </div>
+                    <div class="invoisys-ds-doc-ux-ui-person-card">
+                        <dt>Julio Brandine</dt>
+                        <dd>Orientador de <strong>design</strong>: além da presidência, traz experiência com <strong>outras plataformas do mesmo tipo de serviço</strong> que o Invoisys oferece — ajuda a definir <strong>para onde a UX/UI deve ir</strong> e a validar direções com contexto de mercado.</dd>
+                    </div>
+                    <div class="invoisys-ds-doc-ux-ui-person-card">
+                        <dt>Desenvolvimento front-end</dt>
+                        <dd>
+                            <p class="invoisys-ds-doc-ux-ui-person-names">Mariana Moraes · Gabriel Souza · Everton Barbosa</p>
+                            <p class="invoisys-ds-doc-ux-ui-person-names-desc">Implementação de interfaces no portal, em sintonia com o lead de UX/front e com o lead técnico.</p>
+                        </dd>
+                    </div>
+                    <div class="invoisys-ds-doc-ux-ui-person-card">
+                        <dt>Fabio Dellonero <span class="invoisys-ds-doc-ux-ui-person-role">· lead técnico</span></dt>
+                        <dd>Experiência sólida; <strong>coordena a parte técnica e infraestrutura</strong>, alinhando decisões de stack, integrações e rigor de entrega com a equipe.</dd>
+                    </div>
+                    <div class="invoisys-ds-doc-ux-ui-person-card">
+                        <dt>Matheus Betti <span class="invoisys-ds-doc-ux-ui-person-role">· QA</span></dt>
+                        <dd>Testes de <strong>QA</strong> sobre fluxos e regressões, em articulação com critérios de aceite e, quando aplicável, com <a href="#testes-playwright">automação (Playwright)</a>.</dd>
+                    </div>
+                </dl>
+
+                <h3 class="invoisys-ds-subsection-title" id="sec-ux-area-ferramentas">Ferramentas usadas</h3>
+                <ul class="color-text font-normal invoisys-ds-doc-ux-ui-area-prose invoisys-ds-doc-ux-ui-tools-list" style="margin:0 0 var(--espacamento-md); padding-left:1.25rem">
+                    <li class="mb-2"><strong>Figma</strong> — ferramenta que usamos para UI: bibliotecas de componentes, protótipos e <strong>entrega ao desenvolvimento</strong> (especificação para engenharia).</li>
+                    <li class="mb-2 invoisys-ds-doc-ux-ui-tools-highlight">
+                        <strong>Cursor</strong> (IDE com IA) — editor no dia a dia do código e da documentação. Com o uso consistente de <strong>IA assistida</strong>, a equipe
+                        <strong>cresceu em capacidade</strong>: entregas mais rápidas e mais sólidas, revisões mais claras e <strong>documentação mais adequada</strong> ao que vai para produção.
+                    </li>
+                    <li class="mb-2"><strong>Jira</strong> — backlog, épicos, tarefas e acompanhamento de entregas com produto e engenharia.</li>
+                    <li class="mb-2"><strong>Confluence</strong> — wiki e documentação colaborativa (requisitos, decisões, processos).</li>
+                    <li class="mb-2"><strong>Miro</strong> — quadros para fluxos, discovery, workshops e alinhamento visual entre equipes.</li>
+                    <li class="mb-2">Visual Studio / Git — código e revisão do stack CSS no portal.</li>
+                    <li class="mb-2">Este storybook — pré-visualização de componentes e snippets copiáveis alinhados ao MVC.</li>
+                    <li class="mb-0">Playwright — regressão, fluxos críticos e <code>data-testid</code> (ver <a href="#testes-playwright">Testes · Playwright</a>).</li>
+                </ul>

@@ -1,0 +1,460 @@
+                <h1 id="sec-tabelas-listagem-completa-titulo">Tabelas · listagem completa</h1>
+                <p class="invoisys-ds-lead">
+                    Pré-visualização <strong>num único bloco</strong> com o que costuma ir junto numa página de dados: <strong>toolbar em duas linhas</strong> (datas, pesquisa, KPIs, ações, empresa, «Filtrar por»),
+                    <strong>painéis colapsáveis</strong> (totalizadores e filtros avançados) e a <strong>área da grade</strong> com loading, <code>.table-wrap</code> e rodapé estilo DataTables — o mesmo contrato descrito em
+                    <a href="#sec-tabelas-visao-titulo">Tabelas · visão geral</a> (<code>data-table</code> no <code>section.panel</code>).
+                </p>
+                <p class="invoisys-ds-callout mb-3">
+                    O detalhe da <strong>1.ª e 2.ª linha</strong> da toolbar e do painel de filtros em grelha está em <a href="#sec-tabelas-cabecalho-titulo">Tabelas · cabeçalho da listagem</a>.
+                    Para <code>startTable</code>, <code>ajax</code> e ColVis, siga <a href="#sec-tabelas-utilitarios-titulo">Tabelas · utilitários</a>. Abaixo a tabela é <strong>marcação estática</strong> (sem motor <code>table-setting.js</code> nesta página).
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tabelas-listagem-completa-preview">Prévia · cabeçalho + grade</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Mesmas classes canónicas da prévia de cabeçalho (<code>layout-datatable-page</code>, <code>.panel-content.pagination2</code>, <code>.table-wrap.force-table-responsive</code>) e da grade de exemplo em
+                    <a href="#sec-tabelas-tutorial-inicializacao">Visão geral · tutorial</a>. Identificadores e <code>data-testid</code> desta secção usam o prefixo <code>docListaCompleta</code> / <code>ds-tabelas-listagem-completa-*</code> para não colidir com a página «Cabeçalho da listagem».
+                </p>
+                <div class="invoisys-ds-preview border rounded mb-3 invoisys-ds-preview--toolbar-cards invoisys-ds-preview--select2-portal invoisys-ds-preview--daterange-portal invoisys-ds-doc-tabelas-cabecalho-full-demo-host invoisys-ds-nfeentrada-real-demo-host" data-testid="ds-tabelas-listagem-completa-preview-host" style="background:var(--cor-superficie-nuvem); border-color:var(--cor-borda); padding:var(--espacamento-md); width:100%; max-width:100%; box-sizing:border-box">
+                    <div class="layout-datatable-page page-content invoisys-ds-doc-tabelas-cabecalho-full-demo invoisys-ds-nfeentrada-real-demo">
+                        <section class="panel mb-0" data-table="#tblDocListaCompletaDemo" data-testid="ds-tabelas-listagem-completa-demo-panel">
+                            <div class="d-flex flex-wrap align-items-center gap-2" data-testid="nfeentrada-toolbar" role="toolbar" aria-label="Toolbar da listagem (exemplo listagem completa)">
+                                <div class="combo-container">
+                                    <div class="d-flex justify-content-between align-items-center w-100">
+                                        <label class="form-label mb-0" for="docListaCompletaDateRange">Data emissão NF-e</label>
+                                        <div class="combo-container invoisys-ds-daterange-demo invoisys-ds-daterange-demo--portal">
+                                            <div class="date-range-container">
+                                                <div class="prepend-icon dm-toolbar-date-range">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    <input id="docListaCompletaDateRange" type="text" class="form-control date-range-input" autocomplete="off" aria-label="Intervalo de datas (data emissão NF-e)" data-testid="ds-tabelas-listagem-completa-demo-daterange" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="filter-buttons invoisys-ds-search-demo">
+                                    <input type="search" id="docListaCompletaSearch" class="form-control search-input" placeholder="Pesquisar…" autocomplete="off" readonly aria-label="Campo de pesquisa (exemplo estático)" data-testid="ds-tabelas-listagem-completa-demo-search" />
+                                </div>
+                                <button type="button" class="panel-card-btn nfeentrada-toolbar-btn" aria-expanded="false" aria-controls="idPainelKpisDocListaCompleta" data-testid="ds-tabelas-listagem-completa-demo-metricas">
+                                    <span class="heading-sm mb-0">Mostrar painel</span>
+                                    <i class="fa fa-eye flex-shrink-0" aria-hidden="true"></i>
+                                </button>
+                                <div class="d-flex flex-shrink-0 align-items-center gap-2" role="group" aria-label="Ações da tabela">
+                                    <button type="button" class="square-button" aria-label="Menu de ações" data-testid="ds-tabelas-listagem-completa-demo-menu"><i class="fa fa-bars" aria-hidden="true"></i></button>
+                                    <button type="button" class="square-button" aria-label="Atualizar listagem" data-testid="ds-tabelas-listagem-completa-demo-refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                                    <button type="button" class="square-button" aria-label="Colunas visíveis" data-testid="ds-tabelas-listagem-completa-demo-colvis"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                            <div id="idPainelKpisDocListaCompleta" class="d-none mt-2 w-100 invoisys-ds-doc-cabecalho-flyout-panel invoisys-ds-doc-cabecalho-kpis-panel" role="region" aria-label="Totalizados (prévia)" aria-hidden="true" data-testid="ds-tabelas-listagem-completa-panel-kpis">
+                                <div class="invoisys-ds-kpi-dashboard" role="group" aria-label="Totalizadores de exemplo">
+                                    <div class="invoisys-ds-kpi-tile">
+                                        <p class="invoisys-ds-kpi-value">10</p>
+                                        <p class="invoisys-ds-kpi-label">Em trânsito</p>
+                                        <div class="invoisys-ds-kpi-footer">
+                                            <i class="fa fa-truck" aria-hidden="true"></i>
+                                            <span class="invoisys-ds-kpi-pct">29,8%</span>
+                                        </div>
+                                    </div>
+                                    <div class="invoisys-ds-kpi-tile">
+                                        <p class="invoisys-ds-kpi-value">8</p>
+                                        <p class="invoisys-ds-kpi-label">Entrega realizada</p>
+                                        <div class="invoisys-ds-kpi-footer">
+                                            <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                            <span class="invoisys-ds-kpi-pct">21,2%</span>
+                                        </div>
+                                    </div>
+                                    <div class="invoisys-ds-kpi-tile">
+                                        <p class="invoisys-ds-kpi-value">7</p>
+                                        <p class="invoisys-ds-kpi-label">Em atraso</p>
+                                        <div class="invoisys-ds-kpi-footer">
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                            <span class="invoisys-ds-kpi-pct">20,7%</span>
+                                        </div>
+                                    </div>
+                                    <div class="invoisys-ds-kpi-tile">
+                                        <p class="invoisys-ds-kpi-value">0</p>
+                                        <p class="invoisys-ds-kpi-label">Não entregue</p>
+                                        <div class="invoisys-ds-kpi-footer">
+                                            <i class="fa fa-ban" aria-hidden="true"></i>
+                                            <span class="invoisys-ds-kpi-pct">0%</span>
+                                        </div>
+                                    </div>
+                                    <div class="invoisys-ds-kpi-tile">
+                                        <p class="invoisys-ds-kpi-value">5</p>
+                                        <p class="invoisys-ds-kpi-label">Enviado para sistema destino</p>
+                                        <div class="invoisys-ds-kpi-footer invoisys-ds-kpi-footer--empty" aria-hidden="true">
+                                            <i class="fa fa-truck" aria-hidden="true"></i>
+                                            <span class="invoisys-ds-kpi-pct">0%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="invoisys-ds-doc-cabecalho-linha2 mt-2" data-testid="ds-tabelas-listagem-completa-doc-cabecalho-linha-2">
+                                <div class="d-flex flex-wrap align-items-center w-100 gap-2">
+                                    <div class="invoisys-ds-doc-cabecalho-empresa-wrap flex-shrink-0">
+                                        <div class="form-group mb-0 invoisys-ds-select2-demo invoisys-ds-select2-demo--portal">
+                                            <select id="docListaCompletaEmpresaSelect" name="docListaCompletaEmpresaSelect" class="form-control" aria-label="Empresa (filtro da listagem)" data-testid="ds-tabelas-listagem-completa-demo-empresa-select">
+                                                <option value="" selected>Todas as empresas</option>
+                                                <option value="a">Empresa A — Holding</option>
+                                                <option value="b">Empresa B — Filial SP</option>
+                                                <option value="c">Empresa C — Matriz</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="invoisys-ds-doc-cabecalho-linha2-spacer flex-grow-1" aria-hidden="true"></div>
+                                    <div class="flex-shrink-0">
+                                        <button type="button" class="panel-card-btn nfeentrada-toolbar-btn invoisys-ds-doc-cabecalho-btn-filtrar-plain" aria-expanded="false" aria-controls="idPainelFiltrosDocListaCompleta" data-testid="ds-tabelas-listagem-completa-demo-filtrar">
+                                            <i class="fa fa-filter flex-shrink-0" aria-hidden="true"></i>
+                                            <span class="heading-sm mb-0">Filtrar por</span>
+                                            <i class="fa fa-chevron-down flex-shrink-0" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="idPainelFiltrosDocListaCompleta" class="d-none mt-2 w-100 invoisys-ds-doc-cabecalho-flyout-panel invoisys-ds-doc-cabecalho-filtros-panel" role="region" aria-label="Filtros avançados (prévia)" aria-hidden="true" data-testid="ds-tabelas-listagem-completa-panel-filtros">
+                                <div class="invoisys-ds-doc-cabecalho-filtros-grid">
+                                    <div class="form-group mb-0">
+                                        <label class="control-label mb-1" for="docListaCompletaFiltroDestinatario">Destinatário</label>
+                                        <input type="text" id="docListaCompletaFiltroDestinatario" class="form-control" autocomplete="off" placeholder="Informe o CNPJ/CPF ou Razão Social do destinatário" data-testid="ds-tabelas-listagem-completa-demo-filtro-destinatario" />
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <label class="control-label mb-1" for="docListaCompletaFiltroCategoria">Categoria</label>
+                                        <select id="docListaCompletaFiltroCategoria" class="form-control" aria-label="Categoria (demo)" data-testid="ds-tabelas-listagem-completa-demo-filtro-categoria">
+                                            <option value="" selected>Todas as categorias</option>
+                                            <option value="1">Categoria A</option>
+                                            <option value="2">Categoria B</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <label class="control-label mb-1" for="docListaCompletaFiltroStatus">Status</label>
+                                        <select id="docListaCompletaFiltroStatus" class="form-control" aria-label="Status (demo)" data-testid="ds-tabelas-listagem-completa-demo-filtro-status">
+                                            <option value="" selected>Todos</option>
+                                            <option value="1">Autorizada</option>
+                                            <option value="2">Cancelada</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <label class="control-label mb-1" for="docListaCompletaFiltroDateEntrega">Data entrega</label>
+                                        <div class="combo-container invoisys-ds-daterange-demo invoisys-ds-daterange-demo--portal">
+                                            <div class="date-range-container">
+                                                <div class="prepend-icon dm-toolbar-date-range">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    <input id="docListaCompletaFiltroDateEntrega" type="text" class="form-control date-range-input" autocomplete="off" placeholder="Selecione um intervalo" aria-label="Data entrega (intervalo)" data-testid="ds-tabelas-listagem-completa-demo-filtro-daterange-entrega" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <label class="control-label mb-1" for="docListaCompletaFiltroDateRecusa">Data recusa</label>
+                                        <div class="combo-container invoisys-ds-daterange-demo invoisys-ds-daterange-demo--portal">
+                                            <div class="date-range-container">
+                                                <div class="prepend-icon dm-toolbar-date-range">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    <input id="docListaCompletaFiltroDateRecusa" type="text" class="form-control date-range-input" autocomplete="off" placeholder="Selecione um intervalo" aria-label="Data recusa (intervalo)" data-testid="ds-tabelas-listagem-completa-demo-filtro-daterange-recusa" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <label class="control-label mb-1" for="docListaCompletaFiltroTransportadora">Transportadora</label>
+                                        <input type="text" id="docListaCompletaFiltroTransportadora" class="form-control" autocomplete="off" placeholder="Informe o CNPJ/CPF ou Razão Social da transportadora" data-testid="ds-tabelas-listagem-completa-demo-filtro-transportadora" />
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end flex-wrap gap-2 mt-3">
+                                    <button type="button" class="btn btn-canceled m-0" data-testid="ds-tabelas-listagem-completa-demo-filtro-limpar">Limpar filtros</button>
+                                    <button type="button" class="btn btn-primary m-0" data-testid="ds-tabelas-listagem-completa-demo-filtro-aplicar">Aplicar filtros</button>
+                                </div>
+                            </div>
+
+                            <div class="panel-content pagination2 mt-2">
+                                <div class="loading-table nfeentrada-loading-inicial nfeentrada-loading-oculto" data-testid="ds-tabelas-listagem-completa-nfe-loading" aria-hidden="true">
+                                    <div class="heading-md fw-bold">Carregando…</div>
+                                </div>
+                                <div class="table-wrap force-table-responsive" data-testid="ds-tabelas-listagem-completa-nfe-table-wrap" aria-busy="false">
+                                    <div id="tblDocListaCompletaDemo_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                        <div class="scrollX table-responsive-Y force-table-responsive">
+                                            <table id="tblDocListaCompletaDemo" class="table table-striped dt-responsive th-title-abbrv" cellspacing="0" style="width:100%;" data-testid="ds-tabelas-listagem-completa-nfe-tabela" aria-label="Grade de exemplo (réplica da Visão geral — listagem completa com cabeçalho)" role="grid">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th class="text-center nfeentrada-col-status-acoes p-0 sorting_disabled" scope="col" title="Estado e ações">Status</th>
+                                                        <th class="ps-2 text-center sorting_disabled" scope="col" title="Origem">Origem</th>
+                                                        <th class="sorting_disabled" scope="col" title="Data de entrada">Data de entrada</th>
+                                                        <th class="sorting_disabled" scope="col" title="Emitente">Emitente</th>
+                                                        <th class="sorting_disabled" scope="col" title="Destinatário">Destinatário</th>
+                                                        <th class="text-center sorting_disabled" scope="col" title="UF">UF</th>
+                                                        <th class="sorting_disabled" scope="col" title="Número">Número</th>
+                                                        <th class="text-center sorting_disabled" scope="col" title="Pedido de compra">Pedido de compra</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr role="row" class="odd">
+                                                        <td class="p-0 container-details nfeentrada-col-status-acoes text-center" title="">
+                                                            <div class="details" id="details-lista-nfe-1">
+                                                                <div class="pill pill-success">Autorizado</div>
+                                                                <div class="items-details" aria-label="Ações da linha (demonstração)">
+                                                                    <span role="button" tabindex="0" aria-label="Detalhes do documento"><i class="fa fa-search" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Manifestar documento na SEFAZ"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Visualizar PDF"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Consultar validação fiscal e pedido de compra"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="ps-2 text-center" title="">
+                                                            <div class="nfeentrada-origem-cell d-flex align-items-center justify-content-center flex-nowrap">
+                                                                <span class="div-icon-manifesto tipoOrigem-0 d-inline-flex align-items-center" title="WebService" role="img" aria-label="Origem: WebService"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                            </div>
+                                                        </td>
+                                                        <td>13/01/2026 14:58:58</td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="INVOISYS SISTEMAS LTDA">INVOISYS SISTEMAS LTDA</span></td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="NF-e emitida em ambiente de homologação — sem valor fiscal">NF-e emitida em ambiente de homologação — sem valor fiscal</span></td>
+                                                        <td class="text-center">SC</td>
+                                                        <td>12033</td>
+                                                        <td class="text-center">130126002</td>
+                                                    </tr>
+                                                    <tr role="row" class="even bg-row-selected bulk-editing">
+                                                        <td class="p-0 container-details nfeentrada-col-status-acoes text-center" title="">
+                                                            <div class="details" id="details-lista-nfe-2">
+                                                                <div class="pill pill-success">Autorizado</div>
+                                                                <div class="items-details" aria-label="Ações da linha (demonstração)">
+                                                                    <span role="button" tabindex="0" aria-label="Detalhes do documento"><i class="fa fa-search" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Manifestar documento na SEFAZ"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Visualizar PDF"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Consultar validação fiscal e pedido de compra"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="ps-2 text-center" title="">
+                                                            <div class="nfeentrada-origem-cell d-flex align-items-center justify-content-center flex-nowrap">
+                                                                <span class="div-icon-manifesto tipoOrigem-0 d-inline-flex align-items-center" title="WebService" role="img" aria-label="Origem: WebService"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                            </div>
+                                                        </td>
+                                                        <td>22/01/2026 17:48:58</td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="INVOISYS SISTEMAS LTDA">INVOISYS SISTEMAS LTDA</span></td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="NF-e emitida em ambiente de homologação — sem valor fiscal">NF-e emitida em ambiente de homologação — sem valor fiscal</span></td>
+                                                        <td class="text-center">SC</td>
+                                                        <td>22025</td>
+                                                        <td class="text-center">220126025</td>
+                                                    </tr>
+                                                    <tr role="row" class="odd">
+                                                        <td class="p-0 container-details nfeentrada-col-status-acoes text-center" title="">
+                                                            <div class="details" id="details-lista-nfe-3">
+                                                                <div class="pill pill-success">Autorizado</div>
+                                                                <div class="items-details" aria-label="Ações da linha (demonstração)">
+                                                                    <span role="button" tabindex="0" aria-label="Detalhes do documento"><i class="fa fa-search" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Manifestar documento na SEFAZ"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Visualizar PDF"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Consultar validação fiscal e pedido de compra"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="ps-2 text-center" title="">
+                                                            <div class="nfeentrada-origem-cell d-flex align-items-center justify-content-center flex-nowrap">
+                                                                <span class="div-icon-manifesto tipoOrigem-0 d-inline-flex align-items-center" title="WebService" role="img" aria-label="Origem: WebService"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                            </div>
+                                                        </td>
+                                                        <td>23/01/2026 09:12:00</td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="INVOISYS SISTEMAS LTDA">INVOISYS SISTEMAS LTDA</span></td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="NF-e emitida em ambiente de homologação — sem valor fiscal">NF-e emitida em ambiente de homologação — sem valor fiscal</span></td>
+                                                        <td class="text-center">SC</td>
+                                                        <td>23001</td>
+                                                        <td class="text-center">230126001</td>
+                                                    </tr>
+                                                    <tr role="row" class="even">
+                                                        <td class="p-0 container-details nfeentrada-col-status-acoes text-center" title="">
+                                                            <div class="details" id="details-lista-nfe-4">
+                                                                <div class="pill pill-success">Autorizado</div>
+                                                                <div class="items-details" aria-label="Ações da linha (demonstração)">
+                                                                    <span role="button" tabindex="0" aria-label="Detalhes do documento"><i class="fa fa-search" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Manifestar documento na SEFAZ"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Visualizar PDF"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Consultar validação fiscal e pedido de compra"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="ps-2 text-center" title="">
+                                                            <div class="nfeentrada-origem-cell d-flex align-items-center justify-content-center flex-nowrap">
+                                                                <span class="div-icon-manifesto tipoOrigem-0 d-inline-flex align-items-center" title="WebService" role="img" aria-label="Origem: WebService"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                            </div>
+                                                        </td>
+                                                        <td>24/01/2026 10:05:22</td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="INVOISYS SISTEMAS LTDA">INVOISYS SISTEMAS LTDA</span></td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="NF-e emitida em ambiente de homologação — sem valor fiscal">NF-e emitida em ambiente de homologação — sem valor fiscal</span></td>
+                                                        <td class="text-center">SC</td>
+                                                        <td>24002</td>
+                                                        <td class="text-center">240126002</td>
+                                                    </tr>
+                                                    <tr role="row" class="odd">
+                                                        <td class="p-0 container-details nfeentrada-col-status-acoes text-center" title="">
+                                                            <div class="details" id="details-lista-nfe-5">
+                                                                <div class="pill pill-success">Autorizado</div>
+                                                                <div class="items-details" aria-label="Ações da linha (demonstração)">
+                                                                    <span role="button" tabindex="0" aria-label="Detalhes do documento"><i class="fa fa-search" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Manifestar documento na SEFAZ"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Visualizar PDF"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Consultar validação fiscal e pedido de compra"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="ps-2 text-center" title="">
+                                                            <div class="nfeentrada-origem-cell d-flex align-items-center justify-content-center flex-nowrap">
+                                                                <span class="div-icon-manifesto tipoOrigem-0 d-inline-flex align-items-center" title="WebService" role="img" aria-label="Origem: WebService"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                            </div>
+                                                        </td>
+                                                        <td>25/01/2026 11:20:15</td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="INVOISYS SISTEMAS LTDA">INVOISYS SISTEMAS LTDA</span></td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="NF-e emitida em ambiente de homologação — sem valor fiscal">NF-e emitida em ambiente de homologação — sem valor fiscal</span></td>
+                                                        <td class="text-center">SC</td>
+                                                        <td>25003</td>
+                                                        <td class="text-center">250126003</td>
+                                                    </tr>
+                                                    <tr role="row" class="even">
+                                                        <td class="p-0 container-details nfeentrada-col-status-acoes text-center" title="">
+                                                            <div class="details" id="details-lista-nfe-6">
+                                                                <div class="pill pill-success">Autorizado</div>
+                                                                <div class="items-details" aria-label="Ações da linha (demonstração)">
+                                                                    <span role="button" tabindex="0" aria-label="Detalhes do documento"><i class="fa fa-search" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Manifestar documento na SEFAZ"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Visualizar PDF"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Consultar validação fiscal e pedido de compra"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="ps-2 text-center" title="">
+                                                            <div class="nfeentrada-origem-cell d-flex align-items-center justify-content-center flex-nowrap">
+                                                                <span class="div-icon-manifesto tipoOrigem-0 d-inline-flex align-items-center" title="WebService" role="img" aria-label="Origem: WebService"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                            </div>
+                                                        </td>
+                                                        <td>26/01/2026 12:33:40</td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="INVOISYS SISTEMAS LTDA">INVOISYS SISTEMAS LTDA</span></td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="NF-e emitida em ambiente de homologação — sem valor fiscal">NF-e emitida em ambiente de homologação — sem valor fiscal</span></td>
+                                                        <td class="text-center">SC</td>
+                                                        <td>26004</td>
+                                                        <td class="text-center">260126004</td>
+                                                    </tr>
+                                                    <tr role="row" class="odd">
+                                                        <td class="p-0 container-details nfeentrada-col-status-acoes text-center" title="">
+                                                            <div class="details" id="details-lista-nfe-7">
+                                                                <div class="pill pill-success">Autorizado</div>
+                                                                <div class="items-details" aria-label="Ações da linha (demonstração)">
+                                                                    <span role="button" tabindex="0" aria-label="Detalhes do documento"><i class="fa fa-search" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Manifestar documento na SEFAZ"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Visualizar PDF"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Consultar validação fiscal e pedido de compra"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="ps-2 text-center" title="">
+                                                            <div class="nfeentrada-origem-cell d-flex align-items-center justify-content-center flex-nowrap">
+                                                                <span class="div-icon-manifesto tipoOrigem-0 d-inline-flex align-items-center" title="WebService" role="img" aria-label="Origem: WebService"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                            </div>
+                                                        </td>
+                                                        <td>27/01/2026 13:45:02</td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="INVOISYS SISTEMAS LTDA">INVOISYS SISTEMAS LTDA</span></td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="NF-e emitida em ambiente de homologação — sem valor fiscal">NF-e emitida em ambiente de homologação — sem valor fiscal</span></td>
+                                                        <td class="text-center">SC</td>
+                                                        <td>27005</td>
+                                                        <td class="text-center">270126005</td>
+                                                    </tr>
+                                                    <tr role="row" class="even">
+                                                        <td class="p-0 container-details nfeentrada-col-status-acoes text-center" title="">
+                                                            <div class="details" id="details-lista-nfe-8">
+                                                                <div class="pill pill-success">Autorizado</div>
+                                                                <div class="items-details" aria-label="Ações da linha (demonstração)">
+                                                                    <span role="button" tabindex="0" aria-label="Detalhes do documento"><i class="fa fa-search" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Manifestar documento na SEFAZ"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Visualizar PDF"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Consultar validação fiscal e pedido de compra"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="ps-2 text-center" title="">
+                                                            <div class="nfeentrada-origem-cell d-flex align-items-center justify-content-center flex-nowrap">
+                                                                <span class="div-icon-manifesto tipoOrigem-0 d-inline-flex align-items-center" title="WebService" role="img" aria-label="Origem: WebService"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                            </div>
+                                                        </td>
+                                                        <td>28/01/2026 14:10:55</td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="INVOISYS SISTEMAS LTDA">INVOISYS SISTEMAS LTDA</span></td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="NF-e emitida em ambiente de homologação — sem valor fiscal">NF-e emitida em ambiente de homologação — sem valor fiscal</span></td>
+                                                        <td class="text-center">SC</td>
+                                                        <td>28006</td>
+                                                        <td class="text-center">280126006</td>
+                                                    </tr>
+                                                    <tr role="row" class="odd">
+                                                        <td class="p-0 container-details nfeentrada-col-status-acoes text-center" title="">
+                                                            <div class="details" id="details-lista-nfe-9">
+                                                                <div class="pill pill-success">Autorizado</div>
+                                                                <div class="items-details" aria-label="Ações da linha (demonstração)">
+                                                                    <span role="button" tabindex="0" aria-label="Detalhes do documento"><i class="fa fa-search" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Manifestar documento na SEFAZ"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Visualizar PDF"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Consultar validação fiscal e pedido de compra"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="ps-2 text-center" title="">
+                                                            <div class="nfeentrada-origem-cell d-flex align-items-center justify-content-center flex-nowrap">
+                                                                <span class="div-icon-manifesto tipoOrigem-0 d-inline-flex align-items-center" title="WebService" role="img" aria-label="Origem: WebService"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                            </div>
+                                                        </td>
+                                                        <td>29/01/2026 15:22:18</td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="INVOISYS SISTEMAS LTDA">INVOISYS SISTEMAS LTDA</span></td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="NF-e emitida em ambiente de homologação — sem valor fiscal">NF-e emitida em ambiente de homologação — sem valor fiscal</span></td>
+                                                        <td class="text-center">SC</td>
+                                                        <td>29007</td>
+                                                        <td class="text-center">290126007</td>
+                                                    </tr>
+                                                    <tr role="row" class="even">
+                                                        <td class="p-0 container-details nfeentrada-col-status-acoes text-center" title="">
+                                                            <div class="details" id="details-lista-nfe-10">
+                                                                <div class="pill pill-success">Autorizado</div>
+                                                                <div class="items-details" aria-label="Ações da linha (demonstração)">
+                                                                    <span role="button" tabindex="0" aria-label="Detalhes do documento"><i class="fa fa-search" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Manifestar documento na SEFAZ"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Visualizar PDF"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>
+                                                                    <span role="button" tabindex="0" aria-label="Consultar validação fiscal e pedido de compra"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="ps-2 text-center" title="">
+                                                            <div class="nfeentrada-origem-cell d-flex align-items-center justify-content-center flex-nowrap">
+                                                                <span class="div-icon-manifesto tipoOrigem-0 d-inline-flex align-items-center" title="WebService" role="img" aria-label="Origem: WebService"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                                            </div>
+                                                        </td>
+                                                        <td>30/01/2026 16:00:00</td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="INVOISYS SISTEMAS LTDA">INVOISYS SISTEMAS LTDA</span></td>
+                                                        <td><span class="invoisys-ds-cell-ellipsis" title="NF-e emitida em ambiente de homologação — sem valor fiscal">NF-e emitida em ambiente de homologação — sem valor fiscal</span></td>
+                                                        <td class="text-center">SC</td>
+                                                        <td>30008</td>
+                                                        <td class="text-center">300126008</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="footer-table">
+                                            <div class="d-flex justify-content-center align-items-center flex-wrap w-100 gap-2 py-2">
+                                                <div class="show-registers ps-3">
+                                                    <div class="dataTables_info" id="tblDocListaCompletaDemo_info" role="status" aria-live="polite">
+                                                        <div>Mostrando de 1 até 10 de 10 registros (exemplo estático)</div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-fill d-flex justify-content-center align-items-center drop">
+                                                    <div class="dataTables_paginate paging_simple_numbers" id="tblDocListaCompletaDemo_paginate">
+                                                        <ul class="pagination mb-0">
+                                                            <li class="paginate_button previous disabled" id="tblDocListaCompletaDemo_previous"><span class="paginate-link-demo" tabindex="-1">Anterior</span></li>
+                                                            <li class="paginate_button active"><span class="paginate-link-demo" aria-current="page">1</span></li>
+                                                            <li class="paginate_button disabled" id="tblDocListaCompletaDemo_next"><span class="paginate-link-demo" tabindex="-1">Próxima</span></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="page-results">
+                                                    <div class="dataTables_length" id="tblDocListaCompletaDemo_length">
+                                                        <label class="mb-0 d-flex align-items-center gap-2 flex-wrap"><span>Exibindo</span><span class="invoisys-ds-nfe-length-fake d-inline-block text-center">10</span><span>resultados por página</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>

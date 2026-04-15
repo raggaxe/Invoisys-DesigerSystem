@@ -1,0 +1,392 @@
+                <h2 class="invoisys-ds-section-title" id="sec-tipografia-visao">Visão geral</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Esta página concentra a <strong>tipografia do portal Invoisys</strong>: o que está disponível para equipes de produto e desenvolvimento,
+                    onde cada peça vive no código, e como reutilizá-la sem inventar tamanhos ou pesos ad hoc.
+                    Aqui encontras as variáveis em <code>:root</code> (<strong>main.css</strong>), as classes utilitárias (<strong>tokens.css</strong> e <strong>componentes.css</strong>),
+                    exemplos visuais e, nas tabelas, a coluna <strong>Valor</strong> tal como está no CSS — para alinhar com Figma, especificações ou revisões de escala e acessibilidade.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Regra:</strong> em markup novo, preferir classes canônicas (<code>.heading-sm</code>, <code>.text-label</code>, …) ou <code>var(--tamanho-sm)</code> em CSS sob medida,
+                    em vez de repetir <code>px</code> soltos — quando o token mudar no <code>main.css</code>, o portal inteiro herda a alteração.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tipografia-variaveis">Variáveis em <code>:root</code> (<code>main.css</code>)</h2>
+                <h3 class="invoisys-ds-subsection-title">Família e tamanho base</h3>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Variável</th>
+                                <th scope="col">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Família principal (portal)</td>
+                                <td><code>--fonte-principal</code></td>
+                                <td class="invoisys-ds-hex"><code>'Lato'</code></td>
+                            </tr>
+                            <tr>
+                                <td>Família secundária (fallback)</td>
+                                <td><code>--fonte-secundaria</code></td>
+                                <td class="invoisys-ds-hex"><code>'Helvetica', sans-serif</code></td>
+                            </tr>
+                            <tr>
+                                <td>Tamanho base legado (formulários / inputs)</td>
+                                <td><code>--tamanho-base-fonte</code></td>
+                                <td class="invoisys-ds-hex"><code>14px</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="invoisys-ds-subsection-title">Escala de tamanhos</h3>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Uso típico</th>
+                                <th scope="col">Amostra</th>
+                                <th scope="col">Variável</th>
+                                <th scope="col">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Etiquetas muito pequenas; compat legado <code>--tamanhao-xxs</code></td>
+                                <td class="invoisys-ds-td-type-sample" style="font-size:var(--tamanho-xxs)">Aa</td>
+                                <td><code>--tamanho-xxs</code></td>
+                                <td class="invoisys-ds-hex"><code>10px</code></td>
+                            </tr>
+                            <tr>
+                                <td>Legendas, meta, <code>.heading-xs</code></td>
+                                <td class="invoisys-ds-td-type-sample" style="font-size:var(--tamanho-xs)">Aa</td>
+                                <td><code>--tamanho-xs</code></td>
+                                <td class="invoisys-ds-hex"><code>12px</code></td>
+                            </tr>
+                            <tr>
+                                <td>Corpo padrão, rótulos <code>.text-label</code>, <code>.heading-sm</code></td>
+                                <td class="invoisys-ds-td-type-sample" style="font-size:var(--tamanho-sm)">Aa</td>
+                                <td><code>--tamanho-sm</code></td>
+                                <td class="invoisys-ds-hex"><code>14px</code></td>
+                            </tr>
+                            <tr>
+                                <td>Destaque de corpo, <code>.heading-md</code></td>
+                                <td class="invoisys-ds-td-type-sample" style="font-size:var(--tamanho-md)">Aa</td>
+                                <td><code>--tamanho-md</code></td>
+                                <td class="invoisys-ds-hex"><code>16px</code></td>
+                            </tr>
+                            <tr>
+                                <td>Subtítulos / passo intermédio em <code>rem</code></td>
+                                <td class="invoisys-ds-td-type-sample" style="font-size:var(--tamanho-xl)">Aa</td>
+                                <td><code>--tamanho-xl</code></td>
+                                <td class="invoisys-ds-hex"><code>1.25rem</code></td>
+                            </tr>
+                            <tr>
+                                <td>Títulos de seção médios</td>
+                                <td class="invoisys-ds-td-type-sample" style="font-size:var(--tamanho-xxl)">Aa</td>
+                                <td><code>--tamanho-xxl</code></td>
+                                <td class="invoisys-ds-hex"><code>28px</code></td>
+                            </tr>
+                            <tr>
+                                <td>Títulos de página / <code>.heading-xl</code></td>
+                                <td class="invoisys-ds-td-type-sample" style="font-size:var(--tamanho-xxxl)">Aa</td>
+                                <td><code>--tamanho-xxxl</code></td>
+                                <td class="invoisys-ds-hex"><code>32px</code></td>
+                            </tr>
+                            <tr>
+                                <td>Hero / destaque máximo reservado</td>
+                                <td class="invoisys-ds-td-type-sample" style="font-size:var(--tamanho-xxxxl)">Aa</td>
+                                <td><code>--tamanho-xxxxl</code></td>
+                                <td class="invoisys-ds-hex"><code>40px</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="invoisys-ds-subsection-title">Peso, interlinha e tracking</h3>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Variável</th>
+                                <th scope="col">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Peso extra-leve</td>
+                                <td><code>--peso-fonte-extra-leve</code></td>
+                                <td class="invoisys-ds-hex"><code>100</code></td>
+                            </tr>
+                            <tr>
+                                <td>Peso leve</td>
+                                <td><code>--peso-fonte-leve</code></td>
+                                <td class="invoisys-ds-hex"><code>300</code></td>
+                            </tr>
+                            <tr>
+                                <td>Peso regular</td>
+                                <td><code>--peso-fonte-normal</code></td>
+                                <td class="invoisys-ds-hex"><code>400</code></td>
+                            </tr>
+                            <tr>
+                                <td>Peso semibold (ênfase)</td>
+                                <td><code>--peso-fonte-strong</code></td>
+                                <td class="invoisys-ds-hex"><code>600</code></td>
+                            </tr>
+                            <tr>
+                                <td>Peso extrabold</td>
+                                <td><code>--peso-fonte-negrito</code></td>
+                                <td class="invoisys-ds-hex"><code>800</code></td>
+                            </tr>
+                            <tr>
+                                <td>Interlinha de corpo</td>
+                                <td><code>--line-height-corpo</code></td>
+                                <td class="invoisys-ds-hex"><code>1.5</code></td>
+                            </tr>
+                            <tr>
+                                <td>Interlinha compacta</td>
+                                <td><code>--line-height-tight</code></td>
+                                <td class="invoisys-ds-hex"><code>1.25</code></td>
+                            </tr>
+                            <tr>
+                                <td>Interlinha de títulos</td>
+                                <td><code>--line-height-heading</code></td>
+                                <td class="invoisys-ds-hex"><code>1.2</code></td>
+                            </tr>
+                            <tr>
+                                <td>Tracking estreito</td>
+                                <td><code>--letter-spacing-sm</code></td>
+                                <td class="invoisys-ds-hex"><code>-0.5px</code></td>
+                            </tr>
+                            <tr>
+                                <td>Tracking neutro</td>
+                                <td><code>--letter-spacing-md</code></td>
+                                <td class="invoisys-ds-hex"><code>0px</code></td>
+                            </tr>
+                            <tr>
+                                <td>Tracking aberto</td>
+                                <td><code>--letter-spacing-lg</code></td>
+                                <td class="invoisys-ds-hex"><code>0.5px</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tipografia-lato">Carregar Lato (ex.: Google Fonts)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">Incluir <strong>100, 300, 400, 700, 900</strong> (e itálico se precisares) para cobrir <code>--peso-fonte-*</code> e estilos herdados.</p>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML</span>
+                        <button type="button" data-ds-copy="pre-tipografia-fonte" data-testid="ds-copy-pre-tipografia-fonte"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-tipografia-fonte">{% raw %}&lt;link rel="preconnect" href="https://fonts.googleapis.com" /&gt;
+&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,400&amp;display=swap" rel="stylesheet" /&gt;{% endraw %}</pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tipografia-titulos">Classes de título (<code>tokens.css</code>)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Padrão de títulos reutilizável (sem obrigar a <code>&lt;h1&gt;</code>…<code>&lt;h6&gt;</code> fixos): você pode aplicar a qualquer elemento semântico
+                    (ex.: <code>&lt;h2 class="heading-md"&gt;</code> ou <code>&lt;p class="heading-sm"&gt;</code>).
+                </p>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Classe</th>
+                                <th scope="col">Token principal</th>
+                                <th scope="col">Exemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>.heading-xl</code></td>
+                                <td><code>--tamanho-xxxl</code> · <code>--fonte-principal</code> · <code>--cor-texto-secundario</code></td>
+                                <td><span class="heading-xl">heading-xl</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>.heading-md</code></td>
+                                <td><code>--tamanho-md</code></td>
+                                <td><span class="heading-md">heading-md</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>.heading-sm</code></td>
+                                <td><code>--tamanho-sm</code></td>
+                                <td><span class="heading-sm">heading-sm</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>.heading-xs</code></td>
+                                <td><code>--tamanho-xs</code></td>
+                                <td><span class="heading-xs">heading-xs</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tipografia-fs">Escala fluida (<code>.fs-1</code> … <code>.fs-6</code>)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Escala fluida para títulos grandes e telas variados: tamanhos com <code>calc</code> + <code>vw</code> (útil em heros, métricas e destaques numéricos).
+                </p>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Classe</th>
+                                <th scope="col">Valor em <code>tokens.css</code></th>
+                                <th scope="col">Exemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>.fs-1</code></td>
+                                <td class="invoisys-ds-hex"><code>calc(1.375rem + 1.5vw)</code></td>
+                                <td><span class="fs-1">Aa Bb 12</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>.fs-2</code></td>
+                                <td class="invoisys-ds-hex"><code>calc(1.325rem + .9vw)</code></td>
+                                <td><span class="fs-2">Aa Bb 12</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>.fs-3</code></td>
+                                <td class="invoisys-ds-hex"><code>calc(1.3rem + .6vw)</code></td>
+                                <td><span class="fs-3">Aa Bb 12</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>.fs-4</code></td>
+                                <td class="invoisys-ds-hex"><code>calc(1.275rem + .3vw)</code></td>
+                                <td><span class="fs-4">Aa Bb 12</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>.fs-5</code></td>
+                                <td class="invoisys-ds-hex"><code>1.25rem</code></td>
+                                <td><span class="fs-5">Aa Bb 12</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>.fs-6</code></td>
+                                <td class="invoisys-ds-hex"><code>1rem</code></td>
+                                <td><span class="fs-6">Aa Bb 12</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tipografia-peso">Peso e ênfase (<code>tokens.css</code>)</h2>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Classe</th>
+                                <th scope="col">Origem</th>
+                                <th scope="col">Exemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>.font-extra-leve</code></td>
+                                <td><code>var(--peso-fonte-extra-leve)</code> → <code>100</code></td>
+                                <td><span class="font-extra-leve" style="font-size:var(--tamanho-md)">Extra-leve</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>.font-leve</code></td>
+                                <td><code>var(--peso-fonte-leve)</code> → <code>300</code></td>
+                                <td><span class="font-leve" style="font-size:var(--tamanho-md)">Leve</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>.font-normal</code></td>
+                                <td><code>var(--peso-fonte-normal)</code> → <code>400</code></td>
+                                <td><span class="font-normal" style="font-size:var(--tamanho-md)">Normal</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>.font-strong</code></td>
+                                <td><code>var(--peso-fonte-strong)</code> → <code>600</code></td>
+                                <td><span class="font-strong" style="font-size:var(--tamanho-md)">Strong</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>.font-bold</code></td>
+                                <td><code>var(--peso-fonte-negrito)</code> → <code>800</code></td>
+                                <td><span class="font-bold" style="font-size:var(--tamanho-md)">Bold</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>.fw-light</code> … <code>.fw-bold</code></td>
+                                <td>Pesos fixos <code>300</code>–<code>700</code> (escala numérica; não usam <code>--peso-fonte-*</code>)</td>
+                                <td><span class="fw-bold" style="font-size:var(--tamanho-sm)">.fw-bold</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tipografia-cor-texto">Cor de texto semântica</h2>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Classe</th>
+                                <th scope="col">Token</th>
+                                <th scope="col">Exemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>.color-text</code></td>
+                                <td><code>color: var(--cor-texto-secundario)</code></td>
+                                <td><span class="color-text font-strong" style="font-size:var(--tamanho-md)">Texto secundário com ênfase</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tipografia-rotulos">Rótulos de formulário (<code>componentes.css</code>)</h2>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Classe</th>
+                                <th scope="col">Tokens</th>
+                                <th scope="col">Exemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>.text-label</code></td>
+                                <td><code>--tamanho-sm</code>, <code>--peso-fonte-normal</code>, <code>--cor-texto-secundario</code></td>
+                                <td><p class="text-label mb-0">Nome do campo</p></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tipografia-corpo">Corpo, lead e interlinha</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O <code>body</code> do portal não fixa uma única <code>font-size</code> global em todos os fluxos; usa <code>var(--tamanho-base-fonte)</code> / <code>--tamanho-sm</code> em componentes conforme o contexto.
+                    Para parágrafos de destaque (bloco introdutório mais legível que o corpo), combina <code>--tamanho-md</code> ou <code>--tamanho-xl</code> com <code>--line-height-corpo</code> ou <code>--line-height-tight</code> em CSS sob medida.
+                </p>
+                <div class="invoisys-ds-preview">
+                    <p class="mb-2" style="font-size:var(--tamanho-sm);line-height:var(--line-height-corpo);color:var(--cor-texto-principal);margin:0 0 0.75rem">Corpo padrão (<code>--tamanho-sm</code> + <code>--line-height-corpo</code>).</p>
+                    <p class="mb-0" style="font-size:var(--tamanho-md);line-height:var(--line-height-tight);color:var(--cor-texto-secundario)">Lead curto (<code>--tamanho-md</code> + <code>--line-height-tight</code>).</p>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tipografia-preview">Sandbox</h2>
+                <div class="invoisys-ds-preview">
+                    <p class="heading-xl mb-2">heading-xl</p>
+                    <p class="heading-md mb-2">heading-md</p>
+                    <p class="heading-sm mb-2">heading-sm</p>
+                    <p class="heading-xs mb-2">heading-xs</p>
+                    <p class="text-label mb-2">text-label (rótulo de formulário)</p>
+                    <p class="color-text font-strong mb-0" style="font-size:var(--tamanho-md)">Texto com .color-text e .font-strong</p>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tipografia-snippet">Snippet HTML</h2>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML</span>
+                        <button type="button" data-ds-copy="pre-tipografia" data-testid="ds-copy-pre-tipografia"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-tipografia">&lt;h1 class="heading-xl"&gt;Título da página&lt;/h1&gt;
+&lt;p class="text-label"&gt;Nome do campo&lt;/p&gt;
+&lt;p class="color-text font-strong"&gt;Ênfase no corpo&lt;/p&gt;
+&lt;p class="fs-4 mb-0"&gt;Título responsivo (fs-4)&lt;/p&gt;</pre>
+                </div>

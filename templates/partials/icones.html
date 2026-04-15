@@ -1,0 +1,129 @@
+                <h2 class="invoisys-ds-section-title" id="sec-icones-visao">Visão geral</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O portal usa <strong>Font Awesome</strong> com o padrão clássico <code>fa fa-*</code> (equivalente à linha 4.x),
+                    visível em scripts e markup de tabelas, filtros e modais (ex.: <code>fa-search</code>, <code>fa-calendar</code>, <code>fa-ellipsis-v</code>).
+                    Mantenha a <strong>mesma versão e arquivo</strong> que o <code>_Layout.cshtml</code> de produção — esta página carrega FA 4.7 via CDN só para pré-visualizar os exemplos.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Versões mais novas (5/6)</strong> usam prefixos como <code>fas</code>, <code>far</code> e nomes de glifo diferentes.
+                    Se o seu projeto migrar, atualize também os snippets desta doc; até lá, siga o padrão <code>fa fa-nome</code> alinhado ao código existente.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Design system:</strong> o ícone em si não substitui <strong>tokens.css</strong> — alinhamento, espaçamento e tamanho em relação ao texto usam as mesmas classes utilitárias (<code>d-flex</code>, <code>gap-*</code>, <code>fa-lg</code>, …) que o resto do portal.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-icones-carregar">Carregar no layout (MVC)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Garanta um único <code>&lt;link&gt;</code> para a folha do Font Awesome (caminho real conforme o seu <code>Content</code> ou CDN aprovado pela equipe).
+                </p>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Razor · Font Awesome 4.7 (CDN ilustrativo)</span>
+                        <button type="button" data-ds-copy="pre-icones-link" data-testid="ds-copy-pre-icones-link"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-icones-link">&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" /&gt;</pre>
+                </div>
+                <p class="text-label mb-0">Se o portal servir o CSS a partir de <code>~/Content/…</code>, substitua o <code>href</code> pelo caminho interno — o importante é não duplicar nem misturar duas major versions.</p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-icones-sintaxe">Sintaxe base</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Use um elemento em linha (<code>&lt;i&gt;</code> ou <code>&lt;span&gt;</code>) com as classes <code>fa</code> e <code>fa-nome-do-icone</code>.
+                </p>
+                <div class="invoisys-ds-preview d-flex flex-wrap align-items-center gap-3">
+                    <span><i class="fa fa-search" aria-hidden="true"></i> <code>fa fa-search</code></span>
+                    <span><i class="fa fa-cog" aria-hidden="true"></i> <code>fa fa-cog</code></span>
+                </div>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML</span>
+                        <button type="button" data-ds-copy="pre-icones-base" data-testid="ds-copy-pre-icones-base"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-icones-base">&lt;i class="fa fa-search" aria-hidden="true"&gt;&lt;/i&gt;</pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-icones-comuns">Ícones frequentes no código</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Amostra alinhada a padrões usados em listagens, toolbars e estados (Delivery Monitor, DataTables, modais). O nome em <code>code</code> é a segunda classe (<code>fa-*</code>).</p>
+                <div class="invoisys-ds-icon-grid" aria-label="Grelha de exemplos Font Awesome">
+                    {% for cls, legenda in [
+                        ('fa-search', 'Pesquisa'),
+                        ('fa-filter', 'Filtro'),
+                        ('fa-calendar', 'Data / calendário'),
+                        ('fa-bars', 'Menu / ColVis'),
+                        ('fa-ellipsis-v', 'Mais ações'),
+                        ('fa-chevron-down', 'Expandir'),
+                        ('fa-chevron-up', 'Recolher'),
+                        ('fa-eye', 'Mostrar'),
+                        ('fa-eye-slash', 'Ocultar'),
+                        ('fa-truck', 'Em trânsito'),
+                        ('fa-check-circle', 'Entregue / OK'),
+                        ('fa-times-circle', 'Recusado / erro'),
+                        ('fa-ban', 'Cancelado'),
+                        ('fa-clock-o', 'Atraso / tempo'),
+                        ('fa-file-text-o', 'Documento'),
+                        ('fa-file-pdf-o', 'PDF'),
+                        ('fa-square-o', 'Checkbox vazio'),
+                        ('fa-check-square-o', 'Checkbox marcado'),
+                        ('fa-minus-square-o', 'Checkbox indeterminado'),
+                        ('fa-pencil', 'Editar'),
+                        ('fa-exclamation-circle', 'Alerta'),
+                    ] %}
+                    <div class="invoisys-ds-icon-cell">
+                        <i class="fa {{ cls }}" aria-hidden="true"></i>
+                        <p class="invoisys-ds-icon-cell-label">{{ legenda }}</p>
+                        <code class="invoisys-ds-icon-cell-code">{{ cls }}</code>
+                    </div>
+                    {% endfor %}
+                </div>
+                <p class="invoisys-ds-callout">
+                    Em alguns modais o código usa <code>fa-close</code> no ícone de fechar. Em instalações FA 4.7 “stock”, o equivalente habitual é <code>fa-times</code> ou <code>fa-remove</code> — confirme qual o seu bundle exporta antes de copiar à letra.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-icones-tamanhos">Tamanhos</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Font Awesome 4 oferece classes de escala: <code>fa-lg</code>, <code>fa-2x</code> … <code>fa-5x</code>. Você pode combinar com utilitários de tamanho do DS (ex.: <code>f-20</code>) quando o projeto já os usa em botões de fechar.</p>
+                <div class="invoisys-ds-preview d-flex flex-wrap align-items-end gap-4">
+                    <span class="text-center"><i class="fa fa-star" aria-hidden="true"></i><br><code class="text-label">normal</code></span>
+                    <span class="text-center"><i class="fa fa-star fa-lg" aria-hidden="true"></i><br><code class="text-label">fa-lg</code></span>
+                    <span class="text-center"><i class="fa fa-star fa-2x" aria-hidden="true"></i><br><code class="text-label">fa-2x</code></span>
+                    <span class="text-center"><i class="fa fa-star fa-3x" aria-hidden="true"></i><br><code class="text-label">fa-3x</code></span>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-icones-contexto">Com texto e em botões</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Combine ícone e legenda com <code>d-flex</code> e <code>gap-*</code>, ou coloca o ícone dentro do <code>.btn</code> com pequena margem à direita.</p>
+                <div class="invoisys-ds-preview">
+                    <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+                        <a href="#" class="d-inline-flex align-items-center gap-2 color-text font-weight-bold" onclick="return false;" style="text-decoration:none">
+                            <i class="fa fa-download" aria-hidden="true"></i>
+                            <span>Exportar relatório</span>
+                        </a>
+                    </div>
+                    <button type="button" class="btn btn-primary">
+                        <i class="fa fa-plus" aria-hidden="true" style="margin-right:6px"></i>Novo registro
+                    </button>
+                    <button type="button" class="btn btn-secondary ms-2">
+                        <i class="fa fa-refresh" aria-hidden="true" style="margin-right:6px"></i>Atualizar
+                    </button>
+                </div>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML</span>
+                        <button type="button" data-ds-copy="pre-icones-botao" data-testid="ds-copy-pre-icones-botao"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-icones-botao">&lt;button type="button" class="btn btn-primary"&gt;
+  &lt;i class="fa fa-plus" aria-hidden="true"&gt;&lt;/i&gt; Novo registro
+&lt;/button&gt;</pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-icones-a11y">Acessibilidade</h2>
+                <ul class="color-text font-normal" style="margin:0; padding-left:1.25rem; max-width:min(100%,90ch); line-height:1.65">
+                    <li class="mb-2"><strong>Só decorativo</strong> — <code>aria-hidden="true"</code> no ícone e texto visível ao lado (ou no botão) descreve a ação.</li>
+                    <li class="mb-2"><strong>Botão só com ícone</strong> — <code>aria-label</code> (ou <code>title</code> insuficiente sozinho) no <code>&lt;button&gt;</code>, ex.: fechar modal.</li>
+                    <li><strong>Estado dinâmico</strong> — ao trocar <code>fa-eye</code> / <code>fa-eye-slash</code> por script, mantenha o nome acessível em outro elemento ou em <code>aria-pressed</code> se for um toggle explícito.</li>
+                </ul>
+
+                <h2 class="invoisys-ds-section-title" id="sec-icones-ref">Referência</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Lista completa de nomes para FA 4.7: <a href="https://fontawesome.com/v4/icons/" target="_blank" rel="noopener noreferrer">Font Awesome 4.7 icons</a> (site oficial em modo v4).
+                </p>

@@ -1,0 +1,1919 @@
+/**
+ * =============================================================================
+ * delivery-monitor.css — Notas emitidas · Delivery Monitor
+ * =============================================================================
+ * Vista: Views/DeliveryMonitor/Index.cshtml
+ * JS:   delivery-monitor-header.js, table-init.js; motor em ~/Scripts/Tabelas/table-setting.js
+ *
+ * O QUÊ FOI MOVIDO PARA table.css (refactor / partilha com NFe Entrada Beta)
+ * - Primeira linha da toolbar: [data-testid="deliverymonitor-toolbar-principal"] + combos internos
+ *   (espelho do [data-testid="nfeentrada-toolbar"]).
+ * - Classe base .nfeentrada-toolbar-btn (botão “Filtrar por” usa panel-card-btn + esta classe).
+ * Motivo: um só sítio para larguras/ flex da barra de data + pesquisa nas duas telas.
+ *
+ * ÍNDICE — pesquisar «§NN» no arquivo
+ * §01 Page / main          — overflow e altura do .page-content.delivery-monitor-page
+ * §02 Painel [data-table]  — flex do #dmDeliveryMonitorRoot; quem encolhe vs #dmTableWrap
+ * §03 Layout main interno  — .delivery-monitor-page > .header / .row / colunas
+ * §04 Toolbar só Delivery  — .dm-toolbar-date-range, .dm-grid-search-outer (NFe usa .filter-buttons)
+ * §05 DataTables base      — wrapper, <table>, <td>, .dm-col-status
+ * §06 Estado vazio         — :has(.empty-data-custom), .empty-data-custom, célula a 100% altura
+ * §07 Semáforos / ícones   — .dm-status-icon--*, .dm-bool-dot*, .dm-enviado-dot*, .dm-recebido-dot*
+ * §08 Colunas texto        — .dm-col-cliente, emitente, transportadora, chave; .dm-col-cliente-clip
+ * §09 Tooltip chave        — .dm-tooltip-chave-nfe-bubble (44 dígitos)
+ * §10 ColVis               — .dm-colvis-*, .dt-buttons ocultos
+ * §11 Modais               — .dm-cancel-modal; .dm-details-modal / .dm-eventos-*; .dm-comprovante-*
+ * §12 Coluna ações NF-e    — .dm-col-nfe-acoes, .dm-nfe-pill, hover .items-details
+ * §13 Scroll grid / footer — .scrollX.table-responsive-Y, .dm-page-length-wrap, dropdown length Select2
+ * §14 Totalizadores        — #dm_totalizadora_panel, .dm-metric-*, skeleton .dm-metric-box--loading
+ * §15 Empresa / Select2    — .dm-empresa-select-wrap* global 385px (componentes.css); combo data 385px (table.css); filtros + switch
+ * §16 Filtros avançados    — #dmWrapFiltrarPor, .dm-filters-*, .dm-filter-select2-dropdown
+ * §17 Pesquisa local grid — .dm-grid-search-*, .dm-local-search-empty-row, .dm-local-search-active
+ * §18 Responsivo filtros   — @media .dm-filters-row
+ * =============================================================================
+ */
+
+/* =============================================================================
+ * §01 — Page / main (.main-content … .page-content.delivery-monitor-page)
+ * O quê:  overflow-y auto, height auto, flex no main da página.
+ * Porquê: Em componentes.css o .page-content pode vir com overflow:hidden e height:100%, o que
+ *         colapsava filtros/tabela nalguns viewports. Isto corrige só a rota Delivery Monitor.
+ * Classes: .main-content, main.page-content.delivery-monitor-page, .page-content.delivery-monitor-page,
+ *          .delivery-monitor-page.page-content.page-thin (min-height + box-sizing).
+ * ============================================================================= */
+.main-content main.page-content.delivery-monitor-page,
+.main-content .page-content.delivery-monitor-page {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: auto !important;
+    max-height: none;
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.main-content .delivery-monitor-page.page-content.page-thin {
+    min-height: 0;
+    box-sizing: border-box;
+}
+
+/* =============================================================================
+ * §02 — Painel da listagem ([data-table="#tblDeliveryMonitor"].panel e filhos diretos)
+ * O quê:  O <section id="dmDeliveryMonitorRoot" tem data-table; aqui define-se coluna flex e quem
+ *         não encolhe (toolbar, métricas, filtros) vs área que cresce (#dmTableWrap, wrapper DataTables).
+ * Porquê: Mesmo padrão mental que NFe: card branco em coluna; tabela no espaço restante.
+ * Classes: [data-table="#tblDeliveryMonitor"].panel, #dmTableWrap.table-wrap,
+ *           #tblDeliveryMonitor_wrapper.dataTables_wrapper, regra .panel > *:not(#dmTableWrap)…
+ * ============================================================================= */
+[data-table="#tblDeliveryMonitor"].panel {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+/* =============================================================================
+ * §03 — Layout do <main> (.delivery-monitor-page > .header, .row, colunas)
+ * O quê:  Coluna flex no filho direto do main (header fixo, .row flex-1, colunas Bootstrap flexíveis).
+ * Porquê: Garantir que o conteúdo abaixo do cabeçalho da página preenche a altura útil sem depender
+ *         de regras genéricas que possam faltar nesta rota.
+ * Classes: .delivery-monitor-page, > .header, > .row, > .row > [class*="col-"]
+ * Nota:   A toolbar de dados (1.ª linha) está em table.css — ver cabeçalho deste arquivo.
+ * ============================================================================= */
+.delivery-monitor-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.delivery-monitor-page > .header {
+    flex-shrink: 0;
+}
+
+.delivery-monitor-page > .row {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.delivery-monitor-page > .row > [class*="col-"] {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =============================================================================
+ * §04 — Toolbar Delivery: bloco coluna (.dm-toolbar-primary-left) + gap data/pesquisa + empresa alinhada
+ * O quê:  .dm-toolbar-primary-row-date-search com gap-2 entre combo datas e .dm-grid-search-outer;
+ *         .dm-toolbar-primary-left .dm-empresa-select-wrap em largura fluida (igual à linha de cima).
+ * Porquê: HTML em Index.cshtml agrupa data+pesquisa+empresa numa coluna; anexo 2 — espaço entre data e
+ *         pesquisa e select empresa com a mesma largura útil que data+gap+pesquisa.
+ * Classes: .dm-toolbar-primary-left, .dm-toolbar-primary-row-date-search, .dm-toolbar-primary-actions,
+ *           .dm-toolbar-date-range, .dm-grid-search-outer (ver §17 .dm-grid-search-wrap …)
+ * ============================================================================= */
+.delivery-monitor-page .dm-toolbar-date-range {
+    min-width: min(240px, 100%);
+}
+
+/* Bloco data + gap + pesquisa + linha empresa (Index: .dm-toolbar-primary-left) */
+[data-table="#tblDeliveryMonitor"] .dm-toolbar-primary-left {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 100%;
+}
+
+[data-table="#tblDeliveryMonitor"] [data-testid="deliverymonitor-toolbar-principal"].dm-toolbar-primary {
+    align-items: center;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-toolbar-primary-row-date-search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    min-width: 0;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-toolbar-primary-row-date-search > .combo-container {
+    flex-shrink: 0;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-grid-search-outer {
+    min-width: 0;
+    flex: 1 1 200px;
+    align-self: center;
+}
+
+/* Select empresa na 2.ª linha: largura = data + gap + pesquisa (flex dentro da coluna; anula 385px fixos do componentes) */
+[data-table="#tblDeliveryMonitor"] .dm-toolbar-primary-left .dm-empresa-toolbar-main {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-toolbar-primary-left .dm-empresa-select-wrap {
+    flex: 1 1 auto;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-toolbar-primary-left .dm-empresa-select-wrap .select2-container {
+    max-width: none !important;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-toolbar-primary-left .dm-empresa-select-wrap .select2-container--default .select2-selection--single {
+    max-width: none !important;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-toolbar-primary-left .dm-empresa-select-wrap .select2-container--default .select2-selection--single .select2-selection__rendered,
+[data-table="#tblDeliveryMonitor"] .dm-toolbar-primary-left .dm-empresa-select-wrap .select2-container--default.select2-container--open .select2-selection--single .select2-selection__rendered,
+[data-table="#tblDeliveryMonitor"] .dm-toolbar-primary-left .dm-empresa-select-wrap .select2-container--default.select2-container--focus .select2-selection--single .select2-selection__rendered {
+    max-width: none !important;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-toolbar-primary-left .dm-empresa-select-wrap--loading > select.form-control,
+[data-table="#tblDeliveryMonitor"] .dm-toolbar-primary-left .dm-empresa-select-wrap--loading .select2-container--default .select2-selection--single .select2-selection__rendered {
+    max-width: none !important;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-toolbar-primary-left .dm-empresa-toolbar {
+    width: 100%;
+    min-width: 0;
+}
+
+/* §02 (continuação): filhos do painel acima da tabela não encolhem (toolbar, métricas, filtros, …) */
+[data-table="#tblDeliveryMonitor"].panel > *:not(#dmTableWrap):not(.loading-table) {
+    flex-shrink: 0;
+}
+
+[data-table="#tblDeliveryMonitor"] #dmTableWrap.table-wrap {
+    flex: 1 1 auto;
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper.dataTables_wrapper {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+/* =============================================================================
+ * §05 — DataTables: tabela #tblDeliveryMonitor — células e coluna status
+ * O quê:  Sobrescrever flex/altura da .table herdada de table.css; estilo base de <td>; .dm-col-status.
+ * Porquê: table.css força flex nas tabelas de listagem; nesta grid a tabela deve crescer com o conteúdo
+ *         (linhas variáveis) e não esticar a célula em altura infinita.
+ * Classes: table.table, table.dataTable, tbody tr/td, td.dm-col-status, .dm-status-cell, .dm-status-icon
+ * ============================================================================= */
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper table.table,
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper table.dataTable {
+    flex: 0 0 auto !important;
+    height: auto !important;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper tbody tr,
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper tbody tr td {
+    height: auto !important;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper tbody tr td {
+    background: #fff !important;
+    vertical-align: middle;
+    border: none;
+    font-size: 14px !important;
+    font-weight: 500;
+    height: 38px !important;
+    white-space: nowrap;
+    padding: 0 8px !important;
+    color: var(--cor-texto-secundario);
+    font-family: var(--fonte-principal);
+    font-size: var(--tamanho-sm);
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper td.dm-col-status {
+    min-width: 110px;
+    text-align: center;
+}
+
+/* =============================================================================
+ * §06 — Estado vazio da grid (.empty-data-custom, :has no #dmTableWrap)
+ * O quê:  Quando não há linhas ou há empty state injetado pelo JS, forçar a área da scroll a 100%
+ *         da #dmTableWrap e centrar o cartão vazio (noRecordsHtml / emptySearchHtml em table-setting.js).
+ * Porquê: O template pode vir com height em px; sem estes overrides o vazio não preenche a zona cinza.
+ * Classes: #dmTableWrap:has(.empty-data-custom), .empty-data-custom, .empty-item, .empty-card
+ * ============================================================================= */
+[data-table="#tblDeliveryMonitor"] #dmTableWrap:has(.empty-data-custom) #tblDeliveryMonitor_wrapper .scrollX.table-responsive-Y {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+[data-table="#tblDeliveryMonitor"] #dmTableWrap:has(.empty-data-custom) #tblDeliveryMonitor_wrapper table.table,
+[data-table="#tblDeliveryMonitor"] #dmTableWrap:has(.empty-data-custom) #tblDeliveryMonitor_wrapper table.dataTable {
+    flex: 1 1 auto !important;
+    min-height: 0;
+    height: 100% !important;
+}
+
+[data-table="#tblDeliveryMonitor"] #dmTableWrap:has(.empty-data-custom) #tblDeliveryMonitor_wrapper tbody tr {
+    height: 100%;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper tbody tr td:has(.empty-data-custom) {
+    height: 100% !important;
+    padding: 0 !important;
+    white-space: normal !important;
+    vertical-align: middle;
+}
+
+[data-table="#tblDeliveryMonitor"] .empty-data-custom.empty-state-container,
+[data-table="#tblDeliveryMonitor"] .empty-data-custom.empty-search-state {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+}
+
+[data-table="#tblDeliveryMonitor"] .empty-data-custom .empty-item,
+[data-table="#tblDeliveryMonitor"] .empty-data-custom .empty-card {
+    height: 100% !important;
+    width: auto !important;
+    max-width: 520px;
+    min-width: 260px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper td.dm-col-status .dm-status-cell {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper td.dm-col-status .dm-status-icon {
+    margin-top: 0;
+    font-size: 21px;
+}
+
+/* =============================================================================
+ * §07 — Cores de estado (ícones Font Awesome na coluna status + bolinhas Sim/Não e enviado)
+ * O quê:  Modificadores BEM .dm-status-icon--* e variantes .dm-recebido-dot--*, .dm-enviado-dot--*.
+ * Porquê: Paleta fixa por estado de entrega / documento; o HTML/JS emite estas classes conforme API.
+ * Classes: .dm-status-icon--transito, --entregue, --cancelado, --recusado, --atraso, …; .dm-bool-dot;
+ *           .dm-recebido-dot--sim|nao|unknown; .dm-enviado-dot--cinza|verde|vermelho|unknown
+ * ============================================================================= */
+[data-table="#tblDeliveryMonitor"] .dm-status-icon--transito {
+    color: #b8b8b8;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-status-icon--entregue {
+    color: #6fbe44;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-status-icon--cancelado {
+    color: #ff3b30;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-status-icon--recusado {
+    color: #ff4b3e;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-status-icon--recusa-cancelada {
+    color: #ff3b30;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-status-icon--atraso {
+    color: #ff9814;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-status-icon--doc-cancelado {
+    color: #ff3b30;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-status-icon--default {
+    color: #aaa;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-bool-dot-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-bool-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* Recebido: Sim verde, Não cinza */
+[data-table="#tblDeliveryMonitor"] .dm-recebido-dot--sim {
+    background: #6fbe44;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-recebido-dot--nao {
+    background: #9e9e9e;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-recebido-dot--unknown {
+    background: #b8b8b8;
+}
+
+/* Enviado (enviadoSistDestino): 1 cinza, 2 verde, 3 vermelho */
+[data-table="#tblDeliveryMonitor"] .dm-enviado-dot--cinza {
+    background: #9e9e9e;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-enviado-dot--verde {
+    background: #6fbe44;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-enviado-dot--vermelho {
+    background: #ff3b30;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-enviado-dot--unknown {
+    background: #b8b8b8;
+}
+
+/* =============================================================================
+ * §08 — Larguras e reticências das colunas de texto (cliente, emitente, transportadora, chave NF-e)
+ * O quê:  max/min width, ellipsis; .dm-col-cliente-clip para não estourar layout.
+ * Porquê: Dados longos (razão social, chave 44 chars) precisam de limites; tooltip de chave em §09.
+ * Classes: th/td.dm-col-cliente, .dm-col-cliente-clip, .dm-col-emitente, .dm-col-transportadora, .dm-col-chave-nfe
+ * ============================================================================= */
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper thead th.dm-col-cliente,
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper td.dm-col-cliente {
+    max-width: 180px;
+    width: 180px;
+    min-width: 120px;
+    overflow: hidden;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper thead th.dm-col-cliente {
+    white-space: nowrap;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper td.dm-col-cliente .dm-col-cliente-clip {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper thead th.dm-col-emitente,
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper td.dm-col-emitente {
+    max-width: 220px;
+    min-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper thead th.dm-col-transportadora,
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper td.dm-col-transportadora {
+    max-width: 220px;
+    min-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper thead th.dm-col-chave-nfe,
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper td.dm-col-chave-nfe {
+    max-width: 280px;
+    min-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+/* =============================================================================
+ * §09 — Tooltip da chave de acesso (.tooltip.dm-tooltip-chave-nfe-bubble)
+ * O quê:  .tooltip-inner com max-width grande e word-break para caber 44 dígitos.
+ * Porquê: O default Bootstrap (~200px) cortava a chave; leitores precisam ver o valor completo.
+ * ============================================================================= */
+.tooltip.dm-tooltip-chave-nfe-bubble .tooltip-inner {
+    max-width: min(28rem, 94vw);
+    white-space: normal;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    text-align: left;
+    line-height: 1.35;
+}
+
+/*
+ * Tooltip pesquisa / limpar — mesmo idioma visual que layout.css (.tooltip.* .tooltip-inner: branco, texto e borda #4FB73B),
+ * como o hint do label «Data emissão NF-e» (Bootstrap placement + seta verde).
+ */
+.tooltip.dm-toolbar-hint-tooltip {
+    opacity: 1;
+}
+
+.tooltip.dm-toolbar-hint-tooltip .tooltip-inner {
+    max-width: min(22rem, 90vw);
+    padding: 10px 14px;
+    text-align: center;
+    font-family: var(--fonte-principal);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.45;
+    color: #4fb73b;
+    background-color: #fff;
+    border: 1px solid #4fb73b;
+    border-radius: 6px;
+    white-space: normal;
+}
+
+/* =============================================================================
+ * §10 — Colunas visíveis (substitui ColVis nativo do DataTables nesta página)
+ * O quê:  Esconder .dt-buttons; painel absoluto .dm-colvis-panel, lista .dm-colvis-item, estados active/inactive.
+ * Porquê: UX alinhada ao restante do portal; botões default do plugin ficam invisíveis (duplicariam UI).
+ * Classes: .dm-colvis-host, .dm-colvis-panel, .dm-colvis-grid, .dm-colvis-item, .dm-colvis-handle, .dm-colvis-text
+ * ============================================================================= */
+[data-table="#tblDeliveryMonitor"] .dm-colvis-host {
+    position: relative;
+    overflow: visible;
+}
+
+[data-table="#tblDeliveryMonitor"] .dt-buttons {
+    display: none !important;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper > .dt-buttons {
+    display: none !important;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-colvis-panel {
+    position: absolute;
+    top: calc(100% + 6px) !important;
+    right: 0;
+    left: auto;
+    min-width: 340px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+    padding: 8px;
+    z-index: 1060;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-colvis-grid {
+    display: flex;
+    gap: 10px;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-colvis-col {
+    min-width: 150px;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-colvis-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    margin: 0 0 6px;
+    background: #f8f8f8;
+    border-radius: 2px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #5b5b5b;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-colvis-item--active {
+    opacity: 1;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-colvis-item--inactive {
+    opacity: .45;
+    color: #a8a8a8;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-colvis-item--inactive .dm-colvis-handle,
+[data-table="#tblDeliveryMonitor"] .dm-colvis-item--inactive .dm-colvis-text {
+    color: #a8a8a8;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-colvis-item:last-child {
+    margin-bottom: 0;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-colvis-checkbox {
+    display: none;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-colvis-handle {
+    color: #777;
+    font-size: 11px;
+    line-height: 1;
+    display: inline-flex;
+    gap: 1px;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-colvis-text {
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+/* =============================================================================
+ * §11 — Modais Bootstrap reutilizados só nesta feature (prefixos .dm-*)
+ * §11a — Cancelar comprovante / ação: .dm-cancel-modal (+ .modal-dialog, footer, .dm-cancel-modal-actions)
+ * §11b — Detalhes + eventos (timeline, XML): .dm-details-modal.dm-eventos-modal, .dm-eventos-*
+ * §11c — Pré-visualização comprovante: .dm-comprovante-modal, .dm-comprovante-modal__*
+ * Porquê: Centralizar na tela (transform), larguras máx. e corpos scrolláveis sem alterar modais globais.
+ * ============================================================================= */
+.dm-cancel-modal .modal-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(100% - 32px);
+    max-width: 470px;
+    margin: 0;
+    transform: translate(-50%, -50%) !important;
+}
+
+.dm-cancel-modal .modal-content {
+    max-width: 470px;
+    margin: 0 auto;
+}
+
+.dm-cancel-modal .modal-footer {
+    text-align: initial;
+}
+
+.dm-cancel-modal .dm-cancel-modal-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+/* Modal detalhes = linha do tempo de eventos (accordion + XML) */
+.dm-details-modal.dm-eventos-modal .modal-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(100% - 32px);
+    max-width: 820px;
+    margin: 0;
+    transform: translate(-50%, -50%) !important;
+}
+
+.dm-details-modal.dm-eventos-modal .modal-content {
+    max-width: 820px;
+    margin: 0 auto;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.dm-details-modal.dm-eventos-modal .modal-body.dm-eventos-modal__body {
+    padding: 16px 20px 22px;
+    max-height: calc(90vh - 120px);
+    overflow-y: auto;
+    /* Permite área de loading ocupar altura (quase quadrada em relação à largura ~820px). */
+    display: flex;
+    flex-direction: column;
+}
+
+.dm-eventos-modal__title {
+    font-size: 15px;
+    line-height: 1.35;
+    margin-right: 36px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    word-break: break-word;
+}
+
+.dm-eventos-modal__api-hint {
+    font-size: 12px;
+    color: #666;
+    margin: 0 0 16px;
+    padding: 10px 12px;
+    background: #f7faf6;
+    border: 1px solid #e3ebe0;
+    border-radius: 4px;
+    line-height: 1.45;
+}
+
+/* Área alta centrada; o texto de loading permanece compacto (pulse só no “chip”). */
+.dm-eventos-modal__loading-shell {
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: clamp(320px, min(54vh, 620px), 720px);
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.dm-eventos-modal__loading-msg {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.45;
+    color: #555;
+    text-align: center;
+    animation: loading-pulse 1.5s infinite ease-in-out;
+    border-radius: 6px;
+    max-width: 90%;
+}
+
+/* Estado vazio / erro na modal — mesma ideia que noRecordsHtml (table-setting.js): ícone + títulos centrados. */
+.dm-eventos-modal__empty-state {
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    width: 100%;
+    margin: 0;
+    padding: 24px 16px;
+}
+
+.dm-eventos-modal__empty-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    max-width: 520px;
+    width: 100%;
+}
+
+.dm-eventos-modal__empty-icon {
+    color: #eaeff5;
+    font-size: 50px;
+    line-height: 1;
+    margin-bottom: 20px;
+}
+
+.dm-eventos-modal__empty-title {
+    margin: 0 0 10px;
+    color: #333;
+}
+
+.dm-eventos-modal__empty-subtitle {
+    margin: 0;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Conteúdo após o loading: timeline ou mensagem de erro preenche o corpo sem forçar a mesma altura mínima. */
+.dm-eventos-modal__timeline-host {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+/* Lista + paginação: scroll interno limita altura; barra Anterior/Seguinte fixa por baixo do bloco rolável. */
+.dm-eventos-timeline-wrap {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    flex: 1 1 auto;
+    width: 100%;
+}
+
+/* min = max: reserva sempre a mesma “janela” (~5 itens), evitando a modal encolher na última página com 1–2 eventos. */
+.dm-eventos-modal__timeline-scroll {
+    max-height: min(55vh, 480px);
+    min-height: min(55vh, 480px);
+    overflow-y: auto;
+    flex: 1 1 auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.dm-eventos-modal__pager {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #e3ebe0;
+    flex-shrink: 0;
+}
+
+.dm-eventos-modal__pager-info {
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+    flex: 1 1 auto;
+    min-width: 140px;
+}
+
+.dm-eventos-modal__pager-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.dm-eventos-modal__timeline-host.dm-eventos-modal__timeline-host--empty {
+    min-height: clamp(320px, min(54vh, 620px), 720px);
+    display: flex;
+    flex-direction: column;
+}
+
+.dm-eventos-timeline {
+    position: relative;
+    padding: 4px 0 8px 0;
+}
+
+.dm-eventos-timeline__track {
+    position: absolute;
+    left: 13px;
+    top: 20px;
+    bottom: 20px;
+    width: 2px;
+    background: #d8d8d8;
+    border-radius: 1px;
+}
+
+.dm-eventos-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 10px;
+}
+
+.dm-eventos-item:last-child {
+    margin-bottom: 0;
+}
+
+.dm-eventos-item__marker {
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #4fb73b;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 3px #fff;
+}
+
+.dm-eventos-item__marker.dm-eventos-item__marker--audit-ok {
+    background: #4fb73b;
+}
+
+.dm-eventos-item__marker.dm-eventos-item__marker--audit-attn {
+    background: #4fb73b;
+}
+
+.dm-eventos-item__head--no-toggle {
+    cursor: default;
+}
+
+.dm-eventos-item__head--no-toggle:hover,
+.dm-eventos-item__head--no-toggle:focus {
+    background: #fafafa;
+}
+
+.dm-eventos-item__body {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.dm-eventos-item__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 14px;
+    margin: 0;
+    background: #fafafa;
+    border: 1px solid #e8e8e8;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    transition: background 0.15s ease;
+    box-sizing: border-box;
+}
+
+.dm-eventos-item__head:hover,
+.dm-eventos-item__head:focus {
+    background: #f3f3f3;
+    outline: none;
+}
+
+.dm-eventos-item__meta {
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: left;
+}
+
+.dm-eventos-item__dt {
+    display: block;
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.dm-eventos-item__title {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+    line-height: 1.35;
+}
+
+.dm-eventos-item__chev-wrap {
+    flex: 0 0 auto;
+    padding-top: 2px;
+    color: #777;
+}
+
+.dm-eventos-item__chev {
+    transition: transform 0.2s ease;
+    font-size: 14px;
+}
+
+.dm-eventos-item__head.collapsed .dm-eventos-item__chev {
+    transform: rotate(0deg);
+}
+
+.dm-eventos-item__head:not(.collapsed) .dm-eventos-item__chev {
+    transform: rotate(-90deg);
+}
+
+.dm-eventos-item__panel-inner {
+    padding: 0 0 4px 0;
+}
+
+.dm-eventos-item__xml {
+    margin: 8px 0 0;
+    padding: 14px 16px;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 11px;
+    line-height: 1.45;
+    color: #555;
+    background: #f4f4f4;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    max-height: 280px;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Modal comprovante de entrega (pré-visualização PDF/imagem) */
+.dm-comprovante-modal .modal-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(100% - 32px);
+    max-width: 960px;
+    margin: 0;
+    transform: translate(-50%, -50%) !important;
+}
+
+.dm-comprovante-modal .modal-content {
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.dm-comprovante-modal .modal-header {
+    flex-shrink: 0;
+    border-radius: 6px 6px 0 0;
+}
+
+.dm-comprovante-modal__title {
+    font-size: 15px;
+    line-height: 1.35;
+    margin-right: 36px;
+    word-break: break-word;
+}
+
+.dm-comprovante-modal .modal-body.dm-comprovante-modal__body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.dm-comprovante-modal__frame-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 auto;
+    min-height: min(65vh, 560px);
+    height: 65vh;
+    max-height: calc(90vh - 132px);
+    background: #ebebeb;
+}
+
+.dm-comprovante-modal__iframe {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #fff;
+}
+
+.dm-comprovante-modal__img {
+    display: none;
+    position: relative;
+    z-index: 0;
+    max-width: 100%;
+    max-height: calc(65vh - 48px);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.dm-comprovante-modal__loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(245, 245, 245, 0.95);
+    z-index: 2;
+}
+
+.dm-comprovante-modal__loading-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: #666;
+    animation: loading-pulse 1.5s infinite ease-in-out;
+    padding: 12px 24px;
+    border-radius: 8px;
+}
+
+.dm-comprovante-modal__placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+    background: #fafafa;
+    z-index: 1;
+}
+
+.dm-comprovante-modal__placeholder-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #444;
+    margin: 0 0 8px;
+}
+
+.dm-comprovante-modal__placeholder-text {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.5;
+    max-width: 420px;
+    margin: 0;
+}
+
+/* =============================================================================
+ * §12 — Coluna ações NF-e (.dm-col-nfe-acoes, .dm-nfe-pill, .items-details.dm-row-actions)
+ * O quê:  Largura mínima da coluna, flex da célula, pílula número/série, faixa de ícones que só
+ *         aparece no :hover da linha (largura animada de 0 → strip de 3×28px + gaps).
+ * Porquê: Antes ~184px < conteúdo (~191px) → quebra / scroll horizontal; UX alinhada à NFe.
+ * ============================================================================= */
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper thead th.dm-col-nfe-acoes,
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper td.dm-col-nfe-acoes {
+    --dm-nfe-acoes-strip: 96px; /* 3×28px + 2×6px gap */
+    --dm-nfe-col-min: 240px; /* número/série (ex. 123456/123) + pílula + ações no hover */
+    width: var(--dm-nfe-col-min);
+    min-width: var(--dm-nfe-col-min) !important;
+    max-width: none;
+    padding: 0 !important;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper td.dm-col-nfe-acoes .details {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 6px;
+    width: 100%;
+    min-width: 0;
+    min-height: 38px;
+    padding: 0 6px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+    [data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper td.dm-col-nfe-acoes .dm-nfe-pill {
+        min-width: 99px;
+        flex: 1 1 auto;
+        width: auto;
+        max-width: none;
+        padding-inline: 8px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #7a7a7a;
+        font-family: var(--fonte-principal);
+        font-size: var(--tamanho-sm);
+        font-weight: 700;
+        background: #e9e9e9 !important;
+        transition: flex .18s ease, min-width .18s ease, width .18s ease, max-width .18s ease, opacity .18s ease, padding .18s ease, color .18s ease;
+    }
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper tbody tr:hover td.dm-col-nfe-acoes .dm-nfe-pill {
+    padding-inline: 0;
+    opacity: 0.95;
+    color: transparent;
+    user-select: none;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper td.dm-col-nfe-acoes .items-details.dm-row-actions {
+    display: flex !important;
+    flex: 0 0 0;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition: width .18s ease, min-width .18s ease, max-width .2s ease, opacity .18s ease, flex .18s ease;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper tbody tr:hover td.dm-col-nfe-acoes .items-details.dm-row-actions {
+    flex: 0 0 103px;
+    width: var(--dm-nfe-acoes-strip) !important;
+    min-width: var(--dm-nfe-acoes-strip);
+    max-width: none;
+    opacity: 1;
+    pointer-events: auto;
+    overflow: visible;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper td.dm-col-nfe-acoes .items-details span {
+    flex: 0 0 28px;
+    width: 28px !important;
+    height: 28px !important;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 5px;
+    background: #FFFFFF !important;
+    color: #b1b1b1 !important;
+    border: 1px solid #dddddd;
+    cursor: pointer;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper td.dm-col-nfe-acoes .items-details span i {
+    color: #b1b1b1 !important;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper td.dm-col-nfe-acoes .items-details span:hover {
+    border: 1px solid #858585 !important;
+    background-color: #efefef !important;
+    box-shadow: none;
+    color: #858585 !important;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper td.dm-col-nfe-acoes .items-details span:hover i {
+    color: #858585 !important;
+}
+
+/* =============================================================================
+ * §13 — Área scroll da grid + rodapé DataTables + “resultados por página” (Select2 no body)
+ * O quê:  .scrollX.table-responsive-Y em flex com overflow-y auto; .footer-table sem encolher;
+ *         .dm-page-length-wrap alinha length à direita; dropdown Select2 do length com largura fixa 82px.
+ * Porquê: Com muitas linhas a tabela precisa de scroll interno; length estreito gerava scroll horizontal;
+ *         o Select2 injeta width inline — !important no :has(...) vence e mantém lista legível.
+ * Classes: .scrollX.table-responsive-Y, .footer-table, .dm-page-length-wrap; ul[id*="tblDeliveryMonitor_length"]
+ * ============================================================================= */
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper .scrollX.table-responsive-Y {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper .footer-table {
+    flex: 0 0 auto;
+    flex-shrink: 0;
+    overflow-x: visible;
+    overflow-y: visible;
+}
+
+/* §13 (cont.): “Exibindo … resultados por página” — min-width evita select comprimido + scroll horizontal */
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper .footer-table .dm-page-length-wrap {
+    margin-left: auto;
+    text-align: right;
+    flex-shrink: 0;
+    min-width: 14rem;
+    width: auto !important;
+    max-width: none;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper .footer-table .dm-page-length-wrap .dataTables_length,
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper .footer-table .dm-page-length-wrap .dataTables_length label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    gap: 6px;
+    margin-bottom: 0;
+    text-align: right;
+    width: auto !important;
+    max-width: none;
+    flex: 0 0 auto;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper .footer-table .dm-page-length-wrap .dataTables_length select {
+    margin: 0 4px;
+    min-width: 8.5rem;
+    width: auto !important;
+    max-width: none !important;
+    box-sizing: border-box;
+    padding: 4px 28px 4px 10px;
+    overflow: visible;
+}
+
+/* §13 (cont.): dropdown no body — id select2-tblDeliveryMonitor_length-*-results; 82px pedido UI */
+.select2-dropdown:has(ul.select2-results__options[id*="tblDeliveryMonitor_length"]) {
+    width: 82px !important;
+    min-width: 82px !important;
+    max-width: 82px !important;
+    box-sizing: border-box;
+}
+
+.select2-dropdown:has(ul.select2-results__options[id*="tblDeliveryMonitor_length"]) .select2-results__option {
+    white-space: nowrap;
+}
+
+/* =============================================================================
+ * §14 — Painel de totalizadores (#dm_totalizadora_panel, .dm-totalizadores-metrics, .metrics-box)
+ * O quê:  Ocultar métrica “recebido sistema destino” (6 caixas no markup, 5 visíveis no front);
+ *         wrap/gap/padding; tipografia .heading-sm / .heading-xl; linha .dm-metric-sub com ícone + %;
+ *         skeleton .dm-metric-box--loading (pulse @keyframes em table.css).
+ * Porquê: Layout e loading states específicos do Delivery; reforço visual dos rótulos sem alterar tokens globais.
+ * ============================================================================= */
+#dm_totalizadora_panel .dm-totalizadores-metrics > .metrics-box[data-testid="deliverymonitor-metrica-recebido-sistema-destino"] {
+    display: none !important;
+}
+
+#dm_totalizadora_panel .dm-totalizadores-metrics {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    background: #fff;
+    padding: 12px 8px;
+    border: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#dm_totalizadora_panel .dm-totalizadores-metrics > .metrics-box {
+    flex: 1 1 0;
+    min-width: 110px;
+    width: auto !important;
+    padding: 8px 6px;
+}
+
+/* §14 (cont.): rótulos em caixa alta / cinza — mock visual sem alterar tokens globais */
+#dm_totalizadora_panel .dm-totalizadores-metrics .metrics-box > .heading-sm {
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: #888;
+    font-size: 11px;
+    margin-top: 6px;
+    line-height: 1.3;
+}
+
+#dm_totalizadora_panel .dm-totalizadores-metrics .metrics-box > .heading-xl {
+    color: #555;
+}
+
+/* §14 (cont.): terceira linha — ícone + % (só Delivery) */
+.dm-metric-sub {
+    margin-top: 2px;
+    min-height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.dm-metric-sub--empty {
+    visibility: hidden;
+}
+
+/* §14 (cont.): linha extra para alinhar altura ao skeleton (sem % real da API) */
+[data-table="#tblDeliveryMonitor"] #dm_totalizadora_panel .metrics-box .dm-metric-sub--skeleton-only .dm-metric-icon,
+[data-table="#tblDeliveryMonitor"] #dm_totalizadora_panel .metrics-box .dm-metric-sub--skeleton-only .dm-metric-pct--placeholder {
+    visibility: hidden;
+}
+
+[data-table="#tblDeliveryMonitor"] #dm_totalizadora_panel .metrics-box.dm-metric-box--loading .dm-metric-sub--skeleton-only .dm-metric-icon,
+[data-table="#tblDeliveryMonitor"] #dm_totalizadora_panel .metrics-box.dm-metric-box--loading .dm-metric-sub--skeleton-only .dm-metric-pct--placeholder {
+    visibility: visible;
+}
+
+.dm-metric-icon {
+    color: #aaa;
+    font-size: 14px;
+    margin-top: 3px;
+}
+
+.dm-metric-pct {
+    color: #7cb342;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* §14 (cont.): skeleton — @keyframes loading-pulse em table.css */
+[data-table="#tblDeliveryMonitor"] #dm_totalizadora_panel .dm-totalizadores-metrics > .metrics-box.dm-metric-box--loading {
+    cursor: wait;
+}
+
+[data-table="#tblDeliveryMonitor"] #dm_totalizadora_panel .metrics-box.dm-metric-box--loading .dm-metric-count {
+    display: inline-block;
+    min-width: 2.75rem;
+    min-height: 2.35rem;
+    line-height: 2.35rem;
+    border-radius: 8px;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+    animation: loading-pulse 1.5s infinite ease-in-out;
+    vertical-align: middle;
+}
+
+[data-table="#tblDeliveryMonitor"] #dm_totalizadora_panel .metrics-box.dm-metric-box--loading .dm-metric-sub .dm-metric-pct {
+    display: inline-block;
+    min-width: 3.25rem;
+    min-height: 1.05rem;
+    line-height: 1.05rem;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent;
+    border-radius: 4px;
+    animation: loading-pulse 1.5s infinite ease-in-out;
+}
+
+[data-table="#tblDeliveryMonitor"] #dm_totalizadora_panel .metrics-box.dm-metric-box--loading .dm-metric-sub .dm-metric-icon {
+    opacity: 0.22;
+}
+
+/* =============================================================================
+ * §15 — Toolbar empresa + filiais (.dm-empresa-toolbar*, .combo-container 1.ª linha) + Select2 filtros scoped
+ * O quê:  flex nowrap; bloco data (combo-container exterior) 385px em table.css; estilos Select2 de .dm-filter-select-wrap só
+ *         neste painel; switch “Incluir Filiais”. Largura/select empresa: ver componentes.css (.dm-empresa-select-wrap).
+ * Porquê: Bug Windows / alinhamento; regras de empresa passaram a ser globais para reutilização.
+ * ============================================================================= */
+[data-table="#tblDeliveryMonitor"] .dm-empresa-toolbar {
+    flex-wrap: nowrap;
+}
+
+/* Empresa + “Incluir Filiais” (label lateral ao switch — ui.css) */
+[data-table="#tblDeliveryMonitor"] .dm-empresa-toolbar-main {
+    flex: 0 1 auto;
+    min-width: 0;
+    align-items: center;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-incluir-filial-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+/* Só o .combo-container interior da data (filho do .d-flex): altura da linha; largura vem de table.css + flex. */
+[data-table="#tblDeliveryMonitor"] [data-testid="deliverymonitor-toolbar-principal"] .combo-container > .d-flex > .combo-container {
+    height: 39px !important;
+}
+/* .d-flex usa display:flex !important — jQuery .hide() não escondia o bloco */
+[data-table="#tblDeliveryMonitor"] #dmIncluirFiliaisWrap.dm-incluir-filial-wrap--hidden {
+    display: none !important;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-incluir-filial-switch {
+    margin-top: -3px;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-incluir-filial-text-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 3px;
+    color: var(--cor-texto-secundario, #333);
+}
+
+[data-table="#tblDeliveryMonitor"] .switch-label:before {
+    -moz-transition: inherit;
+    -o-transition: inherit;
+    -webkit-transition: inherit;
+    color: #aaaaaa;
+    content: attr(data-off);
+    line-height: 1;
+    margin-top: -0.5em;
+    position: absolute;
+    /* right: 7px; */
+    right: 6px;
+    text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+    top: 51%;
+    transition: inherit;
+    transform: scale(0.97);
+}
+
+/* Select2 filtros avançados (toolbar / painel): mesma caixa que empresa mas 100% da coluna — só neste [data-table] */
+[data-table="#tblDeliveryMonitor"] .dm-filter-select-wrap .select2-container {
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filter-select-wrap .select2-container--default .select2-selection--single {
+    background: transparent !important;
+    height: 39px !important;
+    border: none !important;
+    border-radius: 4px;
+    max-width: 100%;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filter-select-wrap .select2-container--default .select2-selection--single .select2-selection__rendered,
+[data-table="#tblDeliveryMonitor"] .dm-filter-select-wrap .select2-container--default.select2-container--open .select2-selection--single .select2-selection__rendered,
+[data-table="#tblDeliveryMonitor"] .dm-filter-select-wrap .select2-container--default.select2-container--focus .select2-selection--single .select2-selection__rendered {
+    color: var(--cor-texto-secundario) !important;
+    font-family: var(--fonte-principal), var(--fonte-secundaria), sans-serif !important;
+    font-size: var(--tamanho-sm) !important;
+    font-weight: 700 !important;
+    margin: var(--none);
+    line-height: 37px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #FFF !important;
+    display: block;
+    padding-left: 8px;
+    padding-right: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -webkit-font-smoothing: antialiased;
+}
+
+[data-table="#tblDeliveryMonitor"] .select2-container--default.select2-container--below {
+    background: #F4F4F4 !important;
+    border: none !important;
+    border-radius: 4px;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filter-select-wrap .select2-container--default .select2-selection--single .select2-selection__rendered .select2-selection__placeholder {
+    color: var(--cor-texto-secundario) !important;
+    font-weight: 700 !important;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filter-select-wrap .select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: var(--cor-texto-secundario) transparent transparent transparent !important;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filter-select-wrap .select2-container--default .select2-selection--single .select2-selection__rendered {
+    max-width: 100%;
+}
+
+/* =============================================================================
+ * §16 — Filtros avançados (#dmWrapFiltrarPor, .dm-filters-*, .dm-filter-control, Select2 múltiplo)
+ * O quê:  Painel aberto (.filter-panel-open), skeleton no botão até GETs Status/Categoria, grid
+ *         .dm-filters-row, labels/controles, intervalo de datas com ícone calendário e clear só no painel,
+ *         Select2 no painel em 12px/400 (toolbar empresa fica 700 nos blocos §15), dropdown .dm-filter-select2-dropdown,
+ *         tags múltiplas verdes, .dm-filters-actions.
+ * Porquê: Paridade com NFe Entrada (#wrap… .filter-panel-open); UX de filtros consistente e legível.
+ * ============================================================================= */
+[data-table="#tblDeliveryMonitor"] .dm-filters-panel .dm-filter-select-wrap .select2-container--default .select2-selection--single .select2-selection__rendered,
+[data-table="#tblDeliveryMonitor"] .dm-filters-panel .dm-filter-select-wrap .select2-container--default.select2-container--open .select2-selection--single .select2-selection__rendered,
+[data-table="#tblDeliveryMonitor"] .dm-filters-panel .dm-filter-select-wrap .select2-container--default.select2-container--focus .select2-selection--single .select2-selection__rendered {
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    border-color: #ddd !important;
+    border-radius: 4px !important;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filters-panel .dm-filter-select-wrap .select2-container--default .select2-selection--single .select2-selection__rendered .select2-selection__placeholder {
+    font-weight: 400 !important;
+}
+
+/* Lista aberta dos filtros (dropdown no body com classe dm-filter-select2-dropdown) */
+.dm-filter-select2-dropdown .select2-results__option,
+.dm-filter-select2-dropdown .select2-search__field {
+    font-family: var(--fonte-principal), var(--fonte-secundaria), sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filter-select-wrap .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 37px;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-empresa-toolbar-spacer.flex-fill {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+/* Painel “Filtrar por”: grid 3 colunas, campos com mesma altura */
+/* Mesma lógica da NFe Entrada: [data-table] #wrap… .filter-panel-open */
+[data-table="#tblDeliveryMonitor"] #dmWrapFiltrarPor.filter-panel-open {
+    background: #ececec;
+}
+
+#dmToggleFiltros.active {
+    color: #333;
+}
+
+/*
+ * Botão “Filtrar por”: skeleton + pulse (table.css @keyframes loading-pulse) até GETs de Status/Categoria concluírem — espelha dm-empresa-select-wrap--loading.
+ */
+[data-table="#tblDeliveryMonitor"] #dmWrapFiltrarPor.dm-filtrar-por-wrap--loading {
+    cursor: wait !important;
+    pointer-events: none;
+    border-radius: 4px;
+    animation: loading-pulse 1.5s infinite ease-in-out;
+}
+
+[data-table="#tblDeliveryMonitor"] #dmWrapFiltrarPor.dm-filtrar-por-wrap--loading #dmToggleFiltros {
+    pointer-events: none;
+    cursor: wait !important;
+}
+
+[data-table="#tblDeliveryMonitor"] #dmWrapFiltrarPor.dm-filtrar-por-wrap--loading .heading-sm,
+[data-table="#tblDeliveryMonitor"] #dmWrapFiltrarPor.dm-filtrar-por-wrap--loading .heading-sm * {
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+    text-shadow: none !important;
+}
+
+.dm-filters-list-outer {
+    padding: 0!important;
+}
+
+.dm-filters-panel {
+    background-color: #f5f5f5;
+    padding: 16px 16px 14px;
+    margin-top: 8px;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.dm-filters-row {
+    margin-left: -8px;
+    margin-right: -8px;
+    margin-bottom: 14px;
+}
+
+.dm-filters-row > [class*="col-"] {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.dm-filters-row:last-of-type {
+    margin-bottom: 12px;
+}
+
+.dm-filter-field.form-group {
+    margin-bottom: 0;
+}
+
+.dm-filter-label {
+    font-size: 13px !important;
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+    text-transform: capitalize;
+   
+    color: #333;
+}
+
+.dm-filter-control {
+    width: 100% !important;
+    height: 39px !important;
+    min-height: 39px !important;
+    font-family: var(--fonte-principal), var(--fonte-secundaria), sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    line-height: normal;
+    background-color: #fff !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    box-shadow: none;
+    color: #333;
+    -webkit-font-smoothing: antialiased;
+}
+
+.dm-filter-control::placeholder {
+    font-style: italic;
+    color: #aaa;
+}
+
+.dm-filter-select-wrap {
+    position: relative;
+}
+
+.dm-filter-select-wrap select.dm-filter-control {
+    padding-right: 28px !important;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+.dm-filter-chevron {
+    position: absolute;
+    right: 11px;
+    top: 50%;
+    margin-top: -6px;
+    font-size: 11px;
+    color: #888;
+    pointer-events: none;
+    line-height: 1;
+}
+
+/* Intervalo: calendário; filtros avançados mantêm X à direita; data emissão na toolbar sem X */
+[data-table="#tblDeliveryMonitor"] .dm-filters-panel .dm-filter-range-container.prepend-icon,
+[data-table="#tblDeliveryMonitor"] .dm-toolbar-date-range.prepend-icon {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filters-panel .dm-filter-range-container.prepend-icon input.form-control,
+[data-table="#tblDeliveryMonitor"] .dm-toolbar-date-range.prepend-icon input.form-control {
+    padding-left: 36px !important;
+    width: 100%;
+    cursor: pointer;
+    /* readonly / valor preenchido: manter branco (evita cinza do Bootstrap) */
+    background-color: #fff !important;
+    color: var(--cor-texto-secundario, #333);
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filters-panel .dm-filter-range-container.prepend-icon input.form-control {
+    padding-right: 38px !important;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-toolbar-date-range.prepend-icon input.form-control {
+    padding-right: 12px !important;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filters-panel .dm-filter-range-container.prepend-icon input.form-control:-webkit-autofill,
+[data-table="#tblDeliveryMonitor"] .dm-toolbar-date-range.prepend-icon input.form-control:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+    box-shadow: 0 0 0 1000px #fff inset !important;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filters-panel .dm-filter-range-container.prepend-icon > i.fa-calendar,
+[data-table="#tblDeliveryMonitor"] .dm-toolbar-date-range.prepend-icon > i.fa-calendar {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: auto;
+    height: auto;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+    color: #888;
+    font-size: 13px;
+    pointer-events: none;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filters-panel .dm-filter-range-container.prepend-icon > i.fa-close {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    left: auto;
+    transform: translateY(-50%);
+    z-index: 3;
+    width: auto;
+    height: auto;
+    line-height: 1;
+    margin: 0;
+    padding: 4px;
+    color: #888;
+    font-size: 14px;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filters-panel .dm-filter-range-container.prepend-icon > i.fa-close:hover {
+    color: #5b5b5b;
+}
+
+[data-table="#tblDeliveryMonitor"] .combo-container .dm-toolbar-date-range.prepend-icon {
+    min-width: 220px;
+}
+
+.dm-filters-actions {
+    padding-top: 8px;
+    margin-left: 0;
+    margin-right: 0;
+    clear: both;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filters-panel .select2-container--default .select2-selection--multiple {
+    height: 39px;
+    min-height: 39px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0 28px 0 8px;
+    overflow: hidden;
+    background: #fff;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filters-panel .select2-container--default .select2-selection--multiple .select2-selection__rendered {
+    min-height: 37px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 0;
+    line-height: 37px;
+    font-family: var(--fonte-principal), var(--fonte-secundaria), sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--cor-texto-secundario, #333);
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filters-panel .select2-container--default .select2-selection--multiple .select2-search--inline {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filters-panel .select2-container--default .select2-selection--multiple .select2-search--inline .select2-search__field {
+    margin-top: 0;
+    height: 37px;
+    line-height: 37px;
+    font-size: 12px !important;
+    font-family: var(--fonte-principal), var(--fonte-secundaria), sans-serif !important;
+    font-weight: 400 !important;
+    color: var(--cor-texto-secundario, #333);
+    opacity: 1;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filters-panel .select2-container--default .select2-selection__clear {
+    display: none !important;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filters-panel .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    display: inline-flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    gap: 6px;
+    margin: 0;
+    padding: 4px 8px;
+    border: 0;
+    border-radius: 2px;
+    background: #4fb73b;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filters-panel .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    position: static;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    opacity: .9;
+}
+
+[data-table="#tblDeliveryMonitor"] .dm-filters-panel .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+    background: transparent;
+    color: #fff;
+    opacity: 1;
+}
+/* §12 (cont.): .items-details base na grade (fora da coluna NF-e a regra em §12 acima controla hover) */
+
+[data-table="#tblDeliveryMonitor"] .items-details {
+    display: none;
+    justify-content: start;
+    align-items: center;
+    flex-direction: row;
+    /* flex: 1 0 auto; */
+    gap: .5rem;
+    padding-inline: 8px 0px;
+    position: relative;
+}
+
+/* =============================================================================
+ * §17 — Pesquisa local na grade (.dm-grid-search-*, .dm-local-search-empty-row, .dm-local-search-active)
+ * O quê:  Input com padding para botão limpar; .dm-local-search-info; esconder paginação quando o
+ *         filtro só aplica às linhas já carregadas; estado vazio = linha tbody colspan + thead oculto (noRecordsHtml / table-setting.js).
+ * Porquê: Pesquisa client-side não combina com mudar de página; overlay absoluto partia o alinhamento do thead.
+ * ============================================================================= */
+.delivery-monitor-page .dm-grid-search-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.delivery-monitor-page .dm-grid-search-input.search-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 36px;
+}
+
+.delivery-monitor-page .dm-grid-search-clear {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: #6b7280;
+    font-size: 1.35rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delivery-monitor-page .dm-grid-search-clear:hover {
+    color: #111827;
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.delivery-monitor-page .dm-grid-search-clear.is-hidden {
+    display: none;
+}
+
+#tblDeliveryMonitor_wrapper .dataTables_info .dm-local-search-info {
+    line-height: 1.45;
+}
+
+/* §17 (cont.): paginação oculta enquanto filtro local ativo */
+#tblDeliveryMonitor_wrapper.dm-local-search-active .dataTables_paginate {
+    display: none !important;
+}
+
+/* Estado “nenhum resultado” na pesquisa local: só mensagem + linha colspan — cabeçalho oculto (como draw.dt com 0 linhas na ref. table-setting). */
+#tblDeliveryMonitor_wrapper.dm-local-search-empty-visible #tblDeliveryMonitor thead {
+    display: none !important;
+}
+
+#tblDeliveryMonitor_wrapper.dm-local-search-empty-visible #tblDeliveryMonitor {
+    min-width: 100%;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+/* Centra verticalmente o bloco da tabela (1 linha curta) na área rolável. */
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor_wrapper.dm-local-search-empty-visible .scrollX.table-responsive-Y {
+    display: flex !important;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor tbody tr.dm-local-search-empty-row td.dm-local-search-empty-cell {
+    text-align: center;
+    vertical-align: middle !important;
+    padding: 40px 20px !important;
+    background: #fff !important;
+    white-space: normal !important;
+    border: none !important;
+    height: auto !important;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor tbody tr.dm-local-search-empty-row .dm-local-search-empty-inner {
+    width: 100%;
+    max-width: 520px;
+    min-width: 260px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor tbody tr.dm-local-search-empty-row .heading-md,
+[data-table="#tblDeliveryMonitor"] #tblDeliveryMonitor tbody tr.dm-local-search-empty-row .heading-sm {
+    text-align: center;
+    width: 100%;
+}
+
+/* =============================================================================
+ * §18 — Responsivo: filtros avançados (@media max-width 991px)
+ * O quê:  Espaçamento vertical entre colunas da .dm-filters-row em tablets/mobile.
+ * Porquê: Grid Bootstrap 3 colunas lado a lado ficam apertadas; margem evita campos colados.
+ * ============================================================================= */
+@media (max-width: 991px) {
+    .dm-filters-row > [class*="col-"] {
+        margin-bottom: 12px;
+    }
+
+    .dm-filters-row > [class*="col-"]:last-child {
+        margin-bottom: 0;
+    }
+}

@@ -1,0 +1,43 @@
+                <h2 class="invoisys-ds-section-title" id="sec-logo-visao">Visão geral</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O logotipo deve aparecer nítido, com proporção estável e <code>alt</code> correto.
+                    O arquivo usado nesta documentação (<code>invoisys-logo-flat.png</code>) foi pensado para <strong>fundo de marca</strong> (verde), como na topbar do portal — sobre branco ou cinza muito claro o contraste é fraco ou invisível.
+                    Para cabeçalhos em papel claro, use a variante oficial do kit de marca (PNG/SVG aprovados para fundo claro).
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Proporção:</strong> Mantenha <code>height: auto</code> (ou <code>width</code>/<code>height</code> coerentes) — a proporção do arquivo é ~2,77:1. Evite distorcer o desenho.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-logo-exemplos">Exemplos (fundo de marca)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Dois encaixes típicos no produto: barra compacta (estilo navegação) e zona com mais respiro (ex.: cabeçalho de tela de login).
+                </p>
+
+                <div class="invoisys-ds-logo-demo-label">Barra compacta — altura ~50px, logotipo ~34px de altura</div>
+                <div class="invoisys-ds-logo-banner invoisys-ds-logo-banner--compact">
+                    <img src="{{ url_for('static', filename='images/brand/invoisys-logo-flat.png') }}" alt="Invoisys" width="200" height="72" class="invoisys-ds-logo-banner-img" decoding="async" loading="lazy" />
+                </div>
+
+                <div class="invoisys-ds-logo-demo-label" style="margin-top:var(--espacamento-lg)">Destaque — mais padding e logotipo maior</div>
+                <div class="invoisys-ds-logo-banner invoisys-ds-logo-banner--hero">
+                    <img src="{{ url_for('static', filename='images/brand/invoisys-logo-flat.png') }}" alt="Invoisys" width="280" height="101" class="invoisys-ds-logo-banner-img" decoding="async" loading="lazy" />
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-logo-html">Marcação HTML</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">Vincule o logotipo à home com <code>aria-label</code> no link; o <code>alt</code> do <code>&lt;img&gt;</code> identifica a marca.</p>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML</span>
+                        <button type="button" data-ds-copy="pre-logo" data-testid="ds-copy-pre-logo"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-logo">&lt;a href="/" aria-label="Invoisys — início"&gt;
+  &lt;img
+    src="/static/images/brand/invoisys-logo-flat.png"
+    alt="Invoisys"
+    width="180"
+    height="65"
+    decoding="async"
+    loading="lazy"
+  /&gt;
+&lt;/a&gt;</pre>
+                </div>

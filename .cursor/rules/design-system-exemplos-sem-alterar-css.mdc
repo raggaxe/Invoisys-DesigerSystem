@@ -1,0 +1,22 @@
+---
+description: Exemplos e storybook só com classes existentes; não alterar CSS canónico do portal.
+alwaysApply: true
+---
+
+# Design system — exemplos sem alterar o CSS do portal
+
+## Regra
+
+- **Não acrescentar nem editar regras** nos ficheiros de estilo do design system do portal: `main.css`, `tokens.css`, `componentes.css`, `table.css`, nem CSS de páginas específicas (ex. `Pages/...`), salvo pedido explícito noutra tarefa.
+- **Componentes e exemplos** (documentação, previews, snippets para MVC) devem ser feitos **apenas com HTML/markup e classes já definidas** nesses ficheiros.
+- **Composição**: combinar utilitários e classes de componente existentes; evitar `style=""` salvo demonstração pontual mínima.
+
+## Documentação (site storybook)
+
+- O ficheiro **`static/css/docs/design-system-docs.css`** existe só para o **layout da página de documentação** (sidebar, topbar, blocos de código, preview). **Não** usar esse ficheiro para definir novos padrões de UI do produto nem duplicar tokens de `main.css`.
+- **Templates** (`templates/*.html`): exemplos copiáveis e pré-visualizações alinhados a **ASP.NET MVC** e classes já disponíveis.
+
+## O que fazer quando faltar uma classe
+
+- **Não** implementar a solução no CSS canónico como parte do exemplo.
+- Propor o markup com o que já existe ou registar lacuna para o desenhador/equipa responsável pelos tokens e `componentes.css`.

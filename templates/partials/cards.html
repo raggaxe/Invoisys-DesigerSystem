@@ -1,0 +1,427 @@
+                <h2 class="invoisys-ds-section-title" id="sec-cards-visao">Visão geral</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Em <strong>backoffice financeiro</strong> (faturação, tesouraria, crédito, contabilidade) os “cards” reutilizam vários padrões do portal:
+                    <strong>faixa de KPIs / totalizadores</strong> (valor → rótulo em maiúsculas → ícone + %, como em <strong>Delivery Monitor</strong>);
+                    <strong>carrossel de fases / plugins</strong> (<code>.metrics-carousel</code> + <code>.metrics-box</code> com <code>.metrics-box-header</code>, <code>.pill</code>, <code>.progress.metrics-progress</code> e <code>.progress-bar-*</code>);
+                    <strong>carrossel de indicadores</strong> (<code>.metrics-carousel</code> + <code>.metrics-box</code> em <strong>componentes.css</strong>);
+                    <strong>superfícies brancas</strong> (<code>.panel</code> em <strong>table.css</strong>); e
+                    <strong>composição com utilitários</strong> (<strong>tokens.css</strong> — bordas, grade, tipografia).
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Stack:</strong> carrega <code>table.css</code> nas views com listagens ou painéis alinhados à NF-e / DataTables — esta documentação passou a incluir essa folha para os exemplos abaixo refletirem a cascade real (<code>main</code> → <code>tokens</code> → <code>table</code> → <code>componentes</code>).
+                    Estados de carregamento: ver <a href="#skeletons">Skeletons</a> (<code>.skeleton-pulse</code>, <code>.skeleton-pulse--field</code>).
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-cards-kpi">KPIs · faixa de totalizadores (Delivery Monitor)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O padrão usado em <strong>logística / entregas</strong> (e reutilizável em finanças para contagens por estado) é uma <strong>linha branca</strong> com várias colunas: em cima o <strong>número</strong> (tipografia grande, cinza escuro),
+                    abaixo o <strong>rótulo em maiúsculas</strong> (cinza médio) e na terceira linha um <strong>ícone + percentagem</strong> em verde (<code>--cor-dm-acento-verde</code> no portal).
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Em produção (MVC):</strong> o markup vive em <code>#dm_totalizadora_panel</code> com <code>.dm-totalizadores-metrics</code> e vários <code>.metrics-box</code> — cada caixa com <code>.heading-xl</code> (ou contador), <code>.heading-sm</code> (rótulo) e <code>.dm-metric-sub</code> com <code>.dm-metric-icon</code> + <code>.dm-metric-pct</code>.
+                    Os detalhes tipográficos e o wrap vêm de <strong>delivery-monitor.css</strong> (seção totalizadores). A pré-visualização abaixo reproduz o aspecto em <strong>design-system-docs.css</strong> com classes <code>invoisys-ds-kpi-*</code> para o storybook não depender dessa folha de página.
+                </p>
+                <div class="invoisys-ds-preview p-0 overflow-hidden rounded border" style="border-color: var(--cor-borda-neutra); background-color: var(--cor-superficie-suave)">
+                    <div class="invoisys-ds-kpi-dashboard" role="group" aria-label="Totalizadores de exemplo">
+                        <div class="invoisys-ds-kpi-tile">
+                            <p class="invoisys-ds-kpi-value">10</p>
+                            <p class="invoisys-ds-kpi-label">Em trânsito</p>
+                            <div class="invoisys-ds-kpi-footer">
+                                <i class="fa fa-truck" aria-hidden="true"></i>
+                                <span class="invoisys-ds-kpi-pct">29,8%</span>
+                            </div>
+                        </div>
+                        <div class="invoisys-ds-kpi-tile">
+                            <p class="invoisys-ds-kpi-value">8</p>
+                            <p class="invoisys-ds-kpi-label">Entrega realizada</p>
+                            <div class="invoisys-ds-kpi-footer">
+                                <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                <span class="invoisys-ds-kpi-pct">21,2%</span>
+                            </div>
+                        </div>
+                        <div class="invoisys-ds-kpi-tile">
+                            <p class="invoisys-ds-kpi-value">7</p>
+                            <p class="invoisys-ds-kpi-label">Em atraso</p>
+                            <div class="invoisys-ds-kpi-footer">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                <span class="invoisys-ds-kpi-pct">20,7%</span>
+                            </div>
+                        </div>
+                        <div class="invoisys-ds-kpi-tile">
+                            <p class="invoisys-ds-kpi-value">0</p>
+                            <p class="invoisys-ds-kpi-label">Não entregue</p>
+                            <div class="invoisys-ds-kpi-footer">
+                                <i class="fa fa-ban" aria-hidden="true"></i>
+                                <span class="invoisys-ds-kpi-pct">0%</span>
+                            </div>
+                        </div>
+                        <div class="invoisys-ds-kpi-tile">
+                            <p class="invoisys-ds-kpi-value">5</p>
+                            <p class="invoisys-ds-kpi-label">Enviado para sistema destino</p>
+                            <div class="invoisys-ds-kpi-footer invoisys-ds-kpi-footer--empty" aria-hidden="true">
+                                <i class="fa fa-truck" aria-hidden="true"></i>
+                                <span class="invoisys-ds-kpi-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML · MVC (totalizadores — trecho)</span>
+                        <button type="button" data-ds-copy="pre-cards-kpi" data-testid="ds-copy-pre-cards-kpi"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-cards-kpi"><code class="invoisys-ds-pre-code">&lt;!-- Requer delivery-monitor.css na view + estrutura [data-table] conforme a página --&gt;
+&lt;div id="dm_totalizadora_panel"&gt;
+    &lt;div class="dm-totalizadores-metrics d-flex flex-wrap"&gt;
+        &lt;div class="metrics-box"&gt;
+            &lt;div class="heading-xl dm-metric-count"&gt;10&lt;/div&gt;
+            &lt;p class="heading-sm"&gt;Em trânsito&lt;/p&gt;
+            &lt;div class="dm-metric-sub"&gt;
+                &lt;i class="fa fa-truck dm-metric-icon" aria-hidden="true"&gt;&lt;/i&gt;
+                &lt;span class="dm-metric-pct"&gt;29,8%&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;!-- … mais .metrics-box … --&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+
+                <h3 class="invoisys-ds-subsection-title" id="sec-cards-kpi-carousel">Variação · carrossel com barras (NF-e / indicadores)</h3>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Outro padrão do portal é o <strong>carrossel</strong> de caixas com <code>.metric-paramentro</code>, valor e opcionalmente barra <code>.metrics-progress</code> — ver <strong>componentes.css</strong> (<code>.metrics-carousel-wrapper</code> …).
+                </p>
+                <div class="invoisys-ds-preview p-3" style="background-color: var(--cor-superficie-suave)">
+                    <div class="metrics-carousel-wrapper">
+                        <div class="metrics-carousel static w-100">
+                            <div class="metrics-track">
+                                <div class="metrics-box" style="background-color: var(--cor-superficie); border: 1px solid var(--cor-borda-neutra); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06)">
+                                    <div class="metric-paramentro text-truncate">Exposição aprovada</div>
+                                    <div class="heading-xl mb-0">€ 312&nbsp;450</div>
+                                    <div class="metrics-box-row d-flex align-items-center gap-2 mt-2">
+                                        <div class="metrics-bar-wrap flex-grow-1 min-w-0">
+                                            <div class="metrics-progress rounded">
+                                                <span class="progress-bar progress-bar-success" style="width: 62%"></span>
+                                            </div>
+                                        </div>
+                                        <div class="count flex-shrink-0"><div>62%</div></div>
+                                    </div>
+                                </div>
+                                <div class="metrics-box" style="background-color: var(--cor-superficie); border: 1px solid var(--cor-borda-neutra); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06)">
+                                    <div class="metric-paramentro text-truncate">Utilização de linha</div>
+                                    <div class="heading-xl mb-0">€ 180&nbsp;000</div>
+                                    <div class="metrics-box-row d-flex align-items-center gap-2 mt-2">
+                                        <div class="metrics-bar-wrap flex-grow-1 min-w-0">
+                                            <div class="metrics-progress rounded">
+                                                <span class="progress-bar progress-bar-info" style="width: 45%"></span>
+                                            </div>
+                                        </div>
+                                        <div class="count flex-shrink-0"><div>45%</div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-cards-metrics-phases">Carrossel · fases / plugins (<code>.metrics-box</code>)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Em <strong>pipelines de plugins</strong> (ex.: NFe / PO), cada fase é um <code>.metrics-box</code> dentro de <code>.metrics-carousel</code> → <code>.metrics-track</code>.
+                    O <strong>cabeçalho da fase</strong> usa <code>.metrics-box-header</code> com <code>.pill.pill-default.pill-square</code> (índice), <code>.heading-sm.fw-bold.metrics-phase-title</code> (nome, truncável) e <code>.count</code> (total da fase).
+                    As <strong>linhas de estado</strong> são <code>.metrics-box-row</code> com <code>.metric-paramentro</code> (rótulo), <code>.metrics-bar-wrap</code> envolvendo <code>.progress.metrics-progress</code> e barras <code>.progress-bar-success</code> / <code>.progress-bar-info</code> / <code>.progress-bar-danger</code> (largura em <code>style</code> ou calculada no servidor), e outra <code>.count</code> com o valor.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>CSS:</strong> grade e barras vêm de <strong>componentes.css</strong> (seção carrossel de métricas: <code>.metrics-carousel .metrics-box …</code>). Pills em <code>.pill</code>, <code>.pill-default</code>, <code>.pill-square</code>.
+                    O JS do portal define <code>style</code> em <code>.metrics-track</code> (<code>width</code>, <code>transform</code>) para deslizar entre fases; em telas estáticos usa-se <code>.metrics-carousel.static</code> (sem setas).
+                    <strong>Carregamento:</strong> <a href="#skeletons">Skeletons</a> (<code>.skeleton-pulse</code>) sobre a faixa ou por caixa.
+                </p>
+                <div class="invoisys-ds-preview p-3 invoisys-ds-preview--metrics-phases" style="background-color: var(--cor-superficie-suave)">
+                    <div class="metrics-carousel-wrapper">
+                        <div class="metrics-carousel static w-100">
+                            <div class="metrics-track">
+                                <div class="metrics-box" style="flex: 0 0 auto; width: 340px; min-width: 340px;">
+                                    <div class="metrics-box-header d-flex justify-content-start align-items-center w-100 gap-3">
+                                        <div class="pill pill-default pill-square fw-bold flex-shrink-0">1</div>
+                                        <div class="heading-sm fw-bold flex-fill text-truncate metrics-phase-title">Plugin NFe PO</div>
+                                        <div class="flex-shrink-0 count"><div class="fw-bold">51</div></div>
+                                    </div>
+                                    <div class="metrics-box-row d-flex justify-content-start align-items-center w-100 gap-2 mt-2">
+                                        <div class="metric-paramentro text-nowrap flex-shrink-0">Concluídos</div>
+                                        <div class="metrics-bar-wrap flex-grow-1 min-w-0">
+                                            <div class="progress metrics-progress">
+                                                <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="count flex-shrink-0"><div class="fw-bold">51</div></div>
+                                    </div>
+                                    <div class="metrics-box-row d-flex justify-content-start align-items-center w-100 gap-2">
+                                        <div class="metric-paramentro text-nowrap flex-shrink-0">Em processamento</div>
+                                        <div class="metrics-bar-wrap flex-grow-1 min-w-0">
+                                            <div class="progress metrics-progress">
+                                                <div class="progress-bar progress-bar-info" style="width: 0%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="count flex-shrink-0"><div class="fw-bold">0</div></div>
+                                    </div>
+                                    <div class="metrics-box-row d-flex justify-content-start align-items-center w-100 gap-2">
+                                        <div class="metric-paramentro text-nowrap flex-shrink-0">Erros / Inválidos</div>
+                                        <div class="metrics-bar-wrap flex-grow-1 min-w-0">
+                                            <div class="progress metrics-progress">
+                                                <div class="progress-bar progress-bar-danger" style="width: 1.9607843137254901%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="count flex-shrink-0"><div class="fw-bold">1</div></div>
+                                    </div>
+                                </div>
+                                <div class="metrics-box" style="flex: 0 0 auto; width: 340px; min-width: 340px;">
+                                    <div class="metrics-box-header d-flex justify-content-start align-items-center w-100 gap-3">
+                                        <div class="pill pill-default pill-square fw-bold flex-shrink-0">2</div>
+                                        <div class="heading-sm fw-bold flex-fill text-truncate metrics-phase-title">Script Tag Resumo Nfe x Pedido</div>
+                                        <div class="flex-shrink-0 count"><div class="fw-bold">35</div></div>
+                                    </div>
+                                    <div class="metrics-box-row d-flex justify-content-start align-items-center w-100 gap-2 mt-2">
+                                        <div class="metric-paramentro text-nowrap flex-shrink-0">Concluídos</div>
+                                        <div class="metrics-bar-wrap flex-grow-1 min-w-0">
+                                            <div class="progress metrics-progress">
+                                                <div class="progress-bar progress-bar-success" style="width: 94.28571428571428%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="count flex-shrink-0"><div class="fw-bold">33</div></div>
+                                    </div>
+                                    <div class="metrics-box-row d-flex justify-content-start align-items-center w-100 gap-2">
+                                        <div class="metric-paramentro text-nowrap flex-shrink-0">Em processamento</div>
+                                        <div class="metrics-bar-wrap flex-grow-1 min-w-0">
+                                            <div class="progress metrics-progress">
+                                                <div class="progress-bar progress-bar-info" style="width: 0%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="count flex-shrink-0"><div class="fw-bold">0</div></div>
+                                    </div>
+                                    <div class="metrics-box-row d-flex justify-content-start align-items-center w-100 gap-2">
+                                        <div class="metric-paramentro text-nowrap flex-shrink-0">Erros / Inválidos</div>
+                                        <div class="metrics-bar-wrap flex-grow-1 min-w-0">
+                                            <div class="progress metrics-progress">
+                                                <div class="progress-bar progress-bar-danger" style="width: 5.714285714285714%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="count flex-shrink-0"><div class="fw-bold">2</div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML · uma fase (<code>.metrics-box</code>) — copiar e repetir no <code>.metrics-track</code></span>
+                        <button type="button" data-ds-copy="pre-cards-metrics-phases" data-testid="ds-copy-pre-cards-metrics-phases"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-cards-metrics-phases"><code class="invoisys-ds-pre-code">&lt;!-- metrics-carousel-wrapper &gt; metrics-carousel &gt; metrics-track; repetir .metrics-box por fase --&gt;
+&lt;div class="metrics-box" style="flex:0 0 auto;width:340px;min-width:340px"&gt;
+    &lt;div class="metrics-box-header d-flex justify-content-start align-items-center w-100 gap-3"&gt;
+        &lt;div class="pill pill-default pill-square fw-bold flex-shrink-0"&gt;1&lt;/div&gt;
+        &lt;div class="heading-sm fw-bold flex-fill text-truncate metrics-phase-title"&gt;Plugin NFe PO&lt;/div&gt;
+        &lt;div class="flex-shrink-0 count"&gt;&lt;div class="fw-bold"&gt;51&lt;/div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="metrics-box-row d-flex justify-content-start align-items-center w-100 gap-2 mt-2"&gt;
+        &lt;div class="metric-paramentro text-nowrap flex-shrink-0"&gt;Concluídos&lt;/div&gt;
+        &lt;div class="metrics-bar-wrap flex-grow-1 min-w-0"&gt;
+            &lt;div class="progress metrics-progress"&gt;
+                &lt;div class="progress-bar progress-bar-success" style="width:100%"&gt;&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="count flex-shrink-0"&gt;&lt;div class="fw-bold"&gt;51&lt;/div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="metrics-box-row d-flex justify-content-start align-items-center w-100 gap-2"&gt;
+        &lt;div class="metric-paramentro text-nowrap flex-shrink-0"&gt;Em processamento&lt;/div&gt;
+        &lt;div class="metrics-bar-wrap flex-grow-1 min-w-0"&gt;
+            &lt;div class="progress metrics-progress"&gt;
+                &lt;div class="progress-bar progress-bar-info" style="width:0%"&gt;&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="count flex-shrink-0"&gt;&lt;div class="fw-bold"&gt;0&lt;/div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="metrics-box-row d-flex justify-content-start align-items-center w-100 gap-2"&gt;
+        &lt;div class="metric-paramentro text-nowrap flex-shrink-0"&gt;Erros / Inválidos&lt;/div&gt;
+        &lt;div class="metrics-bar-wrap flex-grow-1 min-w-0"&gt;
+            &lt;div class="progress metrics-progress"&gt;
+                &lt;div class="progress-bar progress-bar-danger" style="width:1.9607843137254901%"&gt;&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="count flex-shrink-0"&gt;&lt;div class="fw-bold"&gt;1&lt;/div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-cards-kpi-grid">Variação · mini‑KPIs em grade</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Em dashboards compactos, mantenha a <strong>mesma hierarquia</strong> que na faixa de totalizadores: <strong>valor em cima</strong>, <strong>rótulo</strong> abaixo (você pode usar <code>.heading-xl</code> + <code>.heading-sm</code> em caixa única com <code>text-center</code>).
+                </p>
+                <div class="invoisys-ds-preview p-3" style="background-color: var(--cor-superficie-suave)">
+                    <div class="d-flex flex-wrap gap-2 w-100" style="max-width: 720px">
+                        <div class="border rounded p-3 flex-grow-1 text-center" style="min-width: 140px; max-width: 220px; background-color: var(--cor-superficie); box-sizing: border-box">
+                            <p class="heading-xl mb-0">1,24</p>
+                            <p class="heading-sm mb-0 mt-1">Liquidez</p>
+                        </div>
+                        <div class="border rounded p-3 flex-grow-1 text-center" style="min-width: 140px; max-width: 220px; background-color: var(--cor-superficie); box-sizing: border-box">
+                            <p class="heading-xl mb-0">38 <span class="fw-normal" style="font-size: var(--tamanho-sm)">dias</span></p>
+                            <p class="heading-sm mb-0 mt-1">DSO médio</p>
+                        </div>
+                        <div class="border rounded p-3 flex-grow-1 text-center" style="min-width: 140px; max-width: 220px; background-color: var(--cor-superficie); box-sizing: border-box">
+                            <p class="heading-xl mb-0">52%</p>
+                            <p class="heading-sm mb-0 mt-1">Concentração top 5</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-cards-cliente">Cliente / contraparte (resumo)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Ficha resumida: cabeçalho com nome e ícone, lista de pares rótulo / valor com <code>border-bottom</code> e tipografia de apoio (<code>.text-muted</code>, <code>.fw-bold</code>).
+                    Ajuste colunas com <code>flex-wrap</code> e <code>min-w-0</code> para NIF longos não estourarem o layout.
+                </p>
+                <div class="invoisys-ds-preview">
+                    <div class="border rounded overflow-hidden w-100" style="max-width: 440px; background-color: var(--cor-superficie); box-sizing: border-box">
+                        <div class="d-flex align-items-start justify-content-between gap-2 p-3 border-bottom" style="border-color: var(--cor-borda-neutra)">
+                            <div class="min-w-0">
+                                <h3 class="heading-md mb-0 text-truncate">Acme &amp; Filhos, Lda.</h3>
+                                <p class="text-muted mb-0 mt-1" style="font-size: var(--tamanho-sm)">Cliente · segmento Corporate</p>
+                            </div>
+                            <span class="flex-shrink-0 d-inline-flex align-items-center justify-content-center rounded" style="width:40px;height:40px;background:var(--cor-superficie-suave);color:var(--cor-texto-secundario)" aria-hidden="true"><i class="fa fa-building"></i></span>
+                        </div>
+                        <div class="p-3">
+                            <dl class="mb-0">
+                                <div class="d-flex flex-wrap justify-content-between gap-2 py-2 border-bottom" style="border-color: var(--cor-borda-neutra)">
+                                    <dt class="text-muted fw-normal mb-0">NIF</dt>
+                                    <dd class="mb-0 text-end fw-bold">508 123 456</dd>
+                                </div>
+                                <div class="d-flex flex-wrap justify-content-between gap-2 py-2 border-bottom" style="border-color: var(--cor-borda-neutra)">
+                                    <dt class="text-muted fw-normal mb-0">Plafond aprovado</dt>
+                                    <dd class="mb-0 text-end fw-bold">€ 500&nbsp;000</dd>
+                                </div>
+                                <div class="d-flex flex-wrap justify-content-between gap-2 py-2 border-bottom" style="border-color: var(--cor-borda-neutra)">
+                                    <dt class="text-muted fw-normal mb-0">Exposição atual</dt>
+                                    <dd class="mb-0 text-end fw-bold">€ 312&nbsp;450</dd>
+                                </div>
+                                <div class="d-flex flex-wrap justify-content-between gap-2 pt-2">
+                                    <dt class="text-muted fw-normal mb-0">Rating interno</dt>
+                                    <dd class="mb-0 text-end"><span class="fw-bold" style="color: var(--cor-brand)">A-</span></dd>
+                                </div>
+                            </dl>
+                            <div class="d-flex flex-wrap gap-2 mt-3">
+                                <a href="#" class="btn btn-primary" onclick="return false;" data-testid="ds-cards-cliente-btn-extrato">Extrato</a>
+                                <button type="button" class="btn btn-secondary" data-testid="ds-cards-cliente-btn-notas">Notas</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML · resumo cliente (trecho)</span>
+                        <button type="button" data-ds-copy="pre-cards-cliente" data-testid="ds-copy-pre-cards-cliente"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-cards-cliente"><code class="invoisys-ds-pre-code">&lt;div class="border rounded overflow-hidden" style="max-width:440px;background-color:var(--cor-superficie)"&gt;
+    &lt;div class="d-flex align-items-start justify-content-between gap-2 p-3 border-bottom"&gt;
+        &lt;div class="min-w-0"&gt;
+            &lt;h3 class="heading-md mb-0 text-truncate"&gt;Acme &amp; Filhos, Lda.&lt;/h3&gt;
+            &lt;p class="text-muted mb-0 mt-1"&gt;Cliente · segmento Corporate&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;span class="flex-shrink-0 d-inline-flex align-items-center justify-content-center rounded" aria-hidden="true"&gt;&lt;i class="fa fa-building"&gt;&lt;/i&gt;&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="p-3"&gt;
+        &lt;dl class="mb-0"&gt;
+            &lt;div class="d-flex justify-content-between py-2 border-bottom"&gt;
+                &lt;dt class="text-muted fw-normal mb-0"&gt;NIF&lt;/dt&gt;
+                &lt;dd class="mb-0 text-end fw-bold"&gt;508 123 456&lt;/dd&gt;
+            &lt;/div&gt;
+        &lt;/dl&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-cards-operacional">Operacional · alerta e tarefas</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Cartões de <strong>estado</strong> (vencimentos, anomalias, fila de aprovação): combina <code>.border</code>, cor semântica com variáveis de <strong>main.css</strong> e lista simples com ícones Font Awesome.
+                </p>
+                <div class="invoisys-ds-preview">
+                    <div class="d-flex flex-wrap gap-3 w-100" style="max-width: 720px">
+                        <div class="border rounded p-3 flex-grow-1" style="min-width: 260px; max-width: 340px; background-color: var(--cor-danger-fundo-claro); border-color: var(--cor-danger-border) !important; box-sizing: border-box">
+                            <p class="fw-bold mb-2" style="color: var(--cor-danger-texto)"><i class="fa fa-exclamation-triangle me-1" aria-hidden="true"></i>3 faturas em atraso</p>
+                            <ul class="mb-0 ps-3 color-text" style="font-size: var(--tamanho-sm); line-height: 1.5">
+                                <li class="mb-1">FT 2025/8842 · venceu há 12 dias</li>
+                                <li class="mb-1">FT 2025/8891 · venceu há 4 dias</li>
+                                <li>NC 2025/120 · aguarda conciliação</li>
+                            </ul>
+                        </div>
+                        <div class="border rounded p-3 flex-grow-1" style="min-width: 260px; max-width: 340px; background-color: var(--cor-superficie); box-sizing: border-box">
+                            <p class="heading-sm mb-2">Fila de aprovação</p>
+                            <p class="heading-xl mb-2">7</p>
+                            <p class="text-muted mb-3" style="font-size: var(--tamanho-sm)">Crédito · limite &gt; plafond regional</p>
+                            <button type="button" class="btn btn-band w-100" data-testid="ds-cards-operacional-btn-rever-pedidos">Rever pedidos</button>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-cards-vazio">Sem dados (indicadores)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Quando ainda não há série para gráfico ou KPI, o portal usa <code>.indicadores-empty-msg</code> (altura mínima alinhada ao carrossel) em <strong>componentes.css</strong>.
+                </p>
+                <div class="invoisys-ds-preview p-3" style="background-color: var(--cor-superficie-suave)">
+                    <div class="indicadores-empty-msg border rounded" style="background-color: var(--cor-superficie); border-color: var(--cor-borda-neutra)">
+                        <span class="text-muted" style="font-size: var(--tamanho-sm)">Ainda não existem indicadores para o período selecionado.</span>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-cards-panel">Painel branco (.panel)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O contêiner <code>.panel</code> (em <strong>table.css</strong>) é a base do <strong>card branco</strong> em torno de grades e filtros: fundo branco, padding e coluna flexível.
+                    Em listagens reais costuma ir com <code>data-table</code> e <code>.panel-content</code>; aqui fica um exemplo mínimo de “zona de trabalho” dentro da página.
+                </p>
+                <div class="invoisys-ds-preview p-3" style="background-color: var(--cor-superficie-suave)">
+                    <div class="panel rounded border" style="max-width: 560px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); border-color: var(--cor-borda-neutra); box-sizing: border-box">
+                        <h3 class="heading-md mb-2">Conciliação bancária</h3>
+                        <p class="text-muted mb-3" style="font-size: var(--tamanho-sm)">Movimentos importados · conta ****3210</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <button type="button" class="btn btn-primary" data-testid="ds-cards-panel-btn-importar-ofx">Importar OFX</button>
+                            <button type="button" class="btn btn-secondary" data-testid="ds-cards-panel-btn-regras">Regras</button>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-cards-toolbar">Toolbar compacta (<code>.panel-card-btn</code>)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O mesmo padrão está resumido em <a href="#sec-botoes-toolbar-nfe">Botões · toolbar NFe</a>.
+                </p>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    <strong>Mostrar Métricas</strong> e <strong>Filtrar por</strong> compartilham o mesmo chip visual: <code>.panel-card-btn.nfeentrada-toolbar-btn</code> em <strong>table.css</strong> (fundo branco, altura <strong>39px</strong>, <code>justify-content: space-between</code>).
+                    O <strong>conteúdo</strong> é o do portal em cada caso: métricas = texto + <strong>olho</strong> (<code>fa-eye</code>) à <strong>direita</strong>, sem chevron; filtro = <strong>funil</strong> + texto + <strong>chevron</strong>.
+                    O contêiner <code>.panel-card</code> com <code>.metrics-button</code> ainda existe em telas legadas — para o chip atual, use só o botão como abaixo.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Ícones (Font Awesome 4.7):</strong> métricas <code>fa-eye</code> (só um ícone); filtro <code>fa-filter</code> + <code>fa-chevron-down</code>. A doc centra o texto do filtro entre os dois ícones via <strong>design-system-docs.css</strong> (<code>:has(&gt; .fa-filter)</code> na pré-visualização).
+                </p>
+                <div class="invoisys-ds-preview invoisys-ds-preview--toolbar-cards d-flex flex-wrap gap-2 align-items-center p-3" style="background-color: var(--cor-superficie-suave)" data-testid="ds-cards-preview-toolbar">
+                    <button type="button" class="panel-card-btn nfeentrada-toolbar-btn" aria-expanded="false" aria-controls="idPainelMetricasExemplo" data-testid="ds-cards-toolbar-metricas">
+                        <span class="heading-sm mb-0">Mostrar Métricas</span>
+                        <i class="fa fa-eye flex-shrink-0" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="panel-card-btn nfeentrada-toolbar-btn" aria-expanded="false" aria-controls="idDoPainelFiltros" data-testid="ds-cards-toolbar-filtrar">
+                        <i class="fa fa-filter flex-shrink-0" aria-hidden="true"></i>
+                        <span class="heading-sm mb-0">Filtrar por</span>
+                        <i class="fa fa-chevron-down flex-shrink-0" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML · Mostrar Métricas + Filtrar por</span>
+                        <button type="button" data-ds-copy="pre-cards-toolbar" data-testid="ds-copy-pre-cards-toolbar"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-cards-toolbar"><code class="invoisys-ds-pre-code">&lt;button type="button" class="panel-card-btn nfeentrada-toolbar-btn" aria-expanded="false" aria-controls="idPainelMetricas"&gt;
+    &lt;span class="heading-sm mb-0"&gt;Mostrar Métricas&lt;/span&gt;
+    &lt;i class="fa fa-eye flex-shrink-0" aria-hidden="true"&gt;&lt;/i&gt;
+&lt;/button&gt;
+
+&lt;button type="button" class="panel-card-btn nfeentrada-toolbar-btn" aria-expanded="false" aria-controls="idPainelFiltros"&gt;
+    &lt;i class="fa fa-filter flex-shrink-0" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;span class="heading-sm mb-0"&gt;Filtrar por&lt;/span&gt;
+    &lt;i class="fa fa-chevron-down flex-shrink-0" aria-hidden="true"&gt;&lt;/i&gt;
+&lt;/button&gt;</code></pre>
+                </div>

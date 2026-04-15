@@ -1,0 +1,75 @@
+                <h2 class="invoisys-ds-section-title" id="sec-cabecalho-visao">Visão geral</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Este padrão documenta o cabeçalho usado em <strong>Notas Recebidas · NF-e</strong>: título à esquerda (texto leve + destaque em negrito), botão de ajuda contextual e trilho à direita.
+                    O markup segue a cascata documentada em <a href="#sec-introducao-cascade">Introdução — ordem de cascade nas views</a> (<strong>main.css</strong> → <strong>tokens.css</strong> → <strong>table.css</strong> quando aplicável → <strong>componentes.css</strong>) e o Font Awesome do layout.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Replicação no portal:</strong> copie o HTML do bloco <strong>Copiar</strong> para a view; classes como <code>f-20</code>, <code>btn-ajuda-header</code> e <code>iconAjudaContextual</code> vivem no CSS da solução MVC.
+                    A pré-visualização abaixo usa só <strong>design-system-docs.css</strong> para aproximar o aspecto da plataforma (maiúsculas e separadores • no trilho, ícone circular, barra com borda inferior) — ajuste conforme os seus arquivos em <code>Content/Css</code>.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Onde está o CSS base:</strong> <strong>componentes.css</strong> — <code>.main-content .page-content &gt; .header</code> (<code>padding-block: 15px 0</code>). Em listagens NF-e, <strong>table.css</strong> — <code>&gt; .header { flex-shrink: 0 }</code> em <code>.nfeentrada-layout</code> / <code>.layout-datatable-page</code>.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-cabecalho-nfe-real">Exemplo (NF-e Entrada)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Pré-visualização alinhada ao tela da plataforma: trilho em maiúsculas com pontos entre entradas, link Home a verde marca, ícone de ajuda em círculo verde com ponto de interrogação branco.
+                </p>
+                <div class="invoisys-ds-preview invoisys-ds-preview--nfe-header" data-testid="ds-cabecalho-preview-nfe">
+                    <div class="main-content invoisys-ds-preview-main w-100">
+                        <div class="page-content invoisys-ds-preview-page-content">
+                            <div id="pageHeader" class="header d-flex justify-content-between align-items-center invoisys-ds-nfe-header-demo" data-testid="nfeentrada-page-header">
+                                <div class="min-w-0 pe-2">
+                                    <h2>
+                                        Notas Recebidas: <strong>NF-e</strong><button type="button" class="f-20 cursor-pointer iconAjudaContextual btn-ajuda-header" data-toggle="tooltip" data-testid="nfeentrada-ajuda" data-placement="right" title="" aria-label="Ajuda sobre NF-e recebidas" onclick="return false;" data-original-title="Clique para consultar ajuda sobre este item."><i class="fa fa-question" aria-hidden="true"></i></button>
+                                    </h2>
+                                </div>
+                                <div class="breadcrumb-wrapper flex-shrink-0" data-testid="nfeentrada-breadcrumb">
+                                    <ol class="breadcrumb invoisys-ds-nfe-breadcrumb">
+                                        <li>
+                                            <a href="#" data-testid="nfeentrada-breadcrumb-home">Home</a>
+                                        </li>
+                                        <li>Notas Recebidas</li>
+                                        <li>NF-e</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-label mb-2">Na doc, o botão de ajuda usa <code>onclick="return false;"</code>; o snippet copiável mantém <code>abrirModalAjuda</code>. O link Home usa <code>href="#"</code> aqui; em produção usa <code>href="/"</code> como no snippet.</p>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML · produção (MVC)</span>
+                        <button type="button" data-ds-copy="pre-cabecalho-nfe-real" data-testid="ds-copy-pre-cabecalho-nfe-real"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <p class="text-label mb-0" style="padding:0 var(--espacamento-md);margin:0;background:var(--cor-superficie-suave);border-bottom:1px solid var(--cor-borda)">Bloco seguinte: <strong>código para copiar</strong> (fundo escuro e letra monoespaçada) — não é uma segunda pré-visualização.</p>
+                    <pre class="invoisys-ds-pre" id="pre-cabecalho-nfe-real"><code class="invoisys-ds-pre-code">&lt;div id="pageHeader" class="header d-flex justify-content-between align-items-center" data-testid="nfeentrada-page-header"&gt;
+        &lt;div&gt;
+            &lt;h2&gt;
+                Notas Recebidas: &lt;strong&gt;NF-e&lt;/strong&gt;&lt;button type="button" class="f-20 cursor-pointer iconAjudaContextual btn-ajuda-header" data-toggle="tooltip" data-testid="nfeentrada-ajuda" data-placement="right" title="" aria-label="Ajuda sobre NF-e recebidas" onclick="abrirModalAjuda('gerenciar-recebidas', 1);" data-original-title="Clique para consultar ajuda sobre este item."&gt;&lt;i class="fa fa-question" aria-hidden="true"&gt;&lt;/i&gt;&lt;/button&gt;
+            &lt;/h2&gt;
+        &lt;/div&gt;
+        &lt;div class="breadcrumb-wrapper" data-testid="nfeentrada-breadcrumb"&gt;
+            &lt;ol class="breadcrumb"&gt;
+                &lt;li&gt;
+                    &lt;a href="/" style="color:#4FB73B" data-testid="nfeentrada-breadcrumb-home"&gt;Home&lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li&gt;Notas Recebidas&lt;/li&gt;
+                &lt;li&gt;NF-e&lt;/li&gt;
+            &lt;/ol&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;</code></pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-cabecalho-listagens">Listagens</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Em views com grade a altura total (<code>.layout-datatable-page</code>), o cabeçalho não encolhe — vê <strong>table.css</strong> e <strong>Tabelas · visão geral</strong>.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-cabecalho-checklist">Checklist</h2>
+                <ul class="color-text font-normal" style="margin:0; padding-left:1.25rem; max-width:min(100%,90ch); line-height:1.65">
+                    <li class="mb-2">Hierarquia de título coerente; <code>data-testid</code> estáveis para testes.</li>
+                    <li class="mb-2">Ajuda contextual: <code>aria-label</code> no botão; tooltip alinhado ao Bootstrap em uso.</li>
+                    <li class="mb-0">Trilho: links reais e contraste; preferir <code>var(--cor-brand)</code> em código novo em vez de hex solto.</li>
+                </ul>

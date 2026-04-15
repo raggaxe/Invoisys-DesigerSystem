@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Export estático para GitHub Pages (gerado por scripts/export_static_site.py)
+site/

@@ -1,0 +1,70 @@
+                <h2 class="invoisys-ds-section-title" id="sec-texto-visao">Visão geral</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Utilitários de <code>text-align</code>, quebra de linha, truncagem e tom secundário em <strong>tokens.css</strong>.
+                    Complementam <strong>Tipografia</strong> (escala <code>.heading-*</code>, <code>.fs-*</code>, pesos). A página <strong>Flexbox</strong> trata do layout em filas/colunas (<code>justify-content</code>, <code>align-items</code>, etc.).
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-texto-alinhamento">Bloco e <code>text-align</code></h2>
+                <div class="invoisys-ds-space-grid">
+                    {% for c in ['text-start', 'text-center', 'text-end'] %}
+                    <div>
+                        <p class="invoisys-ds-flex-demo-label mb-1">.{{ c }}</p>
+                        <div class="{{ c }} rounded border py-3 px-2" style="border-color:var(--cor-borda);background:var(--cor-superficie-suave);font-size:var(--tamanho-sm);color:var(--cor-texto-heading)">Texto de exemplo</div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-texto-fluxo">Fluxo e quebra</h2>
+
+                <h3 class="invoisys-ds-subsection-title"><code>.text-nowrap</code></h3>
+                <p class="text-label mb-2">Uma linha; combina com contêiner estreito e <code>overflow-hidden</code> se precisares de cortar sem reticências.</p>
+                <div class="text-nowrap overflow-hidden rounded border py-2 px-2" style="max-width:180px;border-color:var(--cor-borda);font-size:var(--tamanho-sm)">Texto longo numa única linha sem quebrar</div>
+
+                <h3 class="invoisys-ds-subsection-title"><code>.text-break</code></h3>
+                <p class="text-label mb-2">Permite partir palavras / URLs muito longas.</p>
+                <div class="text-break rounded border p-2" style="max-width:220px;border-color:var(--cor-borda);font-size:var(--tamanho-sm);color:var(--cor-texto-principal)">https://portal.exemplo.com/caminho/muito/longo/sem/espacos/entre/segmentos</div>
+
+                <h3 class="invoisys-ds-subsection-title"><code>.text-truncate</code></h3>
+                <p class="text-label mb-2">Uma linha com reticências (<code>text-overflow: ellipsis</code>).</p>
+                <div class="text-truncate rounded border py-2 px-2" style="max-width:240px;border-color:var(--cor-borda);font-size:var(--tamanho-sm);color:var(--cor-texto-principal)">Título ou célula que não deve ocupar mais do que uma linha visível</div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-texto-muted">Tom secundário</h2>
+                <h3 class="invoisys-ds-subsection-title"><code>.text-muted</code></h3>
+                <p class="text-muted mb-0" style="font-size:var(--tamanho-md);max-width:50ch">Parágrafo auxiliar ou meta-informação com cor de texto secundário (<code>var(--cor-texto-secundario)</code>).</p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-texto-extra">Utilitários extra (<code>line-2</code>, <code>wl-30</code>)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">Definidos na mesma zona de tipografia em <strong>tokens.css</strong>; uso mais pontual.</p>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Classe</th>
+                                <th scope="col">Efeito</th>
+                                <th scope="col">Exemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>.line-2</code></td>
+                                <td class="invoisys-ds-hex"><code>line-height: 3.5rem</code></td>
+                                <td><span class="line-2" style="font-size:var(--tamanho-md);color:var(--cor-texto-heading)">Linha com altura fixa grande</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>.wl-30</code></td>
+                                <td class="invoisys-ds-hex"><code>max-width: 330px</code></td>
+                                <td><div class="wl-30 rounded border p-2" style="border-color:var(--cor-borda);font-size:var(--tamanho-sm);color:var(--cor-texto-principal)">Caixa com largura máxima 330px (.wl-30)</div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-texto-snippet">Snippet</h2>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML</span>
+                        <button type="button" data-ds-copy="pre-texto-alinhamento" data-testid="ds-copy-pre-texto-alinhamento"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-texto-alinhamento">&lt;p class="text-center text-muted mb-0"&gt;Legenda ou nota de rodapé&lt;/p&gt;
+&lt;h3 class="text-truncate mb-2"&gt;Título que não deve quebrar linha&lt;/h3&gt;
+&lt;p class="text-break"&gt;https://…&lt;/p&gt;</pre>
+                </div>

@@ -1,0 +1,49 @@
+                <h2 class="invoisys-ds-section-title" id="sec-loading-visao">Visão geral</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O estado <strong>«carregando» com animação</strong> em listagens (por exemplo com DataTables) combina o GIF de marca (<code>~/Images/loader.gif</code>) com texto em <code>.heading-md</code> e <code>.fw-bold</code>, dentro de <code>.loading-table</code> definido em <strong>table.css</strong> (fundo com <code>loading-pulse</code>, conteúdo centrado).
+                    Em painéis que não são só tabela, o portal também pode usar <code>.loading-panel</code> — o mesmo ritmo visual.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>CSS:</strong> inclua <strong>table.css</strong> na view (cascade em <a href="#sec-introducao-cascade">Introdução — ordem de cascade nas views</a>). Placeholders sem GIF ficam em <a href="#sec-skeletons-titulo">Skeletons</a> (<code>.skeleton-pulse</code>, etc.) — esta página cobre o padrão <strong>loader + mensagem</strong>.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Acessibilidade:</strong> com texto visível, reforce o estado no contêiner (<code>aria-busy="true"</code>, <code>role="status"</code>). O GIF é decorativo: <code>alt=""</code> e, se preferir, <code>aria-hidden="true"</code> na <code>img</code>.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-loading-preview">Pré-visualização</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Simula a área da grade: o bloco <code>.loading-table</code> centraliza ícone e mensagem (comportamento base do <strong>table.css</strong>).
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-loading-preview-grade">
+                    <div class="border rounded w-100 d-flex flex-column" style="max-width: 520px; min-height: 220px; box-sizing: border-box; background-color: var(--cor-superficie)">
+                        <div class="loading-table" role="status" aria-busy="true" aria-label="Carregando conteúdo" data-testid="ds-loading-demo-bloco">
+                            <img src="https://sandbox-portal.invoisys.com.br/Images/loader.gif" width="75" alt="" decoding="async" />
+                            <div class="heading-md fw-bold mt-2">Carregando…</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-loading-mvc">HTML · Razor (overlay genérico)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O padrão mínimo é <code>.loading-table</code> + GIF + mensagem. Para <strong>mostrar ou ocultar</strong> o overlay, use classes de estado com <strong>prefixo do seu módulo</strong> (ex.: <code>pedidos-loading</code>, <code>relatorios-loading</code>) e controle-as no JavaScript da listagem — o mesmo critério vale para <code>data-testid</code> estável nos testes.
+                </p>
+                <p class="color-text font-normal" style="max-width:min(100%,90ch); line-height:1.65">
+                    Dentro de <code>.layout-datatable-page</code>, <code>section[data-table]</code> e <code>.panel-content.pagination2</code>, o <strong>table.css</strong> do portal pode amarrar posicionamento absoluto do overlay a um conjunto específico de classes legadas. Ao criar uma <strong>listagem nova</strong>, replique a estrutura de markup da grade e alinhe com a equipe de front-end se precisar de regras equivalentes para o seu prefixo.
+                </p>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Razor / HTML</span>
+                        <button type="button" data-ds-copy="pre-loading-mvc" data-testid="ds-copy-pre-loading-mvc"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-loading-mvc"><code class="invoisys-ds-pre-code">&lt;div class="loading-table seu-modulo-loading seu-modulo-loading--visivel"
+     style="display: none;"
+     role="status"
+     aria-busy="true"
+     data-testid="seu-modulo-loading"&gt;
+    &lt;img src="~/Images/loader.gif" width="75" alt="" /&gt;
+    &lt;div class="heading-md fw-bold"&gt;Carregando…&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+                <p class="invoisys-ds-callout">
+                    Em runtime, o <code>style="display: none;"</code> ou uma classe do tipo <code>seu-modulo-loading--oculto</code> é controlado pelo JS da view — não copie um estado «sempre visível» para produção se o fluxo começa oculto.
+                </p>

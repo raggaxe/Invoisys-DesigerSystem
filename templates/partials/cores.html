@@ -1,0 +1,1186 @@
+<h2 class="invoisys-ds-section-title" id="sec-cores-visao">Visão geral</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O sistema de cores da Invoisys segue a mesma ideia da documentação do
+                    <a href="https://getbootstrap.com/docs/5.3/customize/color/" rel="noopener noreferrer" target="_blank">Bootstrap&nbsp;5.3 — Color</a>:
+                    tokens semânticos em <code>:root</code> (<strong>main.css</strong>), reutilizáveis em CSS com <code>var(--cor-…)</code>.
+                    Na tabela, a coluna <strong>Valor</strong> reflete o hex (ou <code>rgba</code>) definido no arquivo — útil para alinhar com Figma ou revisões de contraste.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Regra:</strong> em código novo, preferir sempre o <em>nome semântico</em> (<code>--cor-brand</code>, <code>--cor-texto-heading</code>, …) em vez de repetir hex nas views —
+                    assim, quando o token mudar no <code>main.css</code>, todo o portal atualiza.
+                </p>
+                <h2 class="invoisys-ds-section-title" id="sec-cores-marca">Marca e ação</h2>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Amostra</th>
+                                <th scope="col">Variável (<code>:root</code>)</th>
+                                <th scope="col">Valor em <code>main.css</code></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                <tr>
+                    <td>Verde institucional — marca, topbar, primário</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-brand)" title="--cor-brand"></div></td>
+                    <td><code>--cor-brand</code></td>
+                    <td class="invoisys-ds-hex"><code>#4FB73B</code></td>
+                </tr>
+                <tr>
+                    <td>Texto sobre fundo de marca (branco)</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-sobre-brand)" title="--cor-texto-sobre-brand"></div></td>
+                    <td><code>--cor-texto-sobre-brand</code></td>
+                    <td class="invoisys-ds-hex"><code>#ffffff</code></td>
+                </tr>
+                <tr>
+                    <td>Fundo de ação secundária (teal suave)</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-action-fundo)" title="--cor-action-fundo"></div></td>
+                    <td><code>--cor-action-fundo</code></td>
+                    <td class="invoisys-ds-hex"><code>#E5F5F8</code></td>
+                </tr>
+                <tr>
+                    <td>Texto de ação / links de ação</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-action-texto)" title="--cor-action-texto"></div></td>
+                    <td><code>--cor-action-texto</code></td>
+                    <td class="invoisys-ds-hex"><code>#147A8C</code></td>
+                </tr>
+                <tr>
+                    <td>Borda de ação</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-action-border)" title="--cor-action-border"></div></td>
+                    <td><code>--cor-action-border</code></td>
+                    <td class="invoisys-ds-hex"><code>#B1D3D9</code></td>
+                </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-cores-texto">Texto</h2>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Amostra</th>
+                                <th scope="col">Variável (<code>:root</code>)</th>
+                                <th scope="col">Valor em <code>main.css</code></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                <tr>
+                    <td>Títulos e ênfase de alto contraste</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-heading)" title="--cor-texto-heading"></div></td>
+                    <td><code>--cor-texto-heading</code></td>
+                    <td class="invoisys-ds-hex"><code>#1D2939</code></td>
+                </tr>
+                <tr>
+                    <td>Texto de corpo principal (cinza)</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-principal)" title="--cor-texto-principal"></div></td>
+                    <td><code>--cor-texto-principal</code></td>
+                    <td class="invoisys-ds-hex"><code>#8A8A8A</code></td>
+                </tr>
+                <tr>
+                    <td>Texto secundário (labels, subtítulos)</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-secundario)" title="--cor-texto-secundario"></div></td>
+                    <td><code>--cor-texto-secundario</code></td>
+                    <td class="invoisys-ds-hex"><code>#5B5B5B</code></td>
+                </tr>
+                <tr>
+                    <td>Texto e ícones desativados</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-disabled)" title="--cor-texto-disabled"></div></td>
+                    <td><code>--cor-texto-disabled</code></td>
+                    <td class="invoisys-ds-hex"><code>#D9D9D9</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-corpo-forte)" title="--cor-texto-corpo-forte"></div></td>
+                    <td><code>--cor-texto-corpo-forte</code></td>
+                    <td class="invoisys-ds-hex"><code>#333333</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-medio)" title="--cor-texto-medio"></div></td>
+                    <td><code>--cor-texto-medio</code></td>
+                    <td class="invoisys-ds-hex"><code>#666666</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-hint)" title="--cor-texto-hint"></div></td>
+                    <td><code>--cor-texto-hint</code></td>
+                    <td class="invoisys-ds-hex"><code>#aaaaaa</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-placeholder)" title="--cor-texto-placeholder"></div></td>
+                    <td><code>--cor-texto-placeholder</code></td>
+                    <td class="invoisys-ds-hex"><code>#cccccc</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-muted-extra)" title="--cor-texto-muted-extra"></div></td>
+                    <td><code>--cor-texto-muted-extra</code></td>
+                    <td class="invoisys-ds-hex"><code>#b1b1b1</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-muted-lista)" title="--cor-texto-muted-lista"></div></td>
+                    <td><code>--cor-texto-muted-lista</code></td>
+                    <td class="invoisys-ds-hex"><code>#b8b8b8</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-hint-forte)" title="--cor-texto-hint-forte"></div></td>
+                    <td><code>--cor-texto-hint-forte</code></td>
+                    <td class="invoisys-ds-hex"><code>#777777</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-suave)" title="--cor-texto-suave"></div></td>
+                    <td><code>--cor-texto-suave</code></td>
+                    <td class="invoisys-ds-hex"><code>#888888</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-a8)" title="--cor-texto-a8"></div></td>
+                    <td><code>--cor-texto-a8</code></td>
+                    <td class="invoisys-ds-hex"><code>#a8a8a8</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-7a)" title="--cor-texto-7a"></div></td>
+                    <td><code>--cor-texto-7a</code></td>
+                    <td class="invoisys-ds-hex"><code>#7a7a7a</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-444)" title="--cor-texto-444"></div></td>
+                    <td><code>--cor-texto-444</code></td>
+                    <td class="invoisys-ds-hex"><code>#444444</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-celula-escuro)" title="--cor-texto-celula-escuro"></div></td>
+                    <td><code>--cor-texto-celula-escuro</code></td>
+                    <td class="invoisys-ds-hex"><code>#424242</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-dim-grid)" title="--cor-texto-dim-grid"></div></td>
+                    <td><code>--cor-texto-dim-grid</code></td>
+                    <td class="invoisys-ds-hex"><code>#3e474f</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-sobre-desativado)" title="--cor-texto-sobre-desativado"></div></td>
+                    <td><code>--cor-texto-sobre-desativado</code></td>
+                    <td class="invoisys-ds-hex"><code>#242424</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-slate-500)" title="--cor-texto-slate-500"></div></td>
+                    <td><code>--cor-texto-slate-500</code></td>
+                    <td class="invoisys-ds-hex"><code>#6b7280</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-slate-900)" title="--cor-texto-slate-900"></div></td>
+                    <td><code>--cor-texto-slate-900</code></td>
+                    <td class="invoisys-ds-hex"><code>#111827</code></td>
+                </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-cores-superficies">Superfícies e fundos</h2>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Amostra</th>
+                                <th scope="col">Variável (<code>:root</code>)</th>
+                                <th scope="col">Valor em <code>main.css</code></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                <tr>
+                    <td>Superfície branca (cards, painéis)</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie)" title="--cor-superficie"></div></td>
+                    <td><code>--cor-superficie</code></td>
+                    <td class="invoisys-ds-hex"><code>#ffffff</code></td>
+                </tr>
+                <tr>
+                    <td>Fundo neutro suave</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-suave)" title="--cor-superficie-suave"></div></td>
+                    <td><code>--cor-superficie-suave</code></td>
+                    <td class="invoisys-ds-hex"><code>#f5f5f5</code></td>
+                </tr>
+                <tr>
+                    <td>Fundo geral claro de página / área</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-fundo-claro)" title="--cor-fundo-claro"></div></td>
+                    <td><code>--cor-fundo-claro</code></td>
+                    <td class="invoisys-ds-hex"><code>#F5F8FA</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-nuvem)" title="--cor-superficie-nuvem"></div></td>
+                    <td><code>--cor-superficie-nuvem</code></td>
+                    <td class="invoisys-ds-hex"><code>#f8f9fa</code></td>
+                </tr>
+                <tr>
+                    <td>Fundo de campos desativados / select placeholder</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-disabled-fundo)" title="--cor-disabled-fundo"></div></td>
+                    <td><code>--cor-disabled-fundo</code></td>
+                    <td class="invoisys-ds-hex"><code>#EAEFF5</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-painel)" title="--cor-superficie-painel"></div></td>
+                    <td><code>--cor-superficie-painel</code></td>
+                    <td class="invoisys-ds-hex"><code>#f4f4f4</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-alternada)" title="--cor-superficie-alternada"></div></td>
+                    <td><code>--cor-superficie-alternada</code></td>
+                    <td class="invoisys-ds-hex"><code>#f1f1f1</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-tabela)" title="--cor-superficie-tabela"></div></td>
+                    <td><code>--cor-superficie-tabela</code></td>
+                    <td class="invoisys-ds-hex"><code>#f8f8f8</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-hover-linha)" title="--cor-superficie-hover-linha"></div></td>
+                    <td><code>--cor-superficie-hover-linha</code></td>
+                    <td class="invoisys-ds-hex"><code>#ececec</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-zebra)" title="--cor-superficie-zebra"></div></td>
+                    <td><code>--cor-superficie-zebra</code></td>
+                    <td class="invoisys-ds-hex"><code>#f0f0f0</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-barra)" title="--cor-superficie-barra"></div></td>
+                    <td><code>--cor-superficie-barra</code></td>
+                    <td class="invoisys-ds-hex"><code>#f7f7f7</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-desativado)" title="--cor-superficie-desativado"></div></td>
+                    <td><code>--cor-superficie-desativado</code></td>
+                    <td class="invoisys-ds-hex"><code>#d8d8d8</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-hover-forte)" title="--cor-superficie-hover-forte"></div></td>
+                    <td><code>--cor-superficie-hover-forte</code></td>
+                    <td class="invoisys-ds-hex"><code>#efefef</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-pressionado)" title="--cor-superficie-pressionado"></div></td>
+                    <td><code>--cor-superficie-pressionado</code></td>
+                    <td class="invoisys-ds-hex"><code>#dddddd</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-acinzentado)" title="--cor-superficie-acinzentado"></div></td>
+                    <td><code>--cor-superficie-acinzentado</code></td>
+                    <td class="invoisys-ds-hex"><code>#e9e9e9</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-quase-branco)" title="--cor-superficie-quase-branco"></div></td>
+                    <td><code>--cor-superficie-quase-branco</code></td>
+                    <td class="invoisys-ds-hex"><code>#fafafa</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-ebe)" title="--cor-superficie-ebe"></div></td>
+                    <td><code>--cor-superficie-ebe</code></td>
+                    <td class="invoisys-ds-hex"><code>#ebebeb</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-e7)" title="--cor-superficie-e7"></div></td>
+                    <td><code>--cor-superficie-e7</code></td>
+                    <td class="invoisys-ds-hex"><code>#e7e7e7</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-dm-lista-fundo)" title="--cor-dm-lista-fundo"></div></td>
+                    <td><code>--cor-dm-lista-fundo</code></td>
+                    <td class="invoisys-ds-hex"><code>#f7faf6</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-progresso-track)" title="--cor-progresso-track"></div></td>
+                    <td><code>--cor-progresso-track</code></td>
+                    <td class="invoisys-ds-hex"><code>#e9ecef</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-fundo-info-linha)" title="--cor-fundo-info-linha"></div></td>
+                    <td><code>--cor-fundo-info-linha</code></td>
+                    <td class="invoisys-ds-hex"><code>#d0edf2</code></td>
+                </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-cores-estados">Estados, perigo e pills</h2>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Amostra</th>
+                                <th scope="col">Variável (<code>:root</code>)</th>
+                                <th scope="col">Valor em <code>main.css</code></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                <tr>
+                    <td>Fundo de alerta erro / perigo</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-danger-fundo)" title="--cor-danger-fundo"></div></td>
+                    <td><code>--cor-danger-fundo</code></td>
+                    <td class="invoisys-ds-hex"><code>#E34E4E</code></td>
+                </tr>
+                <tr>
+                    <td>Texto de erro</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-danger-texto)" title="--cor-danger-texto"></div></td>
+                    <td><code>--cor-danger-texto</code></td>
+                    <td class="invoisys-ds-hex"><code>#E34E4E</code></td>
+                </tr>
+                <tr>
+                    <td>Borda de erro</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-danger-border)" title="--cor-danger-border"></div></td>
+                    <td><code>--cor-danger-border</code></td>
+                    <td class="invoisys-ds-hex"><code>#CA2222</code></td>
+                </tr>
+                <tr>
+                    <td>Borda de campo obrigatório inválido</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-danger-border-required)" title="--cor-danger-border-required"></div></td>
+                    <td><code>--cor-danger-border-required</code></td>
+                    <td class="invoisys-ds-hex"><code>#FD1111</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-danger-fundo-claro)" title="--cor-danger-fundo-claro"></div></td>
+                    <td><code>--cor-danger-fundo-claro</code></td>
+                    <td class="invoisys-ds-hex"><code>#ffe0dc</code></td>
+                </tr>
+                <tr>
+                    <td>Pill estado erro</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-pill-danger)" title="--cor-pill-danger"></div></td>
+                    <td><code>--cor-pill-danger</code></td>
+                    <td class="invoisys-ds-hex"><code>#CA2222</code></td>
+                </tr>
+                <tr>
+                    <td>Texto em pill de erro</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-pill-danger-texto)" title="--cor-pill-danger-texto"></div></td>
+                    <td><code>--cor-pill-danger-texto</code></td>
+                    <td class="invoisys-ds-hex"><code>#CA2222</code></td>
+                </tr>
+                <tr>
+                    <td>Fundo pill sucesso</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-pill-successo)" title="--cor-pill-successo"></div></td>
+                    <td><code>--cor-pill-successo</code></td>
+                    <td class="invoisys-ds-hex"><code>#D6FFD4</code></td>
+                </tr>
+                <tr>
+                    <td>Texto pill sucesso</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-pill-successo-texto)" title="--cor-pill-successo-texto"></div></td>
+                    <td><code>--cor-pill-successo-texto</code></td>
+                    <td class="invoisys-ds-hex"><code>#2B9326</code></td>
+                </tr>
+                <tr>
+                    <td>Fundo pill aviso</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-pill-warning)" title="--cor-pill-warning"></div></td>
+                    <td><code>--cor-pill-warning</code></td>
+                    <td class="invoisys-ds-hex"><code>#FFF8B7</code></td>
+                </tr>
+                <tr>
+                    <td>Texto pill aviso</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-pill-warning-texto)" title="--cor-pill-warning-texto"></div></td>
+                    <td><code>--cor-pill-warning-texto</code></td>
+                    <td class="invoisys-ds-hex"><code>#C4902E</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-status-sucesso-alt)" title="--cor-status-sucesso-alt"></div></td>
+                    <td><code>--cor-status-sucesso-alt</code></td>
+                    <td class="invoisys-ds-hex"><code>#6fbe44</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-status-erro)" title="--cor-status-erro"></div></td>
+                    <td><code>--cor-status-erro</code></td>
+                    <td class="invoisys-ds-hex"><code>#ff3b30</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-status-erro-alt)" title="--cor-status-erro-alt"></div></td>
+                    <td><code>--cor-status-erro-alt</code></td>
+                    <td class="invoisys-ds-hex"><code>#ff4b3e</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-status-alerta)" title="--cor-status-alerta"></div></td>
+                    <td><code>--cor-status-alerta</code></td>
+                    <td class="invoisys-ds-hex"><code>#ff9814</code></td>
+                </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-cores-bordas">Bordas</h2>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Amostra</th>
+                                <th scope="col">Variável (<code>:root</code>)</th>
+                                <th scope="col">Valor em <code>main.css</code></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                <tr>
+                    <td>Borda padrão de caixas e separadores</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda)" title="--cor-borda"></div></td>
+                    <td><code>--cor-borda</code></td>
+                    <td class="invoisys-ds-hex"><code>#DEE4EA</code></td>
+                </tr>
+                <tr>
+                    <td>Borda muito leve</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-suave)" title="--cor-borda-suave"></div></td>
+                    <td><code>--cor-borda-suave</code></td>
+                    <td class="invoisys-ds-hex"><code>#eeeeee</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-neutra)" title="--cor-borda-neutra"></div></td>
+                    <td><code>--cor-borda-neutra</code></td>
+                    <td class="invoisys-ds-hex"><code>#cccccc</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-discreta)" title="--cor-borda-discreta"></div></td>
+                    <td><code>--cor-borda-discreta</code></td>
+                    <td class="invoisys-ds-hex"><code>#dfdfdf</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-tabela)" title="--cor-borda-tabela"></div></td>
+                    <td><code>--cor-borda-tabela</code></td>
+                    <td class="invoisys-ds-hex"><code>#dddddd</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-controle)" title="--cor-borda-controle"></div></td>
+                    <td><code>--cor-borda-controle</code></td>
+                    <td class="invoisys-ds-hex"><code>#d9d9d9</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-separadora)" title="--cor-borda-separadora"></div></td>
+                    <td><code>--cor-borda-separadora</code></td>
+                    <td class="invoisys-ds-hex"><code>#e8e8e8</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-forte)" title="--cor-borda-forte"></div></td>
+                    <td><code>--cor-borda-forte</code></td>
+                    <td class="invoisys-ds-hex"><code>#bfbfbf</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-neutra-escura)" title="--cor-borda-neutra-escura"></div></td>
+                    <td><code>--cor-borda-neutra-escura</code></td>
+                    <td class="invoisys-ds-hex"><code>#858585</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-bootstrap)" title="--cor-borda-bootstrap"></div></td>
+                    <td><code>--cor-borda-bootstrap</code></td>
+                    <td class="invoisys-ds-hex"><code>#ced4da</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-toolbar)" title="--cor-borda-toolbar"></div></td>
+                    <td><code>--cor-borda-toolbar</code></td>
+                    <td class="invoisys-ds-hex"><code>#d5d5d5</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-toolbar-fina)" title="--cor-borda-toolbar-fina"></div></td>
+                    <td><code>--cor-borda-toolbar-fina</code></td>
+                    <td class="invoisys-ds-hex"><code>#d3d3d3</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-painel-linha)" title="--cor-borda-painel-linha"></div></td>
+                    <td><code>--cor-borda-painel-linha</code></td>
+                    <td class="invoisys-ds-hex"><code>#e9e9e9</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-e0)" title="--cor-borda-e0"></div></td>
+                    <td><code>--cor-borda-e0</code></td>
+                    <td class="invoisys-ds-hex"><code>#e0e0e0</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-dm-lista-borda)" title="--cor-dm-lista-borda"></div></td>
+                    <td><code>--cor-dm-lista-borda</code></td>
+                    <td class="invoisys-ds-hex"><code>#e3ebe0</code></td>
+                </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-cores-indicadores">Indicadores, links e ícones</h2>
+                <div class="invoisys-ds-table-wrap">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Amostra</th>
+                                <th scope="col">Variável (<code>:root</code>)</th>
+                                <th scope="col">Valor em <code>main.css</code></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-overlay-puro)" title="--cor-overlay-puro"></div></td>
+                    <td><code>--cor-overlay-puro</code></td>
+                    <td class="invoisys-ds-hex"><code>#000000</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-indicador-sucesso)" title="--cor-indicador-sucesso"></div></td>
+                    <td><code>--cor-indicador-sucesso</code></td>
+                    <td class="invoisys-ds-hex"><code>#6ab547</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-indicador-info)" title="--cor-indicador-info"></div></td>
+                    <td><code>--cor-indicador-info</code></td>
+                    <td class="invoisys-ds-hex"><code>#62b2fd</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-indicador-perigo)" title="--cor-indicador-perigo"></div></td>
+                    <td><code>--cor-indicador-perigo</code></td>
+                    <td class="invoisys-ds-hex"><code>#e45555</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-botao-secondary-fundo)" title="--cor-botao-secondary-fundo"></div></td>
+                    <td><code>--cor-botao-secondary-fundo</code></td>
+                    <td class="invoisys-ds-hex"><code>#c3c3c3</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-link-grid)" title="--cor-link-grid"></div></td>
+                    <td><code>--cor-link-grid</code></td>
+                    <td class="invoisys-ds-hex"><code>#4298e7</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-icone-calendario)" title="--cor-icone-calendario"></div></td>
+                    <td><code>--cor-icone-calendario</code></td>
+                    <td class="invoisys-ds-hex"><code>#1b1e25</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-icone-calendario-suave)" title="--cor-icone-calendario-suave"></div></td>
+                    <td><code>--cor-icone-calendario-suave</code></td>
+                    <td class="invoisys-ds-hex"><code>rgba(27, 30, 37, 0.3)</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-dm-acento-verde)" title="--cor-dm-acento-verde"></div></td>
+                    <td><code>--cor-dm-acento-verde</code></td>
+                    <td class="invoisys-ds-hex"><code>#7cb342</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-material-500)" title="--cor-material-500"></div></td>
+                    <td><code>--cor-material-500</code></td>
+                    <td class="invoisys-ds-hex"><code>#9e9e9e</code></td>
+                </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-cores-utilitarios">Utilitários de fundo (<code>tokens.css</code>)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Alguns fundos expõem-se também como classes utilitárias (úteis em markup sem CSS sob medida):
+                </p>
+                <div class="invoisys-ds-preview d-flex flex-wrap gap-2 align-items-center">
+                    <span class="px-3 py-2 rounded bg-success" style="color:var(--cor-texto-sobre-brand)">.bg-success</span>
+                    <span class="px-3 py-2 rounded bg-info" style="color:var(--cor-texto-sobre-brand)">.bg-info</span>
+                    <span class="px-3 py-2 rounded bg-danger" style="color:var(--cor-texto-sobre-brand)">.bg-danger</span>
+                </div>
+                <p class="text-label mt-2 mb-0">Estas classes mapeiam para variáveis do design system; ver definições em <strong>tokens.css</strong>.</p>
+                <h2 class="invoisys-ds-section-title" id="sec-cores-snippet">Snippet CSS</h2>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>CSS</span>
+                        <button type="button" data-ds-copy="pre-cores" data-testid="ds-copy-pre-cores"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-cores">.titulo-pagina {
+  color: var(--cor-texto-heading);
+}
+
+.barra-marca {
+  background: var(--cor-brand);
+  color: var(--cor-texto-sobre-brand);
+}
+
+.card-acao {
+  background: var(--cor-action-fundo);
+  color: var(--cor-action-texto);
+  border: 1px solid var(--cor-action-border);
+}</pre>
+                </div>
+                <h2 class="invoisys-ds-section-title" id="sec-cores-referencia">Referência completa <code>:root</code></h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">Todas as variáveis <code>--cor-*</code> atualmente em <strong>main.css</strong> (ordem do arquivo).</p>
+                <div class="invoisys-ds-table-wrap invoisys-ds-table-wrap--tall">
+                    <table class="invoisys-ds-color-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Amostra</th>
+                                <th scope="col">Variável</th>
+                                <th scope="col">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                <tr>
+                    <td>Fundo geral claro de página / área</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-fundo-claro)" title="--cor-fundo-claro"></div></td>
+                    <td><code>--cor-fundo-claro</code></td>
+                    <td class="invoisys-ds-hex"><code>#F5F8FA</code></td>
+                </tr>
+                <tr>
+                    <td>Borda padrão de caixas e separadores</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda)" title="--cor-borda"></div></td>
+                    <td><code>--cor-borda</code></td>
+                    <td class="invoisys-ds-hex"><code>#DEE4EA</code></td>
+                </tr>
+                <tr>
+                    <td>Texto secundário (labels, subtítulos)</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-secundario)" title="--cor-texto-secundario"></div></td>
+                    <td><code>--cor-texto-secundario</code></td>
+                    <td class="invoisys-ds-hex"><code>#5B5B5B</code></td>
+                </tr>
+                <tr>
+                    <td>Texto e ícones desativados</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-disabled)" title="--cor-texto-disabled"></div></td>
+                    <td><code>--cor-texto-disabled</code></td>
+                    <td class="invoisys-ds-hex"><code>#D9D9D9</code></td>
+                </tr>
+                <tr>
+                    <td>Texto de corpo principal (cinza)</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-principal)" title="--cor-texto-principal"></div></td>
+                    <td><code>--cor-texto-principal</code></td>
+                    <td class="invoisys-ds-hex"><code>#8A8A8A</code></td>
+                </tr>
+                <tr>
+                    <td>Títulos e ênfase de alto contraste</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-heading)" title="--cor-texto-heading"></div></td>
+                    <td><code>--cor-texto-heading</code></td>
+                    <td class="invoisys-ds-hex"><code>#1D2939</code></td>
+                </tr>
+                <tr>
+                    <td>Verde institucional — marca, topbar, primário</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-brand)" title="--cor-brand"></div></td>
+                    <td><code>--cor-brand</code></td>
+                    <td class="invoisys-ds-hex"><code>#4FB73B</code></td>
+                </tr>
+                <tr>
+                    <td>Texto sobre fundo de marca (branco)</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-sobre-brand)" title="--cor-texto-sobre-brand"></div></td>
+                    <td><code>--cor-texto-sobre-brand</code></td>
+                    <td class="invoisys-ds-hex"><code>#ffffff</code></td>
+                </tr>
+                <tr>
+                    <td>Superfície branca (cards, painéis)</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie)" title="--cor-superficie"></div></td>
+                    <td><code>--cor-superficie</code></td>
+                    <td class="invoisys-ds-hex"><code>#ffffff</code></td>
+                </tr>
+                <tr>
+                    <td>Fundo neutro suave</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-suave)" title="--cor-superficie-suave"></div></td>
+                    <td><code>--cor-superficie-suave</code></td>
+                    <td class="invoisys-ds-hex"><code>#f5f5f5</code></td>
+                </tr>
+                <tr>
+                    <td>Borda muito leve</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-suave)" title="--cor-borda-suave"></div></td>
+                    <td><code>--cor-borda-suave</code></td>
+                    <td class="invoisys-ds-hex"><code>#eeeeee</code></td>
+                </tr>
+                <tr>
+                    <td>Fundo de campos desativados / select placeholder</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-disabled-fundo)" title="--cor-disabled-fundo"></div></td>
+                    <td><code>--cor-disabled-fundo</code></td>
+                    <td class="invoisys-ds-hex"><code>#EAEFF5</code></td>
+                </tr>
+                <tr>
+                    <td>Fundo de alerta erro / perigo</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-danger-fundo)" title="--cor-danger-fundo"></div></td>
+                    <td><code>--cor-danger-fundo</code></td>
+                    <td class="invoisys-ds-hex"><code>#E34E4E</code></td>
+                </tr>
+                <tr>
+                    <td>Texto de erro</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-danger-texto)" title="--cor-danger-texto"></div></td>
+                    <td><code>--cor-danger-texto</code></td>
+                    <td class="invoisys-ds-hex"><code>#E34E4E</code></td>
+                </tr>
+                <tr>
+                    <td>Borda de erro</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-danger-border)" title="--cor-danger-border"></div></td>
+                    <td><code>--cor-danger-border</code></td>
+                    <td class="invoisys-ds-hex"><code>#CA2222</code></td>
+                </tr>
+                <tr>
+                    <td>Borda de campo obrigatório inválido</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-danger-border-required)" title="--cor-danger-border-required"></div></td>
+                    <td><code>--cor-danger-border-required</code></td>
+                    <td class="invoisys-ds-hex"><code>#FD1111</code></td>
+                </tr>
+                <tr>
+                    <td>Fundo de ação secundária (teal suave)</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-action-fundo)" title="--cor-action-fundo"></div></td>
+                    <td><code>--cor-action-fundo</code></td>
+                    <td class="invoisys-ds-hex"><code>#E5F5F8</code></td>
+                </tr>
+                <tr>
+                    <td>Texto de ação / links de ação</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-action-texto)" title="--cor-action-texto"></div></td>
+                    <td><code>--cor-action-texto</code></td>
+                    <td class="invoisys-ds-hex"><code>#147A8C</code></td>
+                </tr>
+                <tr>
+                    <td>Borda de ação</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-action-border)" title="--cor-action-border"></div></td>
+                    <td><code>--cor-action-border</code></td>
+                    <td class="invoisys-ds-hex"><code>#B1D3D9</code></td>
+                </tr>
+                <tr>
+                    <td>Pill estado erro</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-pill-danger)" title="--cor-pill-danger"></div></td>
+                    <td><code>--cor-pill-danger</code></td>
+                    <td class="invoisys-ds-hex"><code>#CA2222</code></td>
+                </tr>
+                <tr>
+                    <td>Texto em pill de erro</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-pill-danger-texto)" title="--cor-pill-danger-texto"></div></td>
+                    <td><code>--cor-pill-danger-texto</code></td>
+                    <td class="invoisys-ds-hex"><code>#CA2222</code></td>
+                </tr>
+                <tr>
+                    <td>Fundo pill sucesso</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-pill-successo)" title="--cor-pill-successo"></div></td>
+                    <td><code>--cor-pill-successo</code></td>
+                    <td class="invoisys-ds-hex"><code>#D6FFD4</code></td>
+                </tr>
+                <tr>
+                    <td>Texto pill sucesso</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-pill-successo-texto)" title="--cor-pill-successo-texto"></div></td>
+                    <td><code>--cor-pill-successo-texto</code></td>
+                    <td class="invoisys-ds-hex"><code>#2B9326</code></td>
+                </tr>
+                <tr>
+                    <td>Fundo pill aviso</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-pill-warning)" title="--cor-pill-warning"></div></td>
+                    <td><code>--cor-pill-warning</code></td>
+                    <td class="invoisys-ds-hex"><code>#FFF8B7</code></td>
+                </tr>
+                <tr>
+                    <td>Texto pill aviso</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-pill-warning-texto)" title="--cor-pill-warning-texto"></div></td>
+                    <td><code>--cor-pill-warning-texto</code></td>
+                    <td class="invoisys-ds-hex"><code>#C4902E</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-neutra)" title="--cor-borda-neutra"></div></td>
+                    <td><code>--cor-borda-neutra</code></td>
+                    <td class="invoisys-ds-hex"><code>#cccccc</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-discreta)" title="--cor-borda-discreta"></div></td>
+                    <td><code>--cor-borda-discreta</code></td>
+                    <td class="invoisys-ds-hex"><code>#dfdfdf</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-corpo-forte)" title="--cor-texto-corpo-forte"></div></td>
+                    <td><code>--cor-texto-corpo-forte</code></td>
+                    <td class="invoisys-ds-hex"><code>#333333</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-overlay-puro)" title="--cor-overlay-puro"></div></td>
+                    <td><code>--cor-overlay-puro</code></td>
+                    <td class="invoisys-ds-hex"><code>#000000</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-painel)" title="--cor-superficie-painel"></div></td>
+                    <td><code>--cor-superficie-painel</code></td>
+                    <td class="invoisys-ds-hex"><code>#f4f4f4</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-alternada)" title="--cor-superficie-alternada"></div></td>
+                    <td><code>--cor-superficie-alternada</code></td>
+                    <td class="invoisys-ds-hex"><code>#f1f1f1</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-tabela)" title="--cor-superficie-tabela"></div></td>
+                    <td><code>--cor-superficie-tabela</code></td>
+                    <td class="invoisys-ds-hex"><code>#f8f8f8</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-hover-linha)" title="--cor-superficie-hover-linha"></div></td>
+                    <td><code>--cor-superficie-hover-linha</code></td>
+                    <td class="invoisys-ds-hex"><code>#ececec</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-nuvem)" title="--cor-superficie-nuvem"></div></td>
+                    <td><code>--cor-superficie-nuvem</code></td>
+                    <td class="invoisys-ds-hex"><code>#f8f9fa</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-progresso-track)" title="--cor-progresso-track"></div></td>
+                    <td><code>--cor-progresso-track</code></td>
+                    <td class="invoisys-ds-hex"><code>#e9ecef</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-indicador-sucesso)" title="--cor-indicador-sucesso"></div></td>
+                    <td><code>--cor-indicador-sucesso</code></td>
+                    <td class="invoisys-ds-hex"><code>#6ab547</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-indicador-info)" title="--cor-indicador-info"></div></td>
+                    <td><code>--cor-indicador-info</code></td>
+                    <td class="invoisys-ds-hex"><code>#62b2fd</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-indicador-perigo)" title="--cor-indicador-perigo"></div></td>
+                    <td><code>--cor-indicador-perigo</code></td>
+                    <td class="invoisys-ds-hex"><code>#e45555</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-botao-secondary-fundo)" title="--cor-botao-secondary-fundo"></div></td>
+                    <td><code>--cor-botao-secondary-fundo</code></td>
+                    <td class="invoisys-ds-hex"><code>#c3c3c3</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-danger-fundo-claro)" title="--cor-danger-fundo-claro"></div></td>
+                    <td><code>--cor-danger-fundo-claro</code></td>
+                    <td class="invoisys-ds-hex"><code>#ffe0dc</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-link-grid)" title="--cor-link-grid"></div></td>
+                    <td><code>--cor-link-grid</code></td>
+                    <td class="invoisys-ds-hex"><code>#4298e7</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-icone-calendario)" title="--cor-icone-calendario"></div></td>
+                    <td><code>--cor-icone-calendario</code></td>
+                    <td class="invoisys-ds-hex"><code>#1b1e25</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-icone-calendario-suave)" title="--cor-icone-calendario-suave"></div></td>
+                    <td><code>--cor-icone-calendario-suave</code></td>
+                    <td class="invoisys-ds-hex"><code>rgba(27, 30, 37, 0.3)</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-tabela)" title="--cor-borda-tabela"></div></td>
+                    <td><code>--cor-borda-tabela</code></td>
+                    <td class="invoisys-ds-hex"><code>#dddddd</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-controle)" title="--cor-borda-controle"></div></td>
+                    <td><code>--cor-borda-controle</code></td>
+                    <td class="invoisys-ds-hex"><code>#d9d9d9</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-separadora)" title="--cor-borda-separadora"></div></td>
+                    <td><code>--cor-borda-separadora</code></td>
+                    <td class="invoisys-ds-hex"><code>#e8e8e8</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-forte)" title="--cor-borda-forte"></div></td>
+                    <td><code>--cor-borda-forte</code></td>
+                    <td class="invoisys-ds-hex"><code>#bfbfbf</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-neutra-escura)" title="--cor-borda-neutra-escura"></div></td>
+                    <td><code>--cor-borda-neutra-escura</code></td>
+                    <td class="invoisys-ds-hex"><code>#858585</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-bootstrap)" title="--cor-borda-bootstrap"></div></td>
+                    <td><code>--cor-borda-bootstrap</code></td>
+                    <td class="invoisys-ds-hex"><code>#ced4da</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-zebra)" title="--cor-superficie-zebra"></div></td>
+                    <td><code>--cor-superficie-zebra</code></td>
+                    <td class="invoisys-ds-hex"><code>#f0f0f0</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-barra)" title="--cor-superficie-barra"></div></td>
+                    <td><code>--cor-superficie-barra</code></td>
+                    <td class="invoisys-ds-hex"><code>#f7f7f7</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-desativado)" title="--cor-superficie-desativado"></div></td>
+                    <td><code>--cor-superficie-desativado</code></td>
+                    <td class="invoisys-ds-hex"><code>#d8d8d8</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-celula-escuro)" title="--cor-texto-celula-escuro"></div></td>
+                    <td><code>--cor-texto-celula-escuro</code></td>
+                    <td class="invoisys-ds-hex"><code>#424242</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-dim-grid)" title="--cor-texto-dim-grid"></div></td>
+                    <td><code>--cor-texto-dim-grid</code></td>
+                    <td class="invoisys-ds-hex"><code>#3e474f</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-sobre-desativado)" title="--cor-texto-sobre-desativado"></div></td>
+                    <td><code>--cor-texto-sobre-desativado</code></td>
+                    <td class="invoisys-ds-hex"><code>#242424</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-muted-extra)" title="--cor-texto-muted-extra"></div></td>
+                    <td><code>--cor-texto-muted-extra</code></td>
+                    <td class="invoisys-ds-hex"><code>#b1b1b1</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-placeholder)" title="--cor-texto-placeholder"></div></td>
+                    <td><code>--cor-texto-placeholder</code></td>
+                    <td class="invoisys-ds-hex"><code>#cccccc</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-fundo-info-linha)" title="--cor-fundo-info-linha"></div></td>
+                    <td><code>--cor-fundo-info-linha</code></td>
+                    <td class="invoisys-ds-hex"><code>#d0edf2</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-hover-forte)" title="--cor-superficie-hover-forte"></div></td>
+                    <td><code>--cor-superficie-hover-forte</code></td>
+                    <td class="invoisys-ds-hex"><code>#efefef</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-pressionado)" title="--cor-superficie-pressionado"></div></td>
+                    <td><code>--cor-superficie-pressionado</code></td>
+                    <td class="invoisys-ds-hex"><code>#dddddd</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-acinzentado)" title="--cor-superficie-acinzentado"></div></td>
+                    <td><code>--cor-superficie-acinzentado</code></td>
+                    <td class="invoisys-ds-hex"><code>#e9e9e9</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-toolbar)" title="--cor-borda-toolbar"></div></td>
+                    <td><code>--cor-borda-toolbar</code></td>
+                    <td class="invoisys-ds-hex"><code>#d5d5d5</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-toolbar-fina)" title="--cor-borda-toolbar-fina"></div></td>
+                    <td><code>--cor-borda-toolbar-fina</code></td>
+                    <td class="invoisys-ds-hex"><code>#d3d3d3</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-painel-linha)" title="--cor-borda-painel-linha"></div></td>
+                    <td><code>--cor-borda-painel-linha</code></td>
+                    <td class="invoisys-ds-hex"><code>#e9e9e9</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-hint)" title="--cor-texto-hint"></div></td>
+                    <td><code>--cor-texto-hint</code></td>
+                    <td class="invoisys-ds-hex"><code>#aaaaaa</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-status-sucesso-alt)" title="--cor-status-sucesso-alt"></div></td>
+                    <td><code>--cor-status-sucesso-alt</code></td>
+                    <td class="invoisys-ds-hex"><code>#6fbe44</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-status-erro)" title="--cor-status-erro"></div></td>
+                    <td><code>--cor-status-erro</code></td>
+                    <td class="invoisys-ds-hex"><code>#ff3b30</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-status-erro-alt)" title="--cor-status-erro-alt"></div></td>
+                    <td><code>--cor-status-erro-alt</code></td>
+                    <td class="invoisys-ds-hex"><code>#ff4b3e</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-status-alerta)" title="--cor-status-alerta"></div></td>
+                    <td><code>--cor-status-alerta</code></td>
+                    <td class="invoisys-ds-hex"><code>#ff9814</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-muted-lista)" title="--cor-texto-muted-lista"></div></td>
+                    <td><code>--cor-texto-muted-lista</code></td>
+                    <td class="invoisys-ds-hex"><code>#b8b8b8</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-medio)" title="--cor-texto-medio"></div></td>
+                    <td><code>--cor-texto-medio</code></td>
+                    <td class="invoisys-ds-hex"><code>#666666</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-hint-forte)" title="--cor-texto-hint-forte"></div></td>
+                    <td><code>--cor-texto-hint-forte</code></td>
+                    <td class="invoisys-ds-hex"><code>#777777</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-suave)" title="--cor-texto-suave"></div></td>
+                    <td><code>--cor-texto-suave</code></td>
+                    <td class="invoisys-ds-hex"><code>#888888</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-a8)" title="--cor-texto-a8"></div></td>
+                    <td><code>--cor-texto-a8</code></td>
+                    <td class="invoisys-ds-hex"><code>#a8a8a8</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-7a)" title="--cor-texto-7a"></div></td>
+                    <td><code>--cor-texto-7a</code></td>
+                    <td class="invoisys-ds-hex"><code>#7a7a7a</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-444)" title="--cor-texto-444"></div></td>
+                    <td><code>--cor-texto-444</code></td>
+                    <td class="invoisys-ds-hex"><code>#444444</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-quase-branco)" title="--cor-superficie-quase-branco"></div></td>
+                    <td><code>--cor-superficie-quase-branco</code></td>
+                    <td class="invoisys-ds-hex"><code>#fafafa</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-material-500)" title="--cor-material-500"></div></td>
+                    <td><code>--cor-material-500</code></td>
+                    <td class="invoisys-ds-hex"><code>#9e9e9e</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-borda-e0)" title="--cor-borda-e0"></div></td>
+                    <td><code>--cor-borda-e0</code></td>
+                    <td class="invoisys-ds-hex"><code>#e0e0e0</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-ebe)" title="--cor-superficie-ebe"></div></td>
+                    <td><code>--cor-superficie-ebe</code></td>
+                    <td class="invoisys-ds-hex"><code>#ebebeb</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-dm-lista-fundo)" title="--cor-dm-lista-fundo"></div></td>
+                    <td><code>--cor-dm-lista-fundo</code></td>
+                    <td class="invoisys-ds-hex"><code>#f7faf6</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-dm-lista-borda)" title="--cor-dm-lista-borda"></div></td>
+                    <td><code>--cor-dm-lista-borda</code></td>
+                    <td class="invoisys-ds-hex"><code>#e3ebe0</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-dm-acento-verde)" title="--cor-dm-acento-verde"></div></td>
+                    <td><code>--cor-dm-acento-verde</code></td>
+                    <td class="invoisys-ds-hex"><code>#7cb342</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-slate-500)" title="--cor-texto-slate-500"></div></td>
+                    <td><code>--cor-texto-slate-500</code></td>
+                    <td class="invoisys-ds-hex"><code>#6b7280</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-texto-slate-900)" title="--cor-texto-slate-900"></div></td>
+                    <td><code>--cor-texto-slate-900</code></td>
+                    <td class="invoisys-ds-hex"><code>#111827</code></td>
+                </tr>
+                <tr>
+                    <td>Token em <code>main.css</code> — ver uso nas views.</td>
+                    <td class="invoisys-ds-td-swatch"><div class="invoisys-ds-mini-swatch" style="background:var(--cor-superficie-e7)" title="--cor-superficie-e7"></div></td>
+                    <td><code>--cor-superficie-e7</code></td>
+                    <td class="invoisys-ds-hex"><code>#e7e7e7</code></td>
+                </tr>
+                        </tbody>
+                    </table>
+                </div>

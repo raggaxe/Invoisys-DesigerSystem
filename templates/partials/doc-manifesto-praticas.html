@@ -1,0 +1,114 @@
+                <h1 id="manifesto-praticas">Manifesto de UX e cultura da equipe Invoisys</h1>
+                <p class="invoisys-ds-lead">
+                    <strong>Manifesto</strong>, aqui, é o <strong>compromisso por escrito</strong> da frente <strong>UX · UI · Designer</strong>: declaramos <strong>o que defendemos</strong>, <strong>o que não negociamos</strong> ao desenhar o produto e <strong>como isso se reflete no portal</strong> — para a equipe, para a diretoria e para quem implementa.
+                </p>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O miolo desse compromisso são três eixos: <strong>reutilização</strong> (não reinventar a cada tela), <strong>consistência</strong> (a mesma experiência em todo o Invoisys) e <strong>manutenção</strong> (o que entra hoje precisa ser sustentável amanhã, sem surpresa para as áreas).
+                </p>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Abaixo está o <strong>manifesto da equipe</strong> em duas partes: <strong>missão, visão, valores e propósito</strong> (o “porquê” e o “como somos”) e, em seguida, o <strong>manifesto na prática</strong> — como esse compromisso se liga ao <strong>produto em produção</strong>. Detalhe técnico para quem desenvolve: <a href="#introducao">Introdução</a> e <a href="#quick-start">Quick start</a>.
+                </p>
+                <div class="invoisys-ds-doc-manifesto-badges d-flex flex-wrap gap-2 align-items-center mb-3" aria-label="Temas do manifesto">
+                    <span class="pill pill-inline pill-solid-neutral fw-bold">Manifesto</span>
+                    <span class="pill pill-inline pill-light-success fw-bold">Reutilização</span>
+                    <span class="pill pill-inline pill-light-info fw-bold">Consistência</span>
+                    <span class="pill pill-inline pill-light-neutral fw-bold">Manutenção</span>
+                </div>
+                <h2 class="invoisys-ds-section-title" id="sec-manifesto-equipa-valores">Manifesto da equipe — missão, visão e valores</h2>
+                <div class="invoisys-ds-doc-manifesto-jumbotron" data-testid="ds-manifesto-jumbotron-missao-visao">
+                    <div class="invoisys-ds-doc-manifesto-jumbotron__grid">
+                        <div class="invoisys-ds-doc-manifesto-jumbotron__block">
+                            <div class="invoisys-ds-doc-manifesto-jumbotron__head">
+                                <span class="invoisys-ds-doc-manifesto-jumbotron__icon" aria-hidden="true"><i class="fa fa-bullseye"></i></span>
+                                <h3 class="invoisys-ds-doc-manifesto-jumbotron__label">Missão</h3>
+                            </div>
+                            <ul class="invoisys-ds-doc-manifesto-jumbotron__list mb-0" aria-label="Missão em tópicos">
+                                <li><strong>Menos retrabalho no front:</strong> reutilizar <strong>padrões de interface</strong> do portal (botões, formulários, listas) com o mesmo comportamento entre telas.</li>
+                                <li><strong>Uma melhoria, várias telas:</strong> consistência para quem usa e <strong>manutenção</strong> mais simples no código partilhado.</li>
+                                <li>Trabalho <strong>alinhado</strong> a produto e à base técnica do portal.</li>
+                            </ul>
+                        </div>
+                        <div class="invoisys-ds-doc-manifesto-jumbotron__block">
+                            <div class="invoisys-ds-doc-manifesto-jumbotron__head">
+                                <span class="invoisys-ds-doc-manifesto-jumbotron__icon" aria-hidden="true"><i class="fa fa-eye"></i></span>
+                                <h3 class="invoisys-ds-doc-manifesto-jumbotron__label">Visão</h3>
+                            </div>
+                            <ul class="invoisys-ds-doc-manifesto-jumbotron__list mb-0" aria-label="Visão em tópicos">
+                                <li><strong>Um portal com cara de produto único:</strong> «já vi isso em outro lugar» como elogio — fluxos e linguagem <strong>previsíveis</strong>.</li>
+                                <li><strong>Evoluir sem desmontar a base:</strong> <strong>reuso e governança</strong> no design system — velocidade e manutenção.</li>
+                                <li><strong>Tributário — TRM</strong> (<span lang="en">Tax Relationship Manager</span>): <strong>clareza</strong> em conteúdo e <strong>visão geral tributária</strong> para quem usa o portal.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="invoisys-ds-preview p-0 overflow-hidden mb-0" style="max-width:min(100%,90ch)" data-testid="ds-manifesto-equipa-collapse-wrap">
+                    <div data-testid="ds-manifesto-equipa-collapse" class="invoisys-ds-modal-detalhes-doc w-100">
+                        <div class="panel modal-detalhes-panel modal-detalhes-panel--expanded mb-0" data-testid="ds-manifesto-collapse-valores">
+                            <div class="panel-header">
+                                <div class="panel-btn-controls-inverted">
+                                    <a href="#" class="modal-detalhes-panel-toggle pull-right" role="button" aria-expanded="true" aria-label="Recolher Valores" title="Recolher" data-modal-collapse-trigger="">
+                                        <div class="d-flex flex-fill justify-content-start align-items-center gap-2">
+                                            <i class="fa fa-heart" aria-hidden="true"></i>
+                                            <b>Valores</b>
+                                        </div>
+                                        <i class="fa fa-chevron-up modal-detalhes-chevron" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="panel-content">
+                                <ul class="color-text font-normal mb-0" style="padding-left:1.1rem; line-height:1.55; font-size:var(--tamanho-sm)">
+                                    <li class="mb-2"><strong>Reutilizar antes de inventar</strong> — se já existe padrão para listagem, filtro, modal ou feedback, <strong>começar por ele</strong>; só criar novo quando o caso realmente exigir e ficar <strong>documentado para outros reutilizarem</strong>.</li>
+                                    <li class="mb-2"><strong>Consistência como respeito ao usuário</strong> — mesma lógica, nomes e feedback em telas parecidas; <strong>menos erro operacional</strong> e menos “cada tela com uma regra diferente”.</li>
+                                    <li class="mb-2"><strong>Manutenção no centro da decisão</strong> — perguntar “quem sustenta isso daqui a um ano?” antes de aprovar exceção; mudanças grandes com <strong>transparência</strong> de impacto nas equipes e nas telas afetadas.</li>
+                                    <li class="mb-2"><strong>Colaboração</strong> — produto, design e tecnologia <strong>juntos cedo</strong> no escopo, para reuso e consistência não serem sacrificados no fim do prazo.</li>
+                                    <li class="mb-0"><strong>Clareza</strong> — explicar <strong>por que</strong> um padrão vale para várias telas; critérios que qualquer área consiga repetir e auditar.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="panel modal-detalhes-panel modal-detalhes-panel--expanded mb-0" data-testid="ds-manifesto-collapse-proposito">
+                            <div class="panel-header">
+                                <div class="panel-btn-controls-inverted">
+                                    <a href="#" class="modal-detalhes-panel-toggle pull-right" role="button" aria-expanded="true" aria-label="Recolher Propósito" title="Recolher" data-modal-collapse-trigger="">
+                                        <div class="d-flex flex-fill justify-content-start align-items-center gap-2">
+                                            <i class="fa fa-flag" aria-hidden="true"></i>
+                                            <b>Propósito</b>
+                                        </div>
+                                        <i class="fa fa-chevron-up modal-detalhes-chevron" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="panel-content">
+                                <p class="mb-0 color-text font-normal" style="font-size:var(--tamanho-sm); line-height:1.55" data-testid="ds-manifesto-proposito-body">
+                                    <strong>Propósito da frente de front-end</strong> (com UX/UI): montar <strong>telas</strong> com o <strong>mesmo padrão visual do portal</strong> — botões, listas e mensagens com um «jeito» reconhecível — para <strong>não refazer</strong> tudo do zero a cada pedido, manter uma <strong>experiência coerente</strong> e <strong>evoluir</strong> sem soluções que só servem para um canto do sistema. Quando <strong>melhoramos um padrão</strong>, <strong>várias telas</strong> aproveitam a melhoria ao mesmo tempo e o trabalho fica mais <strong>previsível</strong> para quem constrói e para quem usa o portal.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-manifesto-designer-ux">Manifesto na prática — reutilizar, padronizar e manter</h2>
+                <div class="invoisys-ds-doc-manifesto-ux-pratica mb-3">
+                    <div class="invoisys-ds-preview p-3 mb-0" style="border-color:var(--cor-borda)" data-testid="ds-manifesto-designer-ux-card" role="region" aria-label="Manifesto na prática: criação do guia, padronização e consistência com o portal">
+                        <div class="d-flex flex-wrap gap-2 align-items-center mb-2">
+                            <span class="pill pill-inline pill-solid-neutral fw-bold">Reuso</span>
+                            <span class="pill pill-inline pill-light-success fw-bold">Padrão único</span>
+                            <span class="pill pill-inline pill-light-info fw-bold">Sustentação</span>
+                            <span class="invoisys-ds-doc-manifesto-pills-crown" role="img" aria-label="Padrão oficial do que o cliente vê no sistema">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                                    <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14" />
+                                </svg>
+                            </span>
+                        </div>
+                        <p class="mb-2 color-text font-normal" style="font-size:var(--tamanho-sm); line-height:1.55">
+                            O <strong>storybook de documentação</strong> deste projeto <strong>cresceu à medida das necessidades da equipe</strong>: primeiro <strong>padronizar</strong> como as telas do portal se parecem e se comportam; em seguida <strong>disponibilizar</strong> cada componente — pré-visualização, texto explicativo e exemplos copiáveis alinhados ao CSS oficial — para quem monta as views. É a <strong>vitrine</strong> do reuso: o que mostramos aqui deve <strong>coincidir</strong> com o padrão em produção, não um desenho só para o exemplo.
+                        </p>
+                        <p class="mb-0 color-text font-normal" style="font-size:var(--tamanho-sm); line-height:1.55">
+                            <i class="fa fa-refresh me-1" style="color:var(--cor-brand)" aria-hidden="true"></i><strong>Quando o padrão muda de verdade</strong>, a mudança entra pelo <strong>fluxo oficial do produto</strong> — assim preservamos <strong>reuso, consistência e manutenção</strong> no código que todas as telas compartilham. Este site <strong>não substitui</strong> essa governança.
+                        </p>
+                    </div>
+                    <div class="alert alert-danger mb-0 mt-2 w-100" id="sec-manifesto-regra-repo" role="alert" data-testid="ds-manifesto-repo-regras">
+                        <p class="alert-heading mb-2"><i class="fa fa-ban me-1" aria-hidden="true"></i> Por que não “mudar só aqui”</p>
+                        <p class="mb-2 color-text font-normal" style="font-size:var(--tamanho-sm); line-height:1.55">Criar aparência ou regra <strong>só neste guia</strong>, fora do que o portal usa de fato, <strong>quebra a promessa de reuso</strong> e gera <strong>inconsistência</strong> entre o que a equipe vê e o que o cliente recebe — e piora a <strong>manutenção</strong> (dois lugares para corrigir a mesma coisa).</p>
+                        <p class="mb-0 color-text font-normal" style="font-size:var(--tamanho-sm); line-height:1.55"><strong>Listas técnicas e arquivos</strong> para quem implementa: <a href="#introducao" class="alert-link">Introdução</a> e <a href="#quick-start" class="alert-link">Quick start</a>.</p>
+                    </div>
+                </div>

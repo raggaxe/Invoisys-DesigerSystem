@@ -1,0 +1,84 @@
+                <h1 id="testes-playwright">Testes · Playwright</h1>
+                <p class="invoisys-ds-lead">
+                    Os exemplos desta documentação expõem <code>data-testid</code> com o prefixo <code>ds-</code> para que equipas de QA e automação possam
+                    <strong>asserições estáveis</strong> sem depender só de texto visível ou de classes puramente visuais.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-playwright-porque">Porque testar assim</h2>
+                <p class="color-text font-normal" style="max-width:min(100%,90ch); line-height:1.65">
+                    Texto de botões muda com copy e traduções; classes de tema mudam com o design system. Um <code>data-testid</code> dedicado por ação ou por nó crítico
+                    mantém os testes <strong>legíveis</strong> (“clicar em <code>ds-nav-inputs</code>”) e <strong>menos frágeis</strong> quando o CSS evolui.
+                    No portal MVC, replique o mesmo critério com prefixo por módulo (ex.: <code>data-testid="nfe-listagem-filtro-abrir"</code>).
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-playwright-convencoes">Boas práticas de <code>data-testid</code></h2>
+                <ul class="color-text font-normal" style="margin:0 0 var(--espacamento-lg); padding-left:1.25rem; max-width:min(100%,90ch); line-height:1.65">
+                    <li class="mb-2"><strong>Um valor por função</strong> — um id estável por botão, campo ou região que o teste precisa de endereçar; evite duplicar o mesmo <code>data-testid</code> na mesma página.</li>
+                    <li class="mb-2"><strong>Prefixo consistente</strong> — nesta doc, <code>ds-</code> (ex.: <code>ds-nav-botoes</code>, <code>ds-copy-pre-intro-mvc</code>); no produto, escolha um prefixo por área (ex.: <code>nfe-</code>, <code>po-</code>).</li>
+                    <li class="mb-2"><strong>Não usar só classes utilitárias</strong> — <code>.btn-primary</code> pode aparecer dezenas de vezes; o teste deve mirar o nó certo.</li>
+                    <li><strong>Alinhar com QA</strong> — documente numa checklist ou no gestor de casos de teste quais <code>data-testid</code> cobrem cada cenário; o Playwright torna-se documentação executável.</li>
+                </ul>
+
+                <h2 class="invoisys-ds-section-title" id="sec-playwright-stack">Ferramentas e fluxo</h2>
+                <p class="color-text font-normal" style="max-width:min(100%,90ch); line-height:1.65">
+                    Instale o <a href="https://playwright.dev/" target="_blank" rel="noopener noreferrer">Playwright</a> no repositório de testes (<code>npm init playwright@latest</code> ou equivalente na vossa stack).
+                    Corra em <strong>headed</strong> durante o desenvolvimento da spec e em <strong>CI headless</strong> no pipeline; use <code>test.step</code> para relatórios legíveis para QA.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-playwright-exemplo-doc">Exemplo real — navegar nesta documentação</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Servidor local na porta por defeito do <code>app.py</code> (8080). Ajuste <code>baseURL</code> e portas ao vosso ambiente.
+                </p>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Playwright · TypeScript</span>
+                        <button type="button" data-ds-copy="pre-playwright-doc-example" data-testid="ds-copy-pre-playwright-doc-example"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-playwright-doc-example"><code class="invoisys-ds-pre-code">import { test, expect } from "@playwright/test";
+
+test.describe("Design system doc", () => {
+  test.use({ baseURL: "http://127.0.0.1:8080" });
+
+  test("abre Botões a partir do menu", async ({ page }) => {
+    await page.goto("/#introducao");
+    await page.getByTestId("ds-nav-botoes").click();
+    await expect(page.getByTestId("ds-panel-botoes")).toBeVisible();
+    await expect(page.locator("#sec-botoes-titulo")).toContainText("Botões");
+  });
+
+  test("copiar snippet de layout MVC", async ({ page }) => {
+    await page.goto("/#quick-start");
+    await page.getByTestId("ds-copy-pre-intro-mvc").click();
+    // Validar feedback "Copiado!" ou conteúdo no clipboard conforme o vosso critério de aceitação
+  });
+});</code></pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-playwright-exemplo-mvc">Exemplo real — view MVC com <code>data-testid</code></h2>
+                <p class="color-text font-normal" style="max-width:min(100%,90ch); line-height:1.65">
+                    No Razor, exponha o mesmo contrato que QA valida manualmente. O teste abre a listagem, filtra e asserí o estado da grelha sem depender da cor da linha.
+                </p>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Playwright · fluxo ilustrativo</span>
+                        <button type="button" data-ds-copy="pre-playwright-mvc-example" data-testid="ds-copy-pre-playwright-mvc-example"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-playwright-mvc-example"><code class="invoisys-ds-pre-code">import { test, expect } from "@playwright/test";
+
+test("listagem NF-e — filtro visível", async ({ page }) => {
+  await page.goto("/NfeEntrada"); // URL ilustrativa
+  await expect(page.getByTestId("nfe-listagem-filtro-form")).toBeVisible();
+  await page.getByTestId("nfe-listagem-filtro-abrir").click();
+  await page.getByTestId("nfe-listagem-filtro-status").selectOption("Autorizada");
+  await page.getByTestId("nfe-listagem-filtro-aplicar").click();
+  await expect(page.getByTestId("nfe-listagem-grid")).toBeVisible();
+});</code></pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-playwright-checklist-qa">Deixar pronto para QA</h2>
+                <ul class="color-text font-normal" style="margin:0; padding-left:1.25rem; max-width:min(100%,90ch); line-height:1.65">
+                    <li class="mb-2">Listar no ticket ou no caso de teste os <code>data-testid</code> que cobrem cada passo (dado / quando / então).</li>
+                    <li class="mb-2">Garantir que builds de staging expõem os mesmos ids que o ambiente onde o Playwright corre.</li>
+                    <li class="mb-2">Anexar ao relatório de sprint um link para o ficheiro de spec ou para o job de CI que executa a suite.</li>
+                    <li>Preferir <strong>um projeto de testes</strong> partilhado (ou pacote npm) a specs soltas na máquina de um developer — reprodutibilidade para QA.</li>
+                </ul>

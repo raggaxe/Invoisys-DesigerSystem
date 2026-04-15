@@ -1,0 +1,291 @@
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    No portal, os diálogos seguem o padrão <strong>Bootstrap 3</strong> (<code>.modal</code>, <code>.modal-dialog</code>, <code>.modal-content</code>, …) com <strong>jQuery</strong> (<code>$('#id').modal('show')</code>).
+                    O <strong>componentes.css</strong> acrescenta o cabeçalho a cor de marca, centralização vertical, variante fullscreen e o painel lateral (<code>.modal.left</code>).
+                    A folha base do Bootstrap (regras de <code>.modal</code> / <code>.fade</code>) vem do bundle do MVC — nesta documentação os botões «Abrir exemplo» usam apenas <strong>design-system-docs.css</strong> + <strong>design-system-docs.js</strong> para simular abrir/fechar.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Z-index:</strong> use <code>--z-modal-backdrop</code> e <code>--z-modal</code> de <strong>main.css</strong> no portal; nas demos da doc o contêiner fica acima da topbar local.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Tipografia do modal:</strong> título no cabeçalho <strong>15px</strong> (<code>--tamanho-modal-titulo</code> em <strong>main.css</strong>); corpo <strong>14px</strong> (<code>font-size</code> em <code>.modal-body</code> via <code>--tamanho-sm</code> em <strong>componentes.css</strong>).
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-modais-centrado">Modal centrado</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Diálogo padrão ao centro da tela: <code>modal-dialog modal-dialog-centered</code> (largura máxima habitual definida na view ou em regra de página).
+                    O título do cabeçalho fica em <strong>maiúsculas</strong> por CSS (<code>text-transform: uppercase</code> em <strong>componentes.css</strong>).
+                    O rodapé segue a barra a <strong>100%</strong> com dois botões em larguras iguais (<code>modal-footer</code> + <code>d-flex</code> + <code>flex-fill</code>), alinhado ao modal Entrada XML.
+                </p>
+                <div class="invoisys-ds-preview d-flex flex-wrap gap-2 align-items-center" data-testid="ds-modais-preview-centrado">
+                    <button type="button" class="btn btn-primary" data-invoisys-ds-modal-open="ds-modal-demo-centrado" data-testid="ds-modal-open-ds-modal-demo-centrado">Abrir exemplo centrado</button>
+                </div>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Razor / HTML (produção)</span>
+                        <button type="button" data-ds-copy="pre-modais-centrado" data-testid="ds-copy-pre-modais-centrado"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-modais-centrado">&lt;div class="modal fade" id="exemploModalCentrado" tabindex="-1" role="dialog"
+     aria-labelledby="exemploModalCentradoTitulo" data-backdrop="static"&gt;
+    &lt;div class="modal-dialog modal-dialog-centered" role="document"&gt;
+        &lt;div class="modal-content"&gt;
+            &lt;div class="modal-header"&gt;
+                &lt;button type="button" class="close" data-dismiss="modal" aria-label="Fechar"&gt;&lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;&lt;/button&gt;
+                &lt;h2 class="modal-title" id="exemploModalCentradoTitulo"&gt;Título&lt;/h2&gt;
+            &lt;/div&gt;
+            &lt;div class="modal-body"&gt;
+                &lt;p class="mb-0"&gt;Corpo do modal.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="modal-footer d-flex justify-content-between align-items-center gap-2 py-2"&gt;
+                &lt;button type="button" class="btn btn-canceled flex-fill m-0" data-dismiss="modal"&gt;Cancelar&lt;/button&gt;
+                &lt;button type="button" class="btn btn-primary flex-fill m-0"&gt;Confirmar&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-modais-entrada-xml">Exemplo real · Entrada XML</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Padrão usado no portal para carregar arquivo dentro de um modal centrado: <code>modal-dialog-centered</code>, <code>modal-content</code> com largura mínima (~600px),
+                    cabeçalho com <code>bg-primary</code> ou <code>bg-green-invoisys</code>, corpo em <code>modal-body</code> e barra de ações com utilitários flex (<code>d-flex</code>, <code>flex-fill</code>) — <strong>Cancelar</strong> (<code>btn btn-canceled</code>) e <strong>Confirmar</strong> (<code>btn bg-green-invoisys</code>).
+                </p>
+                <p class="invoisys-ds-callout">
+                    O Bootstrap ajusta <code>class="in"</code>, <code>aria-hidden</code> e foco ao abrir/fechar; evite <code>z-index</code> inline — use a stack do tema (<code>--z-modal</code>).
+                    O ícone de fechar no portal pode ser <code>icons-office-52</code>; na demo abaixo usamos Font Awesome por compatibilidade com esta doc.
+                </p>
+                <div class="invoisys-ds-preview d-flex flex-wrap gap-2 align-items-center" data-testid="ds-modais-preview-entrada-xml">
+                    <button type="button" class="btn btn-primary" data-invoisys-ds-modal-open="ds-modal-demo-entrada-xml" data-testid="ds-modal-open-ds-modal-demo-entrada-xml">Abrir exemplo Entrada XML</button>
+                </div>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML (produção · referência)</span>
+                        <button type="button" data-ds-copy="pre-modais-entrada-xml" data-testid="ds-copy-pre-modais-entrada-xml"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-modais-entrada-xml">&lt;div class="modal fade" id="modalEntradaXML" role="dialog" tabindex="-1" aria-labelledby="modalEntradaXMLTitulo" data-backdrop="static" data-testid="modal-entrada-xml-container"&gt;
+    &lt;div class="modal-dialog modal-dialog-centered"&gt;
+        &lt;div class="modal-content" style="min-width:600px"&gt;
+            &lt;div class="modal-header bg-primary"&gt;
+                &lt;button type="button" class="close" data-dismiss="modal" aria-label="Fechar modal de entrada XML" data-testid="modal-entrada-xml-botao-fechar"&gt;&lt;i class="icons-office-52" aria-hidden="true"&gt;&lt;/i&gt;&lt;/button&gt;
+                &lt;h4 class="modal-title" id="modalEntradaXMLTitulo"&gt;&lt;strong&gt;ENTRADA XML&lt;/strong&gt;&lt;/h4&gt;
+            &lt;/div&gt;
+            &lt;form action="#" id="formXML" enctype="multipart/form-data" method="post" onsubmit="return false;" role="form" novalidate="novalidate"&gt;
+                &lt;div class="modal-body"&gt;
+                    &lt;div class="row" id="arquivoXMLDiv"&gt;
+                        &lt;div class="col-sm-12 form-group"&gt;
+                            &lt;label for="arquivoXMLPost" class="control-label"&gt;Arquivo XML&lt;/label&gt;
+                            &lt;div class="file"&gt;
+                                &lt;div class="option-group"&gt;
+                                    &lt;input type="text" class="form-control" id="uploaderXML" placeholder="Nenhum arquivo selecionado" readonly="readonly" style="background-color: #FAFAFA" aria-label="Nome do arquivo selecionado" /&gt;
+                                    &lt;span id="btnXML" class="file-button btn-primary"&gt;Escolha o XML&lt;/span&gt;
+                                    &lt;input id="arquivoXMLPost" name="arquivoXMLPost" type="file" class="dropzone custom-file" style="background-color: #FAFAFA;" onchange="document.getElementById('uploaderXML').value = this.files &amp;&amp; this.files[0] ? this.files[0].name : '';" aria-label="Selecionar arquivo XML" data-testid="modal-entrada-xml-input-arquivo" /&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;input type="hidden" id="arquivoXMLBase64" name="arquivoXMLBase64" /&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class="modal-footer d-flex justify-content-between align-items-center gap-2 py-2"&gt;
+                    &lt;button type="button" class="btn btn-canceled flex-fill m-0" data-dismiss="modal" data-testid="modal-entrada-xml-botao-cancelar" aria-label="Cancelar entrada de XML"&gt;Cancelar&lt;/button&gt;
+                    &lt;button id="btnEntradaXML" type="button" class="btn bg-green-invoisys flex-fill m-0" onclick="enviarXML();" data-testid="modal-entrada-xml-botao-confirmar" aria-label="Confirmar envio do XML"&gt;Confirmar&lt;/button&gt;
+                &lt;/div&gt;
+            &lt;/form&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-modais-confirmacao">Modal de confirmação (eliminar)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Para ações irreversíveis (apagar arquivo, remover registro, etc.), use o mesmo layout centrado com mensagem explícita no <code>modal-body</code>
+                    e no rodapé <strong>Cancelar</strong> (<code>btn btn-canceled</code>) + confirmação em vermelho com <code>btn btn-danger</code> (definido em <strong>componentes.css</strong> com tokens <code>--cor-danger-fundo</code> / <code>--cor-danger-border</code>).
+                </p>
+                <div class="invoisys-ds-preview d-flex flex-wrap gap-2 align-items-center" data-testid="ds-modais-preview-confirmacao">
+                    <button type="button" class="btn btn-primary" data-invoisys-ds-modal-open="ds-modal-demo-confirmacao" data-testid="ds-modal-open-ds-modal-demo-confirmacao">Abrir exemplo «apagar arquivo»</button>
+                </div>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Razor / HTML (produção)</span>
+                        <button type="button" data-ds-copy="pre-modais-confirmacao" data-testid="ds-copy-pre-modais-confirmacao"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-modais-confirmacao">&lt;div class="modal fade" id="modalConfirmarExclusao" tabindex="-1" role="dialog" aria-labelledby="modalConfirmarExclusaoTitulo" data-backdrop="static"&gt;
+    &lt;div class="modal-dialog modal-dialog-centered" role="document"&gt;
+        &lt;div class="modal-content"&gt;
+            &lt;div class="modal-header"&gt;
+                &lt;button type="button" class="close" data-dismiss="modal" aria-label="Fechar"&gt;&lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;&lt;/button&gt;
+                &lt;h2 class="modal-title" id="modalConfirmarExclusaoTitulo"&gt;Eliminar arquivo&lt;/h2&gt;
+            &lt;/div&gt;
+            &lt;div class="modal-body"&gt;
+                &lt;p class="mb-2"&gt;Deseja apagar o arquivo &lt;strong&gt;@Model.NomeArquivo&lt;/strong&gt;?&lt;/p&gt;
+                &lt;p class="mb-0"&gt;Tem certeza desta ação?&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="modal-footer d-flex justify-content-between align-items-center gap-2 py-2"&gt;
+                &lt;button type="button" class="btn btn-canceled flex-fill m-0" data-dismiss="modal" aria-label="Cancelar"&gt;Cancelar&lt;/button&gt;
+                &lt;button type="button" class="btn btn-danger flex-fill m-0" id="btnConfirmarExclusao" aria-label="Confirmar eliminação do arquivo"&gt;Apagar&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-modais-fullscreen">Modal fullscreen</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Ocupa o viewport: combina <code>modal-dialog-centered</code> com <code>modal-fullscreen</code> (definido em <strong>componentes.css</strong> para altura total e corpo scrollável em fluxos com separadores/abas).
+                </p>
+                <div class="invoisys-ds-preview d-flex flex-wrap gap-2 align-items-center" data-testid="ds-modais-preview-fullscreen">
+                    <button type="button" class="btn btn-primary" data-invoisys-ds-modal-open="ds-modal-demo-fullscreen" data-testid="ds-modal-open-ds-modal-demo-fullscreen">Abrir exemplo fullscreen</button>
+                </div>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Razor / HTML (produção)</span>
+                        <button type="button" data-ds-copy="pre-modais-fullscreen" data-testid="ds-copy-pre-modais-fullscreen"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-modais-fullscreen">&lt;div class="modal fade" id="exemploModalFullscreen" tabindex="-1" role="dialog"
+     aria-labelledby="exemploModalFullscreenTitulo"&gt;
+    &lt;div class="modal-dialog modal-dialog-centered modal-fullscreen" role="document"&gt;
+        &lt;div class="modal-content"&gt;
+            &lt;div class="modal-header"&gt;
+                &lt;button type="button" class="close" data-dismiss="modal" aria-label="Fechar"&gt;&lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;&lt;/button&gt;
+                &lt;h2 class="modal-title" id="exemploModalFullscreenTitulo"&gt;Fluxo / detalhe&lt;/h2&gt;
+            &lt;/div&gt;
+            &lt;div class="modal-body"&gt;
+                &lt;!-- conteúdo em altura total --&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-modais-offcanvas">Offcanvas (painel lateral)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Painel a partir da <strong>esquerda</strong>, altura total: <code>class="modal left fade"</code> na raiz e <code>modal-dialog</code> no interior — o posicionamento vem de <strong>componentes.css</strong> (<code>.modal.left .modal-dialog</code>, largura típica 520px).
+                </p>
+                <div class="invoisys-ds-preview d-flex flex-wrap gap-2 align-items-center" data-testid="ds-modais-preview-offcanvas">
+                    <button type="button" class="btn btn-primary" data-invoisys-ds-modal-open="ds-modal-demo-offcanvas" data-testid="ds-modal-open-ds-modal-demo-offcanvas">Abrir exemplo offcanvas</button>
+                </div>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Razor / HTML (produção)</span>
+                        <button type="button" data-ds-copy="pre-modais-offcanvas" data-testid="ds-copy-pre-modais-offcanvas"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-modais-offcanvas">&lt;div class="modal left fade" id="exemploOffcanvas" tabindex="-1" role="dialog"
+     aria-labelledby="exemploOffcanvasTitulo"&gt;
+    &lt;div class="modal-dialog" role="document"&gt;
+        &lt;div class="modal-content"&gt;
+            &lt;div class="modal-header"&gt;
+                &lt;button type="button" class="close" data-dismiss="modal" aria-label="Fechar"&gt;&lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;&lt;/button&gt;
+                &lt;h2 class="modal-title" id="exemploOffcanvasTitulo"&gt;Filtros&lt;/h2&gt;
+            &lt;/div&gt;
+            &lt;div class="modal-body"&gt;
+                &lt;p class="mb-0"&gt;Conteúdo do painel.&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+                </div>
+
+                <!-- Demos (fora do .invoisys-ds-preview: fixed ao viewport) -->
+                <div id="ds-modal-demo-centrado" class="invoisys-ds-modal-demo invoisys-ds-modal-demo--centered" data-invoisys-ds-modal-demo hidden aria-hidden="true" data-testid="ds-modal-demo-centrado">
+                    <div class="invoisys-ds-modal-demo__backdrop" data-invoisys-ds-modal-close data-testid="ds-modal-demo-centrado-backdrop" tabindex="-1" aria-hidden="true"></div>
+                    <div class="invoisys-ds-modal-demo__dialog" role="dialog" aria-modal="true" aria-labelledby="ds-modal-demo-centrado-titulo">
+                        <div class="invoisys-ds-modal-demo__sheet">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-invoisys-ds-modal-close aria-label="Fechar" data-testid="ds-modal-demo-centrado-close-header"><span aria-hidden="true">&times;</span></button>
+                                <h2 class="invoisys-ds-modal-demo__title modal-title" id="ds-modal-demo-centrado-titulo">Modal centrado</h2>
+                            </div>
+                            <div class="invoisys-ds-modal-demo__body">
+                                <p class="mb-0">Exemplo só para esta documentação. Em produção, use o markup copiável acima com o JS do Bootstrap.</p>
+                            </div>
+                            <div class="modal-footer d-flex justify-content-between align-items-center gap-2 py-2">
+                                <button type="button" class="btn btn-canceled flex-fill m-0" data-invoisys-ds-modal-close data-testid="ds-modal-demo-centrado-btn-cancelar">Cancelar</button>
+                                <button type="button" class="btn btn-primary flex-fill m-0" data-invoisys-ds-modal-close data-testid="ds-modal-demo-centrado-btn-confirmar">Confirmar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ds-modal-demo-entrada-xml" class="invoisys-ds-modal-demo invoisys-ds-modal-demo--centered invoisys-ds-modal-demo--entrada-xml" data-invoisys-ds-modal-demo hidden aria-hidden="true" data-testid="ds-modal-demo-entrada-xml">
+                    <div class="invoisys-ds-modal-demo__backdrop" data-invoisys-ds-modal-close data-testid="ds-modal-demo-entrada-xml-backdrop" tabindex="-1" aria-hidden="true"></div>
+                    <div class="invoisys-ds-modal-demo__dialog" role="dialog" aria-modal="true" aria-labelledby="ds-modal-entrada-xml-titulo">
+                        <div class="invoisys-ds-modal-demo__sheet">
+                            <div class="modal-header bg-primary">
+                                <button type="button" class="close" data-invoisys-ds-modal-close aria-label="Fechar modal de entrada XML" data-testid="ds-modal-demo-entrada-xml-close-header"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                <h4 class="invoisys-ds-modal-demo__title modal-title" id="ds-modal-entrada-xml-titulo"><strong>ENTRADA XML</strong></h4>
+                            </div>
+                            <form action="#" method="post" role="form" onsubmit="return false;">
+                                <div class="invoisys-ds-modal-demo__body">
+                                    <div class="form-group mb-0">
+                                        <label for="ds-demo-arquivo-xml" class="control-label">Arquivo XML</label>
+                                        <div class="file">
+                                            <div class="option-group">
+                                                <input type="text" class="form-control" id="ds-demo-uploader-xml" readonly placeholder="Nenhum arquivo selecionado" aria-label="Nome do arquivo selecionado" />
+                                                <span class="file-button btn-primary" aria-hidden="true">Escolha o XML</span>
+                                                <input type="file" id="ds-demo-arquivo-xml" class="dropzone custom-file" accept=".xml,application/xml,text/xml" aria-label="Selecionar arquivo XML" data-testid="ds-modal-demo-entrada-xml-input-file" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer d-flex justify-content-between align-items-center gap-2 py-2">
+                                    <button type="button" class="btn btn-canceled flex-fill m-0" data-invoisys-ds-modal-close aria-label="Cancelar entrada de XML" data-testid="ds-modal-demo-entrada-xml-btn-cancelar">Cancelar</button>
+                                    <button type="button" class="btn bg-green-invoisys flex-fill m-0" data-invoisys-ds-modal-close aria-label="Confirmar envio do XML" data-testid="ds-modal-demo-entrada-xml-btn-confirmar">Confirmar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ds-modal-demo-confirmacao" class="invoisys-ds-modal-demo invoisys-ds-modal-demo--centered" data-invoisys-ds-modal-demo hidden aria-hidden="true" data-testid="ds-modal-demo-confirmacao">
+                    <div class="invoisys-ds-modal-demo__backdrop" data-invoisys-ds-modal-close data-testid="ds-modal-demo-confirmacao-backdrop" tabindex="-1" aria-hidden="true"></div>
+                    <div class="invoisys-ds-modal-demo__dialog" role="dialog" aria-modal="true" aria-labelledby="ds-modal-confirmacao-titulo">
+                        <div class="invoisys-ds-modal-demo__sheet">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-invoisys-ds-modal-close aria-label="Fechar" data-testid="ds-modal-demo-confirmacao-close-header"><span aria-hidden="true">&times;</span></button>
+                                <h2 class="invoisys-ds-modal-demo__title modal-title" id="ds-modal-confirmacao-titulo">Eliminar arquivo</h2>
+                            </div>
+                            <div class="invoisys-ds-modal-demo__body">
+                                <p class="mb-2">Deseja apagar o arquivo <strong>relatorio-fiscal-2024.pdf</strong>?</p>
+                                <p class="mb-0">Tem certeza desta ação?</p>
+                            </div>
+                            <div class="modal-footer d-flex justify-content-between align-items-center gap-2 py-2">
+                                <button type="button" class="btn btn-canceled flex-fill m-0" data-invoisys-ds-modal-close data-testid="ds-modal-demo-confirmacao-btn-cancelar">Cancelar</button>
+                                <button type="button" class="btn btn-danger flex-fill m-0" data-invoisys-ds-modal-close aria-label="Confirmar eliminação do arquivo" data-testid="ds-modal-demo-confirmacao-btn-apagar">Apagar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ds-modal-demo-fullscreen" class="invoisys-ds-modal-demo invoisys-ds-modal-demo--fullscreen" data-invoisys-ds-modal-demo hidden aria-hidden="true" data-testid="ds-modal-demo-fullscreen">
+                    <div class="invoisys-ds-modal-demo__backdrop" data-invoisys-ds-modal-close data-testid="ds-modal-demo-fullscreen-backdrop" tabindex="-1" aria-hidden="true"></div>
+                    <div class="invoisys-ds-modal-demo__dialog" role="dialog" aria-modal="true" aria-labelledby="ds-modal-demo-full-titulo">
+                        <div class="invoisys-ds-modal-demo__sheet">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-invoisys-ds-modal-close aria-label="Fechar" data-testid="ds-modal-demo-fullscreen-close-header"><span aria-hidden="true">&times;</span></button>
+                                <h2 class="invoisys-ds-modal-demo__title modal-title" id="ds-modal-demo-full-titulo">Modal fullscreen</h2>
+                            </div>
+                            <div class="invoisys-ds-modal-demo__body">
+                                <p>O corpo pode crescer com scroll interno, alinhado ao padrão <code>modal-dialog-centered modal-fullscreen</code> no portal.</p>
+                                <p class="mb-0">Fecha com Esc, com o × no cabeçalho ou com «Fechar».</p>
+                            </div>
+                            <div class="modal-footer d-flex justify-content-end py-2">
+                                <button type="button" class="btn btn-primary" data-invoisys-ds-modal-close data-testid="ds-modal-demo-fullscreen-btn-fechar">Fechar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ds-modal-demo-offcanvas" class="invoisys-ds-modal-demo invoisys-ds-modal-demo--offcanvas" data-invoisys-ds-modal-demo hidden aria-hidden="true" data-testid="ds-modal-demo-offcanvas">
+                    <div class="invoisys-ds-modal-demo__backdrop" data-invoisys-ds-modal-close data-testid="ds-modal-demo-offcanvas-backdrop" tabindex="-1" aria-hidden="true"></div>
+                    <div class="invoisys-ds-modal-demo__dialog" role="dialog" aria-modal="true" aria-labelledby="ds-modal-demo-off-titulo">
+                        <div class="invoisys-ds-modal-demo__sheet">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-invoisys-ds-modal-close aria-label="Fechar" data-testid="ds-modal-demo-offcanvas-close-header"><span aria-hidden="true">&times;</span></button>
+                                <h2 class="invoisys-ds-modal-demo__title modal-title" id="ds-modal-demo-off-titulo">Offcanvas</h2>
+                            </div>
+                            <div class="invoisys-ds-modal-demo__body">
+                                <p class="mb-0">Painel à esquerda (<code>.modal.left</code>). Clique fora (backdrop) ou use Fechar.</p>
+                            </div>
+                            <div class="modal-footer d-flex justify-content-end py-2">
+                                <button type="button" class="btn btn-canceled" data-invoisys-ds-modal-close data-testid="ds-modal-demo-offcanvas-btn-fechar">Fechar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>

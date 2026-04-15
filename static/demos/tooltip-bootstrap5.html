@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Demos · Tooltips Bootstrap 5.3</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" crossorigin="anonymous" />
+    <style>
+        /* Evita o documento esticar à altura do iframe (área cinza vazia em baixo) */
+        html {
+            height: auto !important;
+        }
+        body {
+            margin: 0;
+            padding: 1rem 1rem 1rem;
+            min-height: 0 !important;
+            height: auto !important;
+            font-family: Lato, system-ui, sans-serif;
+            background: #f5f8fa;
+            box-sizing: border-box;
+        }
+        .demo-wrap {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            text-align: left;
+        }
+        .demo-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0 0 12px;
+            color: #1d2939;
+            text-align: left;
+        }
+        .demo-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+        /* Cartão tipo .invoisys-ds-preview: largura total, conteúdo à esquerda, centrado na vertical */
+        .demo-preview-card {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0.75rem 1.25rem;
+            margin-bottom: 0;
+            background: #fff;
+            border: 1px solid #dee4ea;
+            border-radius: 8px;
+        }
+        /* Aspecto Invoisys (cartão verde) — espelha o padrão da doc principal */
+        .invoisys-tooltip-brand {
+            --bs-tooltip-bg: #ffffff;
+            --bs-tooltip-color: #4fb73b;
+            --bs-tooltip-opacity: 1;
+            --bs-tooltip-border-radius: 6px;
+            --bs-tooltip-padding-x: 14px;
+            --bs-tooltip-padding-y: 10px;
+            --bs-tooltip-font-size: 13px;
+        }
+        .invoisys-tooltip-brand .tooltip-inner {
+            font-weight: 500;
+            border: 1px solid #4fb73b;
+            text-align: center;
+            line-height: 1.45;
+        }
+        .invoisys-tooltip-brand .tooltip-arrow::before {
+            border-top-color: #4fb73b !important;
+        }
+        .invoisys-tooltip-brand.bs-tooltip-bottom .tooltip-arrow::before {
+            border-bottom-color: #4fb73b !important;
+            border-top-color: transparent !important;
+        }
+        .invoisys-tooltip-brand.bs-tooltip-start .tooltip-arrow::before,
+        .invoisys-tooltip-brand.bs-tooltip-end .tooltip-arrow::before,
+        .invoisys-tooltip-brand.bs-tooltip-left .tooltip-arrow::before,
+        .invoisys-tooltip-brand.bs-tooltip-right .tooltip-arrow::before {
+            border-top-color: transparent !important;
+        }
+        .invoisys-tooltip-brand.bs-tooltip-start .tooltip-arrow::before,
+        .invoisys-tooltip-brand.bs-tooltip-left .tooltip-arrow::before {
+            border-left-color: #4fb73b !important;
+        }
+        .invoisys-tooltip-brand.bs-tooltip-end .tooltip-arrow::before,
+        .invoisys-tooltip-brand.bs-tooltip-right .tooltip-arrow::before {
+            border-right-color: #4fb73b !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-wrap">
+        <p class="demo-title">Posições (passe o mouse sobre cada botão)</p>
+        <div class="demo-row">
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="invoisys-tooltip-brand" data-bs-title="Tooltip em cima (top)">Top</button>
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="invoisys-tooltip-brand" data-bs-title="Tooltip abaixo (bottom)">Bottom</button>
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-custom-class="invoisys-tooltip-brand" data-bs-title="Tooltip à esquerda (left)">Left</button>
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="invoisys-tooltip-brand" data-bs-title="Tooltip à direita (right)">Right</button>
+        </div>
+        <p class="demo-title">Exemplo «Importar XML» (top + mesma classe marca)</p>
+        <div class="demo-preview-card">
+            <button type="button" class="btn btn-light border text-secondary d-inline-flex align-items-center gap-2" id="btn-importar-xml-demo" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="invoisys-tooltip-brand" data-bs-title="Importar NF-e a partir de um arquivo XML" data-testid="demo-tooltip-importar-xml">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                    <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                </svg>
+                Importar XML
+            </button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+        (function () {
+            var list = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            list.forEach(function (el) {
+                new bootstrap.Tooltip(el, { container: "body" });
+            });
+        })();
+        (function () {
+            function reportEmbedHeight() {
+                try {
+                    var doc = document.documentElement;
+                    var body = document.body;
+                    var h = Math.max(
+                        doc.scrollHeight,
+                        doc.offsetHeight,
+                        body ? body.scrollHeight : 0,
+                        body ? body.offsetHeight : 0
+                    );
+                    h = Math.ceil(h);
+                    if (window.parent && window.parent !== window) {
+                        var target = window.location.origin || "*";
+                        window.parent.postMessage({ source: "invoisys-ds-embed-height", height: h }, target);
+                    }
+                } catch (err) {}
+            }
+            window.addEventListener("load", function () {
+                reportEmbedHeight();
+                setTimeout(reportEmbedHeight, 150);
+                setTimeout(reportEmbedHeight, 500);
+            });
+            window.addEventListener("resize", reportEmbedHeight);
+        })();
+    </script>
+</body>
+</html>

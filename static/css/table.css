@@ -1,0 +1,1820 @@
+/* ==========================================================
+   TABLES / LISTAGEM / DATATABLES
+   ==========================================================
+   NF-e Beta / páginas equivalentes:
+   - Anfitrião: :is(.nfeentrada-layout, .layout-datatable-page) no .page-content (HTML legacy
+     mantém .nfeentrada-layout; outras views podem usar só .layout-datatable-page).
+   - Delivery Monitor: toolbar primeira linha + .nfeentrada-toolbar-btn com .delivery-monitor-page
+     (data-testid deliverymonitor-toolbar-principal) quando o markup espelha a NFe.
+   - Grid: [data-table] no painel — o CSS não fixa o valor do atributo (#tblNFe fica só no HTML).
+   ========================================================== */
+
+/* ==========================
+   CONTAINERS / HEADER
+   ========================== */
+
+.panel {
+    background-color: #FFFFFF;
+    padding-block: 16px .5rem;
+    padding-inline: 16px;
+    flex: 1 1 auto;
+    flex: 1 1 auto !important;
+    display: flex;
+    flex-direction: column;
+}
+
+/* NFe Entrada Beta: footer da tabela no rodapé do card branco; rolagem só no corpo da tabela */
+.main-content .page-content:is(.nfeentrada-layout, .layout-datatable-page) {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: calc(100vh - 120px);
+    overflow: hidden !important;
+}
+.main-content .page-content:is(.nfeentrada-layout, .layout-datatable-page) > .header {
+    flex-shrink: 0;
+}
+/* Card branco (panel) preenche a altura e usa flex em coluna */
+.main-content .page-content:is(.nfeentrada-layout, .layout-datatable-page) .panel[data-table] {
+    flex: 1 1 0%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden !important;
+}
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table].panel {
+    min-height: 0;
+}
+
+/* Telas médias (até 1200px): relaxar altura/overflow dos níveis superiores para tabela e scroll funcionarem */
+@media (max-width: 1200px) {
+    .main-content .page-content:is(.nfeentrada-layout, .layout-datatable-page) {
+        height: auto;
+        min-height: 0;
+        overflow: visible !important;
+    }
+    .main-content .page-content:is(.nfeentrada-layout, .layout-datatable-page) .panel[data-table] {
+        flex: 1 1 auto;
+        min-height: 320px;
+        overflow: visible !important;
+    }
+    :is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 {
+        overflow: visible !important;
+        min-height: 280px;
+    }
+    :is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap {
+        overflow: visible !important;
+        position: relative;
+        flex: 1 1 auto;
+    }
+    :is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap .dataTables_wrapper,
+    :is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap div[class*="dataTables_wrapper"] {
+        overflow: visible !important;
+    }
+}
+/* Blocos acima da tabela não encolhem */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table].panel > .d-flex,
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table].panel > #main_panel,
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table].panel > #filtersList,
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table].panel > .panel-content:not(.pagination2) {
+    flex-shrink: 0;
+}
+/* Área da tabela: preenche o resto do card; posição relativa para o table-wrap preencher */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 {
+    flex: 1 1 0%;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden !important;
+    position: relative;
+}
+/* Loading inicial e no resize: mesma área do table-wrap para se adaptar igual à tabela/empty state */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .loading-table.nfeentrada-loading-inicial {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 6px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    flex: none !important;
+}
+/* Quando a tabela estiver pronta, esconder de forma definitiva (sobrepõe qualquer outro display) */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .loading-table.nfeentrada-loading-inicial.nfeentrada-loading-oculto {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+/* table-wrap preenche a área da tabela com pequena margem inferior para não cortar footer/scrollbar */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 6px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden !important;
+}
+/* Wrapper do DataTables: flex em coluna, ocupa 100% da altura para rodapé ficar no bottom mesmo com poucos registros */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap .dataTables_wrapper,
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap div[class*="dataTables_wrapper"] {
+    flex: 1 1 0%;
+    min-height: 0;
+    height: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+}
+/* Área rolável = corpo da tabela; cresce para preencher o espaço e empurra o footer para o bottom (poucos registros = espaço vazio aqui, footer embaixo) */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap .dataTables_wrapper > div:not(.footer-table),
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap div[class*="dataTables_wrapper"] > div:not(.footer-table),
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap .scrollX.table-responsive-Y,
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap div.scrollX {
+    flex: 1 1 0% !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: auto !important;
+    /* Garante que o bloco ocupe o espaço disponível e não encolha ao conteúdo */
+    display: block !important;
+}
+/* Estado vazio (sem linhas): sem barra de rolagem na área da grid — classe aplicada em table-setting.js draw.dt */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap.nfeentrada-grid-empty .dataTables_wrapper > div:not(.footer-table),
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap.nfeentrada-grid-empty div[class*="dataTables_wrapper"] > div:not(.footer-table),
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap.nfeentrada-grid-empty .scrollX.table-responsive-Y,
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap.nfeentrada-grid-empty div.scrollX {
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+}
+/* Footer sempre visível no rodapé do card; com poucos registros fica no bottom do painel */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap .footer-table,
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap .dataTables_wrapper > .footer-table,
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap .dataTables_wrapper > div:last-child.footer-table {
+    flex-shrink: 0 !important;
+    margin-top: auto !important;
+}
+
+/* Telas médias (até 1200px): tabela com scroll horizontal legível e barra de rolagem visível */
+@media (max-width: 1200px) {
+    :is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap .scrollX.table-responsive-Y,
+    :is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap div.scrollX {
+        overflow-x: auto !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+        min-height: 320px;
+    }
+    :is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap #tblNFe {
+        min-width: 1000px;
+    }
+    :is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap.nfeentrada-grid-empty .scrollX.table-responsive-Y,
+    :is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap.nfeentrada-grid-empty div.scrollX {
+        overflow-x: hidden !important;
+        overflow-y: hidden !important;
+        min-height: 0 !important;
+    }
+    :is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-content.pagination2 .table-wrap.nfeentrada-grid-empty #tblNFe {
+        min-width: 0 !important;
+    }
+}
+
+/* ==========================
+   NFe Entrada Beta – Toolbar responsiva (overflow + fila completa)
+   Tela média: menu três pontos; desktop: botões inline
+   ========================== */
+.nfeentrada-actions-overflow {
+    display: none !important;
+}
+.nfeentrada-actions-overflow .nfeentrada-overflow-trigger {
+    min-width: 44px;
+    min-height: 39px;
+    padding-inline: 12px;
+    justify-content: center;
+}
+.nfeentrada-actions-overflow .dropdown-menu {
+    min-width: 200px;
+}
+.nfeentrada-actions-overflow .dropdown-menu a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+}
+/* Tela média (768px–991px): mostrar menu três pontos, esconder botões completos */
+@media (min-width: 768px) and (max-width: 991px) {
+    .nfeentrada-actions-overflow {
+        display: block !important;
+    }
+    .nfeentrada-actions-full {
+        display: none !important;
+    }
+}
+/* Abaixo de 768px: overflow escondido de novo (mobile usa botões só ícones) */
+/* Desktop (992px+): botões completos, esconder overflow */
+@media (min-width: 992px) {
+    .nfeentrada-actions-overflow {
+        display: none !important;
+    }
+    .nfeentrada-actions-full {
+        display: flex !important;
+    }
+}
+/* Telas médias e mobile (até 1200px): botões só ícones, compactos */
+@media (max-width: 1200px) {
+    .nfeentrada-toolbar-btn .nfeentrada-btn-text {
+        display: none !important;
+    }
+    .panel-card-btn.nfeentrada-toolbar-btn,
+    .metrics-button.nfeentrada-toolbar-btn,
+    .panel-card.nfeentrada-toolbar-btn .panel-toggle,
+    .nfeentrada-toolbar-btn .panel-select {
+        min-width: 44px;
+        min-height: 39px;
+        padding-left: 10px;
+        padding-right: 10px;
+        justify-content: center;
+    }
+    .panel-card-btn.nfeentrada-toolbar-btn span:empty,
+    .metrics-button.nfeentrada-toolbar-btn .nfeentrada-btn-text,
+    .nfeentrada-toolbar-btn .panel-btn-controls-inverted .nfeentrada-btn-text {
+        display: none !important;
+    }
+    .nfeentrada-toolbar-btn .panel-btn-controls-inverted .mx-3 {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    .panel-card.nfeentrada-toolbar-btn {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+    :is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-card .square-button,
+    :is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-card .square-button div {
+        min-width: 44px;
+        min-height: 39px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+/* Mobile (até 767px): overflow escondido, mesma lógica de ícones já aplicada em 1200px */
+@media (max-width: 767px) {
+    .nfeentrada-actions-overflow {
+        display: none !important;
+    }
+    .nfeentrada-actions-full {
+        display: flex !important;
+    }
+}
+
+/* Select de workflow (Nfe Padrão): uma só borda, igual ao estado normal (evita borda dupla ao focar/selecionar) */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .select-fluxo,
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] #SelectFluxo {
+    border: 1px solid #ccc !important;
+    border-radius: 4px;
+    outline: none !important;
+    box-shadow: none !important;
+}
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .select-fluxo:focus,
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] #SelectFluxo:focus {
+    border: 1px solid #ccc !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+/* Select2 no mesmo select: manter uma só borda (só no __rendered), sem borda/outline extra no container */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .loading-select .select2-container--default .select2-selection--single,
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .loading-select .select2-container--default.select2-container--focus .select2-selection--single,
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .loading-select .select2-container--default.select2-container--open .select2-selection--single {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .loading-select .select2-container--default .select2-selection--single .select2-selection__rendered {
+    border: 1px solid #ccc !important;
+    border-radius: 4px;
+}
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .loading-select .select2-container--default.select2-container--focus .select2-selection--single .select2-selection__rendered,
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .loading-select .select2-container--default.select2-container--open .select2-selection--single .select2-selection__rendered {
+    border: 1px solid #ccc !important;
+    border-radius: 4px;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+
+.panel-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 39px !important;
+    font-size: var(--tamanho-base-fonte) !important;
+    font-family: var(--fonte-principal) !important;
+    width: fit-content;
+}
+
+.panel-limiter {
+    max-width: 354px;
+}
+
+/* NFe Entrada Beta: itens dentro do panel-card sem background próprio, respeitando a borda do container */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-card.panel-limiter .metrics-button,
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-card.panel-limiter .panel-select,
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-card .square-button {
+    background: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* NFe Entrada Beta: botão Filtrar por – ícones centralizados no centro do botão */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-card.nfeentrada-toolbar-btn .panel-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    min-height: 39px;
+    margin: 0;
+    float: none !important;
+}
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-card.nfeentrada-toolbar-btn .panel-btn-controls-inverted,
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] .panel-card.nfeentrada-toolbar-btn .panel-btn-controls-inverted .heading-sm {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin: 0;
+}
+
+/* “Filtrar por” e outros .panel-card-btn com esta classe (NFe Entrada Beta + Delivery Monitor) */
+.nfeentrada-toolbar-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    border-radius: 4px;
+    height: 39px !important;
+    font-size: var(--tamanho-base-fonte) !important;
+    font-family: var(--fonte-principal) !important;
+    width: fit-content;
+    gap: .5rem;
+}
+
+/* Primeira linha da toolbar: data + pesquisa + ações — NFe + Delivery (principal). */
+.delivery-monitor-page [data-testid="deliverymonitor-toolbar-principal"] {
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 0.5rem;
+}
+
+/* NFe: sem space-between — esse valor reparte o espaço livre entre TODOS os itens e abria um burgo enorme
+   entre o bloco de datas e o .filter-buttons (além do gap-2). flex-start + gap-2 + margin-left no 1.º painel. */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-testid="nfeentrada-toolbar"] {
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 0.5rem;
+    justify-content: flex-start !important;
+    gap: 0.5rem !important;
+}
+
+:is(.nfeentrada-layout, .layout-datatable-page) [data-testid="nfeentrada-toolbar"] > .filter-buttons + .panel-card {
+    margin-left: auto;
+}
+
+/* NFe: bloco label + datas 385px + margem até à pesquisa (z-index: pesquisa por cima se houver overflow). */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-testid="nfeentrada-toolbar"] > .combo-container {
+    width: 385px !important;
+    max-width: min(385px, 100%) !important;
+    min-width: 0;
+    height: auto !important;
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    /* Espaço até “Pesquisar…” vem só do .gap-2 na toolbar — sem margin-right (evitava 0.5rem + 0.5rem). */
+    margin-right: 0;
+    position: relative;
+    z-index: 0;
+}
+
+/* Delivery: combo na linha .dm-toolbar-primary-row-date-search (gap até pesquisa no delivery-monitor.css). */
+.delivery-monitor-page [data-testid="deliverymonitor-toolbar-principal"] .dm-toolbar-primary-row-date-search > .combo-container {
+    width: auto !important;
+    max-width: min(520px, 100%) !important;
+    min-width: 0;
+    height: auto !important;
+    flex: 0 1 auto;
+    box-sizing: border-box;
+    margin-right: 0;
+}
+
+    :is(.nfeentrada-layout, .layout-datatable-page) [data-testid="nfeentrada-toolbar"] .combo-container .combo-container {
+        width: auto !important;
+        max-width: 100%;
+        height: auto !important;
+        flex: 1 1 0%;
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    .delivery-monitor-page [data-testid="deliverymonitor-toolbar-principal"] .dm-toolbar-primary-row-date-search > .combo-container .combo-container {
+        width: auto !important;
+        max-width: 100%;
+        height: auto !important;
+        flex: 1 1 160px;
+        min-width: 0;
+    }
+
+/* NFe: o markup usa justify-content-between no .d-flex — dentro de 385px isso abre um vão enorme entre rótulo e datas
+   (diferente do Delivery). Forçar início + gap compacto como bloco único. */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-testid="nfeentrada-toolbar"] .combo-container > .d-flex {
+    align-items: center;
+    flex-wrap: nowrap;
+    min-width: 0;
+    justify-content: flex-start !important;
+    gap: 0.5rem !important;
+}
+
+.delivery-monitor-page [data-testid="deliverymonitor-toolbar-principal"] .dm-toolbar-primary-row-date-search > .combo-container > .d-flex {
+    align-items: center;
+    flex-wrap: nowrap;
+    min-width: 0;
+}
+
+/* NFe toolbar: min-width 31ch do .date-range-input (regra global abaixo) excede o .combo-container (385px) e
+   desenhava por cima do .filter-buttons; contém o input ao flex + label com min-width 0. */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-testid="nfeentrada-toolbar"] .date-range-container .date-range-input {
+    min-width: min(22ch, 100%) !important;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* .flex-fill no label roubava espaço ao campo de datas; o rótulo só ocupa o texto. */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-testid="nfeentrada-toolbar"] .combo-container > .d-flex > label.form-label {
+    flex: 0 1 auto !important;
+    min-width: 0;
+    max-width: 11rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+:is(.nfeentrada-layout, .layout-datatable-page) [data-testid="nfeentrada-toolbar"] > .filter-buttons {
+    flex: 1 1 auto;
+    min-width: min(12rem, 42vw);
+    position: relative;
+    z-index: 1;
+}
+
+/* NFe — 2.ª linha: SelectFluxo (.loading-select) alinhado à largura do bloco data (385px), como Delivery Monitor. */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table="#tblNFe"] #panel-filter-row > .d-flex {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table="#tblNFe"] #panel-filter-row .loading-select,
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table="#tblNFe"] #panel-filter-row .loading-select-item {
+    width: min(385px, 100%) !important;
+    max-width: min(385px, 100%) !important;
+    flex: 0 1 min(385px, 100%);
+    box-sizing: border-box;
+}
+
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table="#tblNFe"] #panel-filter-row .loading-select .select2-container {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.combo-container {
+    width: 385px;
+    height: 39px !important;
+}
+
+.header-result {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+/* ==========================
+   FILTER / DROPDOWN
+   ========================== */
+
+
+/* ==========================
+   INPUTS / SEARCH
+   ========================== */
+
+.search-input,
+input[type="search"],
+.date-range-input {
+    height: 39px !important;
+    font-size: var(--tamanho-base-fonte) !important;
+    font-family: var(--fonte-principal) !important;
+}
+
+/* Data de Exibição: container com contexto de posição para ícones */
+.date-range-container {
+    position: relative;
+    width: 100%;
+    min-width: 1px; /* permite encolher até o min-width do input */
+}
+
+/* Ícone X alinhado à direita, compacto para não cortar o texto */
+.date-range-container .date-range-clear {
+    position: absolute !important;
+    left: auto !important;
+    right: 6px !important;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    margin: 0;
+}
+
+/* Espaço mínimo para "DD/MM/YYYY - DD/MM/YYYY" + ícones; padding reduzido para caber tudo */
+.date-range-container .date-range-input {
+    padding-left: 30px;
+    padding-right: 28px;
+    min-width: 31ch;
+}
+
+.search-input {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    height: 39px;
+    width: 100%;
+    padding: 9px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--cor-action-border);
+    background-color: var(--cor-action-fundo);
+    color: var(--cor-action-texto);
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+    .search-button:hover {
+        background-color: #d0edf2;
+    }
+
+/* ==========================
+   TABLE BASE
+   ========================== */
+
+.main-content .footer {
+    display: none
+}
+
+:is(.nfeentrada-layout, .layout-datatable-page) #tblNFe_wrapper {
+    max-width: -webkit-fill-available;
+    flex: 1 1 auto;
+    flex: 1 1 auto !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.table-wrap {
+    flex: 1 1 auto;
+    flex: 1 1 auto !important;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Tabela Bootstrap no contexto flex do .table-wrap */
+.table {
+    flex: 1 1 auto;
+}
+
+table {
+    width: 100% !important;
+    margin-bottom: 0 !important;
+}
+
+.table > thead > tr {
+    border: 1px solid #ccc;
+}
+
+    .table > thead > tr > th {
+        background: #F1F1F1 !important;
+        height: 36px !important;
+        vertical-align: middle;
+        border: none;
+        font-size: 12px !important;
+        font-weight: 600;
+        text-transform: uppercase;
+        white-space: nowrap;
+        padding: 8px !important;
+        color: var(--cor-texto-secundario);
+        font-family: var(--fonte-principal);
+        font-size: var(--tamanho-sm);
+    }
+
+.table > tbody > tr > td, .table > tbody > tr > th {
+    background: #FFF !important;
+    vertical-align: middle;
+    border: none;
+    font-size: 14px !important;
+    font-weight: 500;
+    height: 38px !important;
+    white-space: nowrap;
+    padding: 0px 8px !important;
+    color: var(--cor-texto-secundario);
+    font-family: var(--fonte-principal);
+    font-size: var(--tamanho-sm);
+}
+/*tbody tr.odd {
+    height: 38px;
+}
+tbody tr.even {
+    height: 38px;
+}*/
+tbody tr,
+tbody tr td {
+    vertical-align: middle;
+    background-color: #fff !important;
+}
+
+    tbody tr:hover,
+    tbody tr:hover td {
+        background-color: #f8f9fa !important;
+    }
+
+    /* Sem hover na linha do empty state */
+    tbody tr:has(td.dataTables_empty):hover,
+    tbody tr:has(td.dataTables_empty):hover td {
+        background-color: #fff !important;
+    }
+
+/* ==========================
+   SELEÇÃO DE LINHAS
+   ========================== */
+/*    tbody tr.selected,
+    tbody tr.bg-row-selected {
+        background-color: #EAEFF5 !important;
+    }
+
+        tbody tr.selected td,
+        tbody tr.bg-row-selected td {
+            background-color: #EAEFF5 !important;
+            font-weight: var(--peso-fonte-strong);
+            color: #3e474f !important;
+        }*/
+
+/* NFe Entrada Beta: destaque visual das linhas selecionadas (click-to-select) */
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] tbody tr.bg-row-selected,
+:is(.nfeentrada-layout, .layout-datatable-page) [data-table] tbody tr.bg-row-selected td {
+    background-color: #d8d8d8 !important;
+    color: #242424;
+}
+
+/* ==========================
+  BUTTONS
+   ========================== */
+.square-button {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    width: 39px;
+    align-items: center;
+    font-size: var(--tamanho-sm) !important;
+    font-family: var(--fonte-principal) !important;
+    background-color: #fff;
+    border: none;
+    color: var(--cor-texto-secundario);
+    margin-right: 0;
+    cursor: pointer;
+}
+
+.panel-card-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    border-radius: 4px;
+    height: 39px !important;
+    font-size: var(--tamanho-base-fonte) !important;
+    font-family: var(--fonte-principal) !important;
+    width: fit-content;
+    gap: .5rem;
+    background: #fff;
+    padding-inline: 1rem !important;
+    color: var(--cor-texto-secundario);
+    font-family: var(--fonte-principal);
+    font-size: 13px;
+}
+    .panel-card-btn:hover {
+        background: #ececec
+    }
+
+    /* Botão Filtrar por: mesma cor do hover quando o painel de filtros está aberto */
+    :is(.nfeentrada-layout, .layout-datatable-page) [data-table] #wrapFiltrarPor.filter-panel-open {
+        background: #ececec;
+    }
+
+    .panel-card-btn i {
+        font-size: 13px;
+    }
+    /* ColVis: ícone (fa-bars) visível; botão real do DataTables invisível por cima para o clique abrir o dropdown */
+    .colvis-trigger-container {
+        position: relative;
+    }
+
+        .colvis-trigger-container .square-button {
+            pointer-events: none;
+        }
+
+        .colvis-trigger-container .dt-buttons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: 0;
+            border: none;
+        }
+
+            .colvis-trigger-container .dt-buttons .colvis-dt-button-overlay {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                background: transparent !important;
+                border: none !important;
+                color: transparent !important;
+                font-size: 0 !important;
+                opacity: 1;
+                cursor: pointer;
+            }
+    /* ColVis (ocultar colunas): mesmo estilo da tela de validação fiscal / modal */
+    .dt-button-background {
+        z-index: 1 !important;
+    }
+
+    .dt-button-collection {
+        z-index: 2 !important;
+    }
+
+    div.dt-button-collection {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 8px 8px 4px 8px;
+        border: 1px solid #d9d9d9;
+        background-color: white;
+        overflow: hidden;
+        z-index: 2002;
+        border-radius: 5px;
+        box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
+        box-sizing: border-box;
+        height: 260px;
+        width: 320px;
+        padding-bottom: 1px;
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        -ms-column-count: 2;
+        -o-column-count: 2;
+        column-count: 2;
+    }
+
+        div.dt-button-collection button.dt-button,
+        div.dt-button-collection div.dt-button,
+        div.dt-button-collection a.dt-button {
+            position: relative;
+            left: 0;
+            right: 0;
+            width: 100%;
+            display: block;
+            float: none;
+            margin-bottom: 4px;
+            margin-right: 0;
+            white-space: normal;
+            overflow: visible;
+            text-overflow: clip;
+        }
+
+            div.dt-button-collection a.dt-button span {
+                display: inline;
+                word-break: break-word;
+            }
+
+        div.dt-button-collection .dt-button {
+            border-radius: 0;
+        }
+
+        div.dt-button-collection > :last-child > * {
+            -webkit-column-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+    button.dt-button,
+    div.dt-button,
+    a.dt-button {
+        font-weight: 700;
+        color: #5b5b5b;
+        font-size: 14px;
+        position: relative;
+        display: inline-block;
+        padding: 0.5em 1em;
+        border: #ccc;
+    cursor: pointer;
+}
+
+.panel-card-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    border-radius: 4px;
+    height: 39px !important;
+    font-size: var(--tamanho-base-fonte) !important;
+    font-family: var(--fonte-principal) !important;
+    width: fit-content;
+    gap: .5rem;
+    background: #fff;
+    padding-inline: 1rem !important;
+    color: var(--cor-texto-secundario);
+    font-family: var(--fonte-principal);
+    font-size: 13px;
+}
+    .panel-card-btn:hover {
+        background: #ececec
+    }
+
+    /* Botão Filtrar por: mesma cor do hover quando o painel de filtros está aberto */
+    :is(.nfeentrada-layout, .layout-datatable-page) [data-table] #wrapFiltrarPor.filter-panel-open {
+        background: #ececec;
+    }
+
+    .panel-card-btn i {
+        font-size: 13px;
+    }
+    /* ColVis: ícone (fa-bars) visível; botão real do DataTables invisível por cima para o clique abrir o dropdown */
+    .colvis-trigger-container {
+        position: relative;
+    }
+
+        .colvis-trigger-container .square-button {
+            pointer-events: none;
+        }
+
+        .colvis-trigger-container .dt-buttons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: 0;
+            border: none;
+        }
+
+            .colvis-trigger-container .dt-buttons .colvis-dt-button-overlay {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                background: transparent !important;
+                border: none !important;
+                color: transparent !important;
+                font-size: 0 !important;
+                opacity: 1;
+                cursor: pointer;
+            }
+    /* ColVis (ocultar colunas): mesmo estilo da tela de validação fiscal / modal */
+    .dt-button-background {
+        z-index: 1 !important;
+    }
+
+    .dt-button-collection {
+        z-index: 2 !important;
+    }
+
+    div.dt-button-collection {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 8px 8px 4px 8px;
+        border: 1px solid #d9d9d9;
+        background-color: white;
+        overflow: hidden;
+        z-index: 2002;
+        border-radius: 5px;
+        box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
+        box-sizing: border-box;
+        height: 260px;
+        width: 320px;
+        padding-bottom: 1px;
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        -ms-column-count: 2;
+        -o-column-count: 2;
+        column-count: 2;
+    }
+
+        div.dt-button-collection button.dt-button,
+        div.dt-button-collection div.dt-button,
+        div.dt-button-collection a.dt-button {
+            position: relative;
+            left: 0;
+            right: 0;
+            width: 100%;
+            display: block;
+            float: none;
+            margin-bottom: 4px;
+            margin-right: 0;
+            white-space: normal;
+            overflow: visible;
+            text-overflow: clip;
+        }
+
+            div.dt-button-collection a.dt-button span {
+                display: inline;
+                word-break: break-word;
+            }
+
+        div.dt-button-collection .dt-button {
+            border-radius: 0;
+        }
+
+        div.dt-button-collection > :last-child > * {
+            -webkit-column-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+    button.dt-button,
+    div.dt-button,
+    a.dt-button {
+        font-weight: 700;
+        color: #5b5b5b;
+        font-size: 14px;
+        position: relative;
+        display: inline-block;
+        padding: 0.5em 1em;
+        border: #ccc;
+        cursor: pointer;
+        line-height: 1.6em;
+        color: black;
+        white-space: nowrap;
+        overflow: hidden;
+        background-color: transparent;
+        filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='white',EndColorStr='#e9e9e9');
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        text-decoration: none;
+        outline: none;
+        text-overflow: ellipsis;
+    }
+
+    .dt-button.buttons-columnVisibility {
+        background-color: transparent;
+        font-weight: normal;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    .dt-button.buttons-colvisRestore {
+        color: #5b5b5b;
+        background-color: #f8f8f8;
+        font-weight: normal;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+        .dt-button.buttons-colvisRestore:active:not(.disabled) {
+            color: #5b5b5b;
+            background-color: #dddddd;
+            font-weight: normal;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+    div.dt-button-collection button.dt-button:active:not(.disabled),
+    div.dt-button-collection button.dt-button.active:not(.disabled),
+    div.dt-button-collection div.dt-button:active:not(.disabled),
+    div.dt-button-collection div.dt-button.active:not(.disabled),
+    div.dt-button-collection a.dt-button:active:not(.disabled),
+    div.dt-button-collection a.dt-button.active:not(.disabled) {
+        background-color: transparent;
+        color: #5b5b5b;
+        font-weight: normal;
+        font-size: 12px;
+        text-transform: uppercase;
+        font-weight: 700;
+        filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#f0f0f0',EndColorStr='#dadada');
+    }
+
+    button.dt-button:active:not(.disabled),
+    button.dt-button.active:not(.disabled),
+    div.dt-button:active:not(.disabled),
+    div.dt-button.active:not(.disabled) {
+        background-color: #f8f8f8;
+        filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#f3f3f3',EndColorStr='#e2e2e2');
+        box-shadow: inset 1px 1px 3px #f8f8f8;
+    }
+
+    li.ui-menu-item:hover {
+        background-color: #dddddd;
+    }
+
+    li.ui-menu-item {
+        font-family: 'Lato', 'Open Sans', Helvetica, sans-serif !important;
+        font-size: 14px;
+        font-weight: 400;
+        color: #5B5B5B;
+    }
+
+    a.dt-button.buttons-columnVisibility:active:not(.disabled),
+    a.dt-button.buttons-columnVisibility.active:not(.disabled) {
+        background-color: #f8f8f8;
+    }
+
+    a.link-acao:link {
+        color: #4298E7;
+        font-weight: 700;
+        font-size: 14px;
+    }
+
+    a.link-acao:visited {
+        color: #4298E7;
+    }
+
+    a.link-acao:hover {
+        color: #4298E7;
+        text-decoration: underline;
+    }
+
+    a.link-acao:active {
+        color: #4298E7;
+    }
+
+    .panel-select {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        align-items: center;
+        font-size: 13px !important;
+        font-family: var(--fonte-principal) !important;
+        background-color: #f1f1f1;
+        border: none;
+        color: var(--cor-texto-secundario);
+        margin-right: 0;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 4px;
+        width: auto
+    }
+
+    .selectButtonPanel {
+        position: absolute;
+        z-index: 9999;
+        background: rgba(255, 255, 255, .95);
+        padding: 5px !important;
+        border: 1px solid #dddddd;
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        flex-direction: column;
+        font-size: var(--tamanho-xs) !important;
+        border: 1px solid #d5d5d5;
+        gap: .15rem;
+        border-radius: 4px;
+        box-shadow: 3px 5px 10px 0px rgba(0, 0, 0, 0.12);
+        -webkit-box-shadow: 3px 3px 15px 6px rgba(0, 0, 0, 0.12);
+        width: 238px;
+        top: 35px;
+        right: 0px;
+    }
+
+    /* Card Totalizadores/Indicadores: estilo igual ao drop-content/drop-btn (card details), largura contida */
+    .selectButtonPanel-card {
+        width: 220px;
+        min-width: 200px;
+        padding: 6px !important;
+        gap: 4px;
+    }
+
+    /* NFe Entrada Beta: dropdown Exportar – layout tipo Totalizadores/Indicadores (fundo branco, borda suave, itens com ícone + texto, hover cinza) */
+    #buttonsBar .dropdown:not(.open) .nfeentrada-export-dropdown {
+        display: none !important;
+    }
+    #buttonsBar .dropdown.open .nfeentrada-export-dropdown {
+        display: flex !important;
+    }
+    .nfeentrada-export-dropdown {
+        min-width: 220px;
+        padding: 6px !important;
+        background: #fff !important;
+        border: 1px solid #d3d3d3;
+        border-radius: 4px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+    .nfeentrada-export-dropdown .nfeentrada-export-dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 12px;
+        margin: 0;
+        border-radius: 4px;
+        background: #fff;
+        border: 1px solid #e8e8e8;
+        color: #424242;
+        font-size: 13px;
+        font-weight: 400;
+        cursor: pointer;
+        list-style: none;
+        transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .nfeentrada-export-dropdown .nfeentrada-export-dropdown-item i.fa {
+        flex-shrink: 0;
+        width: 18px;
+        text-align: center;
+        color: inherit;
+    }
+    .nfeentrada-export-dropdown .nfeentrada-export-dropdown-item:hover {
+        background: #f0f0f0;
+        border-color: #e8e8e8;
+        color: #555555;
+    }
+    .nfeentrada-export-dropdown .nfeentrada-export-dropdown-item:hover i.fa {
+        color: #555555;
+    }
+
+    .panel-view-btn {
+        width: 100%;
+        border-radius: 5px;
+        background: #f7f7f7 !important;
+        border: 1px solid #dddddd;
+        cursor: pointer;
+        padding: 8px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row;
+        gap: 0.5rem;
+        font-size: 13px;
+        color: var(--cor-texto-secundario, #555);
+        transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+    }
+
+    .panel-view-btn i {
+        flex-shrink: 0;
+        width: 18px;
+        text-align: center;
+    }
+
+    .panel-view-btn.active {
+        background: #e9ecef !important;
+        border-color: #ced4da;
+        font-weight: 600;
+    }
+
+    .panel-view-btn:hover {
+        background: #efefef !important;
+        border-color: #858585;
+        opacity: 1;
+    }
+
+    .metrics {
+        min-height: 135px;
+        /*    background: #F4F4F4;*/
+    }
+
+    .metrics-button {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        align-items: center;
+        font-size: 13px !important;
+        font-family: var(--fonte-principal) !important;
+        background-color: #fff;
+        border: none;
+        color: var(--cor-texto-secundario);
+        margin-right: 0;
+        cursor: pointer;
+        padding: 4px 8px;
+    }
+
+    .progress {
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+        height: 12px !important;
+    }
+
+    .count {
+        min-width: 160px;
+        text-align: right;
+    }
+        .count div {
+            font-size: 14px !important;
+            text-align: right;
+        }
+
+.metric-paramentro {
+    width: 326px;
+    text-align: left;
+    color: var(--cor-texto-secundario);
+    font-size: 13px !important;
+    font-family: var(--fonte-principal) !important;
+    font-weight: 600 !important;
+    min-width: 110px;
+}
+
+
+
+    /*.btn-default {
+        border: 1px solid #ccc;
+        font-size: var(--tamanho-xs) !important;
+        font-family: var(--fonte-principal) !important;
+        height: auto !important;
+        padding: 4px 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: none;
+        background-color: #fff;
+        color: #ccc;
+    }
+
+        .btn-default:hover, .btn-default:focus, .btn-default.active.focus, .btn-default.active:focus, .btn-default.active:hover, .btn-default:active.focus, .btn-default:active:focus, .btn-default:active:hover, .open > .dropdown-toggle.btn-default.focus, .open > .dropdown-toggle.btn-default:focus, .open > .dropdown-toggle.btn-default:hover {*/
+            /*        color: var(--cor-texto-secundario);
+        background-color: #e7e7e7;
+        border-color: #ddd;*/
+        /*}
+
+        .btn-default.active {
+            background-color: var(--cor-borda);
+            box-shadow: none;
+            border-color: #ddd;
+            color: var(--cor-texto-secundario);
+            font-weight: 700;
+        }*/
+
+    .action-buttons-group {
+        display: none !important;
+        white-space: nowrap;
+        z-index: 99;
+    }
+
+    tbody tr:hover .action-buttons-group {
+        display: inline-block !important;
+    }
+
+    .action-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        padding: 2px !important;
+        background-color: #F8F8F8;
+        border: 1px solid #bfbfbf;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+        .action-button:hover {
+            background-color: var(--cor-action-fundo) !important;
+            border-color: var(--cor-action-texto) !important;
+        }
+    /* ==========================
+   PAGINAÇÃO / DATATABLES
+   ========================== */
+
+    .dataTables_filter,
+    .dataTables_info,
+    .dataTables_length {
+        width: 100% !important;
+        color: var(--cor-texto-secundario);
+        font-family: var(--fonte-principal);
+        font-size: 13px !important;
+        margin: var(--none);
+    }
+
+    div.dataTables_info {
+        width: 100% !important;
+        color: var(--cor-texto-secundario) !important;
+        font-family: var(--fonte-principal) !important;
+        font-size: 13px !important;
+        margin: var(--none) !important;
+        font-weight: 700;
+        height: 37px !important;
+        flex: 1 1 auto;
+        flex: 1 1 auto !important;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pagination {
+        margin-bottom: 0px !important;
+        height: 37px;
+        font-family: var(--fonte-principal) !important;
+        font-size: 13px !important;
+        flex: 1 1 auto;
+        flex: 1 1 auto !important;
+        display: flex;
+        flex-direction: row;
+        background: #FFF !important;
+        border: none !important;
+    }
+
+    .dataTables_length .select2-container--default .select2-selection--single {
+        height: 31px !important;
+        border: none !important;
+    }
+
+        .dataTables_length .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: var(--cor-texto-secundario);
+            font-family: var(--fonte-principal);
+            font-size: 13px;
+            margin: var(--none);
+            line-height: 27px;
+            /*        border: 1px solid #dddddd;*/
+            font-weight: 700;
+        }
+
+    .drop {
+        margin-bottom: 0px !important;
+        height: 37px;
+        font-family: var(--fonte-principal) !important;
+        font-size: 13px !important;
+        flex: 1 1 auto;
+        flex: 1 1 auto !important;
+    }
+
+    .pagination2 .pagination li {
+        height: 37px !important;
+        margin-left: 0;
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+    }
+
+    .pagination2 ul.pagination > .disabled > a {
+        line-height: 23px;
+    }
+
+    .pagination2 ul.pagination > a {
+        line-height: 23px;
+    }
+
+    .pagination2 .pagination li a {
+        height: 37px !important;
+        vertical-align: middle;
+        line-height: 23px;
+    }
+
+    .pagination > li > a {
+        background: transparent !important;
+        border: none !important;
+        font-weight: var(--peso-fonte-strong);
+        font-family: var(--fonte-principal) !important;
+        font-size: 13px !important;
+        height: 39px !important;
+        line-height: 23px;
+        color: var(--cor-texto-secundario);
+    }
+
+    /* Página atual (DataTables: li.paginate_button.active) — marca verde como demais telas; o bloco acima usa !important e anulava o .active do Bootstrap */
+    .pagination > li.active > a,
+    .pagination > li.active > a:hover,
+    .pagination > li.active > a:focus,
+    .pagination > li.paginate_button.active > a,
+    .pagination > li.paginate_button.active > a:hover,
+    .pagination > li.paginate_button.active > a:focus,
+    .dataTables_wrapper .pagination > li.active > a,
+    .dataTables_wrapper .pagination > li.paginate_button.active > a {
+        background-color: var(--cor-brand, #4FB73B) !important;
+        border: none !important;
+        border-radius: 4px;
+        color: #fff !important;
+        cursor: default;
+        font-weight: var(--peso-fonte-strong);
+    }
+
+    .dataTables_length label {
+        margin-bottom: 0px !important;
+    }
+    /* ==========================
+   LOADING / EMPTY
+   ========================== */
+    @keyframes loading-pulse {
+        0% {
+            background-color: #f0f0f0;
+        }
+
+        50% {
+            background-color: #ffffff;
+        }
+
+        100% {
+            background-color: #f0f0f0;
+        }
+    }
+
+    .loading-table {
+        animation: loading-pulse 1.5s infinite ease-in-out;
+        flex: 1 1 auto;
+        flex: 1 1 auto !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: .5rem !important;
+    }
+
+    .loading-panel {
+        animation: loading-pulse 1.5s infinite ease-in-out;
+        flex: 1 1 auto;
+        flex: 1 1 auto !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 135px;
+        margin-top: .5rem !important;
+    }
+
+    .empty-data-custom.empty-state-container {
+        flex: 1 1 auto;
+        flex: 1 1 auto !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .empty-item {
+        flex: 1 1 auto;
+        flex: 1 1 auto !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        background: transparent;
+    }
+    /* ==========================
+   RESPONSIVO / WRAPPERS
+   ========================== */
+    .table-responsive-Y {
+        flex: 1 1 auto !important;
+        overflow-x: auto !important;
+    }
+
+    .force-table-responsive {
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        -webkit-overflow-scrolling: touch;
+        border: 1px solid #E9E9E9;
+        border: none;
+        margin-bottom: .5rem !important;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        padding: 0px 0px;
+        width: 100%;
+    }
+
+    footer {
+        display: none;
+    }
+    /* ==========================
+   SELECTED 
+   ========================== */
+.selected-actions {
+    position: relative;
+    overflow: visible;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    gap: 1.25rem;
+}
+
+
+
+.selection-item {
+    height: 39px;
+    padding-inline: 9px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 1.5rem;
+    padding-right: 1rem;
+    width: 100%;
+    font-weight: 700;
+    font-size: 13px !important;
+    font-family: var(--fonte-principal) !important;
+}
+
+    .selection-item .selection-link {
+        gap: 0.35rem;
+    }
+
+    .select-icon i {
+        padding-top: 4px;
+        cursor: pointer;
+    }
+.select-icon {
+    transform: scale(0.85);
+}
+    /* ==========================
+   LINHAS / TABELA
+   ========================== */
+    table > tbody > tr.selected > td {
+        background-color: #d9d9d9 !important;
+        font-weight: 700;
+    }
+
+    table > tbody > tr.selected:hover > td {
+        background-color: #d9d9d9 !important;
+    }
+
+    .div-icon-manifesto {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: .5rem
+    }
+
+        .div-icon-manifesto span {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 99;
+            width: -webkit-fit-content;
+            height: -webkit-fit-content;
+            color: #FFF;
+            font-size: 13px;
+        }
+
+    .details {
+        width: 200px;
+        height: 38px;
+        white-space: nowrap;
+        cursor: default;
+        overflow: visible;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+    }
+
+    .items-details {
+        display: none;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+        /*    flex:1 0 auto;*/
+        gap: .5rem;
+        padding-inline: 8px 0px;
+        position: relative
+    }
+
+        .items-details span {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border-radius: 5px;
+            background: #FFFFFF !important;
+            color: #b1b1b1 !important;
+            border: 1px solid #dddddd;
+            cursor: pointer;
+        }
+
+            .items-details span:hover {
+                border: 1px solid #858585 !important;
+                background-color: #efefef !important;
+                box-shadow: none;
+                color: #858585 !important;
+            }
+
+            .items-details span i {
+                padding-left: 0;
+                padding-right: 0px !important;
+                /*        color: #b1b1b1 !important;
+        color: var(--cor-texto-secundario);*/
+            }
+    /*    .items-details span i:hover {
+       
+    }*/
+
+    .more-details {
+    }
+
+    .drop-content {
+        margin-left: 170px;
+        z-index: 9999;
+        background: rgba(255, 255, 255, .5);
+        padding: 5px !important;
+        border: 1px solid #dddddd;
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        flex-direction: column;
+        background: #fff !important;
+        border: 1px solid #d5d5d5;
+        gap: .15rem;
+        border-radius: 4px;
+        box-shadow: 3px 5px 10px 0px rgba(0, 0, 0, 0.12);
+        -webkit-box-shadow: 3px 3px 15px 6px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Mesmo modelo do card Totalizadores/Indicadores: largura 220px e itens alinhados */
+    .drop-content-card {
+        width: 220px;
+        min-width: 200px;
+        padding: 6px !important;
+        gap: 4px;
+    }
+
+    .drop-content-card .drop-btn {
+        min-width: 0;
+        padding: 8px 12px;
+        transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+    }
+
+    .drop-btn {
+        width: 100%;
+        min-width: 300px;
+        border-radius: 5px;
+        background: #F7f7f7 !important;
+        border: 1px solid #dddddd;
+        cursor: pointer;
+        padding: 8px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+        gap: .5rem;
+        font-size: 13px;
+        opacity: .88
+    }
+
+        .drop-btn:hover {
+            width: 100%;
+            border-radius: 5px;
+            background: #efefef !important;
+            opacity: 1;
+            font-weight: 700;
+            border: 1px solid #858585 !important;
+            color: var(--cor-text-secondary)
+        }
+
+    .drop-content.open {
+        display: block;
+    }
+
+    .icon-manifesto {
+        width: 28px;
+        height: 28px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 5px;
+    }
+
+    .div-icon-manifesto i {
+    }
+
+    table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child, table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > th:first-child {
+        position: relative;
+        padding-left: 30px !important;
+        cursor: pointer;
+    }
+
+    ol.listEventos > li::before {
+        margin-top: 20px;
+        margin-right: 10px;
+        content: counter(start-from);
+        background: #4FB73B;
+        border-radius: 4px;
+        color: #fff;
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: bold;
+        width: 27px;
+        height: 27px;
+        min-width: 27px;
+        flex-shrink: 0;
+    }
+
+    ol.listEventos {
+        list-style: none;
+    }
+
+        ol.listEventos > li {
+            counter-increment: start-from -1;
+            margin-bottom: 5px;
+            display: flex;
+            width: 100%;
+            justify-content: start;
+            align-items: start;
+        }
+
+            ol.listEventos > li::marker {
+                display: none;
+            }
+
+    ol.listEventosWorkflow > li::before {
+        margin-top: 20px;
+        content: counter(workflow-counter);
+        background-color: #f1f1f1;
+        border-radius: 4px;
+        color: var(--cor-texto-secundario, #555);
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: bold;
+        width: 27px;
+        height: 27px;
+        min-width: 27px;
+        flex-shrink: 0;
+    }
+
+    ol.listEventosWorkflow-colored > li::before {
+        display: none;
+    }
+
+    ol.listEventosWorkflow {
+        list-style: none;
+        height: auto;
+    }
+
+        ol.listEventosWorkflow > li {
+            counter-increment: workflow-counter;
+            margin-bottom: 5px;
+            display: flex;
+            width: 100%;
+            justify-content: start;
+            align-items: start;
+        }
+
+            ol.listEventosWorkflow > li::marker {
+                display: none;
+            }
+
+            ol.listEventosWorkflow > li:last-child .panel {
+                border-bottom: none;
+            }
+
+    .paginationjs {
+        display: inline-table;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        bottom: -20px;
+    }
+
+        .paginationjs .paginationjs-go-button, .paginationjs .paginationjs-go-input, .paginationjs .paginationjs-nav {
+            float: left;
+            margin-left: 10px;
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+    .footer, footer {
+        display: none
+    }
+
+
+    a.dt-button.buttons-columnVisibility:active:not(.disabled), a.dt-button.buttons-columnVisibility.active:not(.disabled) {
+        background-color: #f8f8f8 !important;
+    }

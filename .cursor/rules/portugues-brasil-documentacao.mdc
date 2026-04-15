@@ -1,0 +1,33 @@
+---
+description: Texto da documentação e exemplos em português do Brasil (pt-BR), não português de Portugal (pt-PT).
+alwaysApply: true
+---
+
+# Documentação — português do Brasil (pt-BR)
+
+## Regra
+
+- **Escrever em pt-BR** em templates de documentação (`templates/`, `templates/partials/`), comentários de exemplo e textos visíveis ao utilizador neste repositório.
+- **Evitar vocabulário de pt-PT**; preferir equivalentes de pt-BR (lista orientadora, não exaustiva):
+
+| Evitar (pt-PT) | Preferir (pt-BR) |
+|----------------|------------------|
+| ficheiro | arquivo |
+| vista (UI) | tela / view (Razor) quando for o termo técnico |
+| grelha | grade |
+| contentor / contentores | contêiner / contêineres |
+| canónico | canônico |
+| partilhado / partilhar | compartilhado / compartilhar |
+| aspeto | aspecto |
+| registos | registros |
+| por omissão | por padrão |
+| tem de / deve de | precisa / deve |
+| pedidos de rede | requisições de rede |
+| equipa | equipe |
+| utilizador | usuário (em UI; em código ASP.NET pode manter-se “User” em inglês se for API) |
+| ecrã | tela |
+| afinamento | ajuste |
+| encontra-se | está |
+| invólucro (quando for wrapper técnico) | wrapper (ou “elemento que envolve”) |
+
+- **Manter consistência** com o restante do design system já em pt-BR.

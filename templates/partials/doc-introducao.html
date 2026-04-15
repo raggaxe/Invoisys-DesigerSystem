@@ -1,0 +1,63 @@
+                <div class="invoisys-ds-doc-introducao-page" lang="pt-BR">
+                <h1 id="introducao">Introdução</h1>
+                <p class="invoisys-ds-lead">
+                    Esta documentação acompanha o <strong>design system Invoisys</strong>: a referência viva para quem constrói telas em
+                    <strong>C# · ASP.NET MVC · Visual Studio</strong>, com folhas em <code>Content/Css</code> e scripts de apoio (por exemplo em <code>Scripts/Tabelas</code>).
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-introducao-intencao">Para que serve</h2>
+                <p class="invoisys-ds-lead invoisys-ds-doc-introducao__lead-tight">
+                    A intenção é <strong>facilitar o dia a dia</strong> de quem desenha e de quem implementa: menos decisões ad hoc, menos retrabalho e uma experiência do <strong>usuário previsível em todo o portal</strong>.
+                    O design system concentra tokens, utilitários e componentes já alinhados com UX e produto — este site é o lugar onde se vê o comportamento,
+                    se copia o markup e se alinham discussões antes de tocar no <strong>código oficial</strong> do portal.
+                </p>
+                <p class="color-text font-normal invoisys-ds-doc-introducao__prose">
+                    Para <strong>desenvolvimento</strong>, o ganho é direto: exemplos em HTML/Razor alinhados ao que o CSS do projeto já suporta, com a cascade <a href="#sec-introducao-cascade">documentada abaixo</a> e snippets prontos para colar no Visual Studio.
+                    Para <strong>reutilização</strong>, as views deixam de reinventar botões, modais ou listagens — compõem-se a partir das mesmas classes e padrões, o que reduz dívida visual e acelera code review.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-introducao-evolucao">Atualização dinâmica dos componentes</h2>
+                <p class="invoisys-ds-lead invoisys-ds-doc-introducao__lead-tight">
+                    Quando o token ou o componente muda nos <strong>arquivos oficiais de CSS</strong> do portal (<code>main.css</code>, <code>tokens.css</code>, <code>componentes.css</code>, <code>table.css</code> no repositório),
+                    <strong>todas as views que seguem o padrão beneficiam da mesma alteração</strong> — sem caçar estilos inline ou CSS duplicado por tela.
+                </p>
+                <p class="invoisys-ds-callout invoisys-ds-doc-introducao__callout">
+                    Este repositório de <strong>documentação / storybook</strong> não substitui o fluxo de alteração do design system no produto: serve para <strong>validar, documentar e testar</strong> antes (e depois) de integrar no MVC.
+                    A <strong>ordem de cascade</strong> nas views e as <strong>prioridades desta documentação</strong> estão nas seções abaixo.
+                    <strong>Missão, valores e propósito</strong> em torno de <strong>reutilização, consistência e manutenção</strong> estão em <a href="#manifesto-praticas">Manifesto de UX e cultura da equipe</a>; comandos, links e arquivos para baixar estão no <a href="#quick-start">Quick start</a>.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-introducao-cascade">Ordem de cascade nas views</h2>
+                <div class="invoisys-ds-preview p-3 mb-3 invoisys-ds-doc-introducao__cascade-preview" data-testid="ds-introducao-cascade-preview">
+                    <p class="font-strong color-text mb-2 invoisys-ds-doc-introducao__cascade-heading">Ordem dos arquivos CSS</p>
+                    <div class="d-flex flex-wrap gap-2 align-items-center">
+                        <span class="pill pill-square pill-inline pill-light-success fw-bold" aria-hidden="true">1</span>
+                        <code class="color-text">main.css</code>
+                        <span class="text-muted" aria-hidden="true">→</span>
+                        <span class="pill pill-square pill-inline pill-light-info fw-bold" aria-hidden="true">2</span>
+                        <code class="color-text">tokens.css</code>
+                        <span class="text-muted" aria-hidden="true">→</span>
+                        <span class="pill pill-square pill-inline pill-light-warning fw-bold" aria-hidden="true">3</span>
+                        <code class="color-text">table.css</code>
+                        <span class="text-muted" aria-hidden="true">→</span>
+                        <span class="pill pill-square pill-inline pill-light-neutral fw-bold" aria-hidden="true">4</span>
+                        <code class="color-text">componentes.css</code>
+                    </div>
+                    <p class="mb-0 mt-2 color-text font-normal invoisys-ds-doc-introducao__cascade-note"><strong>table.css</strong> — omitir se a view não tiver listagens/DataTables.</p>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-introducao-componentes-doc">Componentes e prioridades</h2>
+                <p class="mb-2 color-text font-normal invoisys-ds-doc-introducao__componentes-p">
+                    <strong>Páginas cobertas nesta doc:</strong> Cabeçalho, Colapso, Tabs, Timeline, Inputs, Loading, Skeletons, Cards, Alertas, Pills, Botões, Tooltips, Modais, Ícones, …
+                </p>
+                <p class="mb-2 color-text font-normal invoisys-ds-doc-introducao__componentes-p">
+                    <strong>Prioridade em listagens.</strong> Em <strong>Inputs</strong>, trate <strong>Select2</strong> e <strong>intervalo de datas</strong> com o mesmo nível de integração (jQuery, vendors, cascade).
+                </p>
+                <p class="mb-3 color-text font-normal invoisys-ds-doc-introducao__componentes-p">
+                    <strong>Sem CSS novo na view.</strong> Use <strong>tokens</strong> + <strong>componentes</strong> (+ <strong>table</strong> quando houver listagens) e combine <strong>classes já existentes</strong>.
+                </p>
+                <div class="alert alert-info mb-0" role="status" data-testid="ds-introducao-doc-shell">
+                    <p class="alert-heading mb-1"><i class="fa fa-columns me-1" aria-hidden="true"></i> design-system-docs.css</p>
+                    <p class="mb-0 color-text font-normal invoisys-ds-doc-introducao__alert-body">Só o <strong>layout desta documentação</strong> — não entra no portal. Ícones: <a href="#icones" class="alert-link">página Ícones</a>.</p>
+                </div>
+                </div>

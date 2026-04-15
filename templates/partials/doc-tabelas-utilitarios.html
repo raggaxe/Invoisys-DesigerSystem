@@ -1,0 +1,183 @@
+                <h1 id="sec-tabelas-utilitarios-titulo">Tabelas · utilitários</h1>
+                <p class="invoisys-ds-lead">
+                    Opções que costumam ir no <strong>segundo argumento</strong> de <code>startTable</code> (e o <strong>terceiro</strong>, quando há busca), além de trechos de UI na toolbar.
+                    O comportamento canônico está em <code>static/scripts/Tabelas/table-setting.js</code>; exemplos reais aparecem nos scripts de cada tela (ex.: <code>static/scripts/table-init.js</code> no Delivery Monitor).
+                </p>
+                <p class="invoisys-ds-callout mb-3">
+                    Antes de usar isto, confira a <a href="#sec-tabelas-visao-titulo" class="color-text">Tabelas · visão geral</a> (<code>data-table</code>, ordem de scripts e contrato do painel) e, se estiver montando a toolbar, <a href="#sec-tabelas-cabecalho-titulo" class="color-text">Tabelas · cabeçalho da listagem</a>.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tabelas-util-server-ajax"><code>serverSide</code> e <code>ajax</code></h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O motor define <strong><code>serverSide: true</code></strong> e <strong><code>processing: true</code></strong> por padrão. Na tela, passe <code>ajax</code> com <code>url</code>, <code>type</code> (ex.: <code>'POST'</code>) e função <code>data</code> para juntar filtros ao payload que o DataTables envia ao servidor.
+                </p>
+                <ul class="color-text font-normal mb-3" style="padding-left:1.25rem; max-width:min(100%,90ch); line-height:1.65">
+                    <li class="mb-2"><strong>Grade só no cliente</strong> — defina <code>serverSide: false</code> e use <code>data</code> (array/objeto) em vez de <code>ajax</code>, se fizer sentido para a tela.</li>
+                    <li class="mb-0"><strong>Recarregar dados</strong> — com API do DataTables: <code>$('#idDaTabela').DataTable().ajax.reload(null, false);</code> (o segundo argumento <code>false</code> mantém a página atual; use <code>true</code> para voltar à primeira página).</li>
+                </ul>
+                <div class="invoisys-ds-code-wrap mb-3">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Ajax + colunas (trecho ilustrativo)</span>
+                        <button type="button" data-ds-copy="pre-tabelas-util-ajax" data-testid="ds-copy-pre-tabelas-util-ajax"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-tabelas-util-ajax"><code class="invoisys-ds-pre-code">var options = {
+  serverSide: true,
+  ajax: {
+    url: '/MinhaArea/Lista/DataTable',
+    type: 'POST',
+    data: function (d) {
+      d.status = $('#filtroStatus').val();
+      return d;
+    }
+  },
+  columns: [
+    { data: 'id', name: 'id', title: 'ID' },
+    { data: 'nome', name: 'nome', title: 'Nome' }
+  ]
+};
+startTable('#tblMinhaLista', options);</code></pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tabelas-util-busca">Campo de busca (search custom)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O <strong>terceiro argumento</strong> de <code>startTable(lookup, options, searchSelector)</code> é um jQuery do input de pesquisa. Se omitir, o motor tenta <code>$('#customSearch')</code>.
+                </p>
+                <p class="color-text font-normal mb-3" style="max-width:min(100%,90ch); line-height:1.65">
+                    Por padrão o DataTables fica com <code>searching: false</code> no merge global; o texto digitado chama <code>dataTable.search(valor).draw()</code>, o que com <code>serverSide: true</code> dispara nova requisição a cada alteração (comportamento típico de “busca no servidor”).
+                </p>
+                <div class="invoisys-ds-code-wrap mb-3">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML + <code>startTable</code> com seletor explícito</span>
+                        <button type="button" data-ds-copy="pre-tabelas-util-search" data-testid="ds-copy-pre-tabelas-util-search"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-tabelas-util-search"><code class="invoisys-ds-pre-code">&lt;input type="search" id="minhaBuscaGrade" class="form-control" placeholder="Pesquisar…" /&gt;
+
+&lt;script&gt;
+  startTable('#tblMinhaLista', options, $('#minhaBuscaGrade'));
+&lt;/script&gt;</code></pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tabelas-util-busca-cliente"><code>searchClientSideOnly</code> — filtro só na página atual</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Com <strong><code>searchClientSideOnly: true</code></strong> nas opções (não é opção nativa do DataTables; o motor remove antes do <code>$.extend</code> final), a busca <strong>não</strong> chama <code>search().draw()</code> no servidor.
+                    Em vez disso, filtra apenas as linhas <strong>já desenhadas</strong> na página atual (útil quando a pesquisa principal é outra ou os dados já estão na viewport).
+                </p>
+                <div class="invoisys-ds-code-wrap mb-3">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Exemplo</span>
+                        <button type="button" data-ds-copy="pre-tabelas-util-search-client" data-testid="ds-copy-pre-tabelas-util-search-client"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-tabelas-util-search-client"><code class="invoisys-ds-pre-code">startTable('#tblMinhaLista', {
+  serverSide: true,
+  searchClientSideOnly: true,
+  ajax: { /* … */ },
+  columns: [ /* … */ ]
+}, $('#filtroRapidoLocal'));</code></pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tabelas-util-paginacao-dinamica">Paginação dinâmica (<code>invTableUi</code>)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O número de linhas por página inicial é calculado pela altura útil da área da tabela (<code>getDynamicPageLength</code>). Ajuste isso com o objeto <strong><code>invTableUi</code></strong> dentro de <code>options</code> (o motor funde com defaults e remove antes de passar ao DataTables).
+                </p>
+                <ul class="color-text font-normal mb-3" style="padding-left:1.25rem; max-width:min(100%,90ch); line-height:1.65">
+                    <li class="mb-2"><strong><code>pageLengthMenu</code></strong> — lista de valores do menu “resultados por página” (ex.: <code>[20, 50, 100, -1]</code>; <code>-1</code> = “Todos”).</li>
+                    <li class="mb-2"><strong><code>pageLengthClamp</code></strong> — <code>{ min: 10, subtractAfterMeasure: 1 }</code> combina mínimo com o valor medido (útil quando sobra uma linha “cortada”).</li>
+                    <li class="mb-2"><strong><code>dynamicPageLengthMode</code></strong> — <code>'measureFooter'</code> (mede <code>.footer-table</code>) ou <code>'fixedReserve'</code> (reservas fixas para layouts mais densos).</li>
+                    <li class="mb-0"><strong>Override direto</strong> — pode passar <code>pageLength</code> e/ou <code>lengthMenu</code> no mesmo nível das opções do DataTables; o motor respeita quando a chave vem explicitamente do script da tela.</li>
+                </ul>
+                <div class="invoisys-ds-code-wrap mb-3">
+                    <div class="invoisys-ds-code-bar">
+                        <span><code>invTableUi</code> ilustrativo</span>
+                        <button type="button" data-ds-copy="pre-tabelas-util-inv-ui" data-testid="ds-copy-pre-tabelas-util-inv-ui"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-tabelas-util-inv-ui"><code class="invoisys-ds-pre-code">startTable('#tblMinhaLista', {
+  ajax: { /* … */ },
+  columns: [ /* … */ ],
+  invTableUi: {
+    dynamicPageLengthMode: 'measureFooter',
+    pageLengthMenu: [15, 30, 60, 100, -1],
+    pageLengthClamp: { min: 10, subtractAfterMeasure: 1 }
+  }
+});</code></pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tabelas-util-colvis">ColVis — “Editar colunas”</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O motor já inclui um botão <strong>Buttons</strong> <code>colvis</code> (“Editar colunas”) e colunas com classe <code>.noVis</code> podem ser excluídas da lista via <code>columnDefs</code> padrão (<code>columns: ':not(.noVis)'</code>).
+                </p>
+                <p class="color-text font-normal mb-3" style="max-width:min(100%,90ch); line-height:1.65">
+                    Para abrir o ColVis a partir de um <strong>botão quadrado na toolbar</strong> (ícone de colunas / elipse), passe <strong><code>colvisTriggerSelector</code></strong> com o seletor do contêiner (ex.: <code>'#btnOcultarColunas'</code>). O motor injeta <code>'B'</code> no <code>dom</code>, move <code>.dt-buttons</code> para dentro do trigger e usa a classe <code>colvis-trigger-container</code> no markup — alinhado ao padrão das telas com <code>.square-button</code> em <code>table.css</code> / toolbar.
+                </p>
+                <div class="invoisys-ds-code-wrap mb-3">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Opções + markup mínimo do trigger</span>
+                        <button type="button" data-ds-copy="pre-tabelas-util-colvis" data-testid="ds-copy-pre-tabelas-util-colvis"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-tabelas-util-colvis"><code class="invoisys-ds-pre-code">&lt;div id="btnOcultarColunas"&gt;
+  &lt;button type="button" class="square-button" aria-label="Editar colunas visíveis"&gt;
+    &lt;i class="fa fa-bars" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  startTable('#tblMinhaLista', {
+    colvisTriggerSelector: '#btnOcultarColunas',
+    ajax: { /* … */ },
+    columns: [ /* … */ ]
+  });
+&lt;/script&gt;</code></pre>
+                </div>
+                <p class="invoisys-ds-callout mb-3">
+                    Algumas telas substituem o dropdown nativo por painel próprio (checkboxes, etc.) — nesse caso mantenha a lógica na tela e alinhe com o time antes de duplicar padrões.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tabelas-util-atualizar">Botão “Atualizar” (ícone de refresh)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Use um <strong><code>button.square-button</code></strong> (ou o padrão de toolbar da tela) com ícone <strong><code>fa fa-refresh</code></strong> e, no clique, chame <code>ajax.reload</code> na instância do DataTables.
+                </p>
+                <div class="invoisys-ds-code-wrap mb-3">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Markup + handler</span>
+                        <button type="button" data-ds-copy="pre-tabelas-util-refresh" data-testid="ds-copy-pre-tabelas-util-refresh"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-tabelas-util-refresh"><code class="invoisys-ds-pre-code">&lt;button type="button" id="btnAtualizarGrade" class="square-button" aria-label="Atualizar listagem"&gt;
+  &lt;i class="fa fa-refresh" aria-hidden="true"&gt;&lt;/i&gt;
+&lt;/button&gt;
+
+&lt;script&gt;
+  $('#btnAtualizarGrade').on('click', function () {
+    var api = $('#tblMinhaLista').DataTable();
+    if (api && api.ajax) api.ajax.reload(null, false);
+  });
+&lt;/script&gt;</code></pre>
+                </div>
+                <p class="color-text font-normal mb-3" style="max-width:min(100%,90ch); line-height:1.65">
+                    Estilos do botão quadrado seguem o design system — ver também a página <a href="#panel-botoes">Botões</a> para hierarquia com <code>.panel-card</code> / toolbar.
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tabelas-util-selecao">Seleção de linhas (click to select)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O merge padrão usa extensão <strong>Select</strong> com <code>style: 'multi'</code>, <code>items: 'row'</code>, classe de linha selecionada <code>bg-row-selected</code> e seletor <code>td.selectable</code> — ou seja, o clique na linha só conta onde houver célula com essa classe.
+                </p>
+                <ul class="color-text font-normal mb-3" style="padding-left:1.25rem; max-width:min(100%,90ch); line-height:1.65">
+                    <li class="mb-2"><strong>Desligar seleção</strong> — <code>select: false</code> nas opções da tela.</li>
+                    <li class="mb-2"><strong>Checkbox mestre</strong> — o motor sincroniza ícones <code>#selectRows</code> / <code>#checkUncheck</code> com a API quando existem no painel; funções auxiliares como <code>setupMasterCheckbox</code> estão no mesmo arquivo para reuso.</li>
+                    <li class="mb-0"><strong>Manter seleção em redraws</strong> — <code>invTableUi.keepSelectionOnRedraw: true</code> quando fizer sentido (cenários com overlay e <code>draw</code> frequentes).</li>
+                </ul>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tabelas-util-barra">Barra de ações e <code>buttons</code></h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    A disposição em <strong>duas linhas</strong> (filtro data, pesquisa, KPIs, ações, segunda linha com “Filtrar por”) está em <a href="#sec-tabelas-cabecalho-titulo">Tabelas · cabeçalho da listagem</a>.
+                    A toolbar combina <strong><code>.panel-card</code></strong>, <strong><code>.square-button</code></strong> e áreas de filtro documentadas em <a href="#sec-inputs-titulo">Inputs</a> e <a href="#sec-cabecalho-titulo">Cabeçalho</a> (componente de app, não confundir com este painel de tabelas). No DataTables, o array <code>buttons</code> do motor já traz ColVis; só use <code>buttons: []</code> se a tela substituir o ColVis do plugin por UI própria (senão mantenha o default ou estenda o array).
+                </p>
+                <p class="color-text font-normal mb-3" style="max-width:min(100%,90ch); line-height:1.65">
+                    Outros botões do plugin (exportar, etc.) seguem a mesma mecânica do Buttons — acrescente entradas no array e ajuste o <code>dom</code> apenas se o time padronizar outro layout (o <code>dom</code> padrão do motor já reserva a área de scroll + rodapé).
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-tabelas-util-extras">Outras opções úteis</h2>
+                <ul class="color-text font-normal mb-0" style="padding-left:1.25rem; max-width:min(100%,90ch); line-height:1.65">
+                    <li class="mb-2"><strong><code>ordering</code></strong> — controle de ordenação por coluna; desative globalmente ou por coluna conforme a API do DataTables.</li>
+                    <li class="mb-2"><strong><code>invTableUi.deferInitialTableReveal</code></strong> — atrasa mostrar <code>.table-wrap</code> até o primeiro desenho (loading visível mais tempo no arranque).</li>
+                    <li class="mb-2"><strong><code>invTableUi.afterDraw</code></strong> / <strong><code>onDataTableError</code></strong> — ganchos opcionais para DOM pós-<code>draw</code> ou tratamento de erro de rede/API.</li>
+                    <li class="mb-0"><strong><code>invTableUi.processingOverlaySuppressFlag</code></strong> — nome de variável global: quando <code>true</code> durante <code>processing</code>, o motor pode suprimir o overlay de loading (padrão usado em fluxos muito específicos).</li>
+                </ul>

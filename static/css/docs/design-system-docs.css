@@ -1,0 +1,3498 @@
+/*
+ * Shell da documentação do design system (não faz parte do produto).
+ * Carregar depois de main.css / tokens.css / componentes.css.
+ */
+
+html.invoisys-ds-doc-html {
+    scroll-behavior: smooth;
+    /* Topbar fixa 50px + respiro — alinhado a getTocStickyOffsetPx() no design-system-docs.js */
+    scroll-padding-top: calc(var(--invoisys-ds-doc-topbar-h, 50px) + var(--invoisys-ds-doc-anchor-pad, 12px));
+    /* Evita barra horizontal por filhos com 100% + margem da sidebar ou por unidades vw */
+    overflow-x: hidden;
+}
+
+body.invoisys-ds-doc {
+    display: block;
+    min-height: 100vh;
+    overflow-x: hidden;
+    margin: 0;
+    padding-top: 50px;
+    --invoisys-ds-doc-topbar-h: 50px;
+    --invoisys-ds-doc-anchor-pad: 12px;
+    /* Largura padrão do menu fixo (compensada em .invoisys-ds-main com margin-left) */
+    --invoisys-ds-sidebar-w: 260px;
+    font-family: var(--fonte-principal);
+    font-size: var(--tamanho-sm);
+    line-height: var(--line-height-corpo);
+    color: var(--cor-texto-heading);
+    background: var(--cor-superficie);
+}
+
+/* —— Top bar (portal / marca) —— */
+.invoisys-ds-topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1100;
+    box-sizing: border-box;
+    height: 50px;
+    padding: 0 var(--espacamento-md);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--espacamento-md);
+    background: var(--cor-brand);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.invoisys-ds-topbar-brand {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+}
+
+.invoisys-ds-topbar-brand:focus-visible {
+    outline: 2px solid var(--cor-texto-sobre-brand);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
+
+.invoisys-ds-topbar-logo {
+    display: block;
+    height: 34px;
+    width: auto;
+    max-width: min(220px, 55vw);
+    object-fit: contain;
+    object-position: left center;
+}
+
+.invoisys-ds-topbar-version {
+    margin-left: auto;
+    flex-shrink: 0;
+    align-self: center;
+    font-family: var(--fonte-principal);
+    font-size: var(--tamanho-sm);
+    font-weight: var(--peso-fonte-strong, 700);
+    letter-spacing: 0.04em;
+    color: var(--cor-texto-sobre-brand);
+    line-height: 1;
+    user-select: none;
+}
+
+.invoisys-ds-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    min-height: calc(100vh - 50px);
+    min-width: 0;
+    /* Coluna principal com margin-left da sidebar não pode somar >100% da viewport */
+    overflow-x: hidden;
+}
+
+/* Área principal + coluna «Nesta página» (estilo documentação tipo Bootstrap) */
+.invoisys-ds-layout-inner {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: calc(100vh - 50px);
+    margin-left: var(--invoisys-ds-sidebar-w);
+    /* Largura explícita: margin-left + width = 100% do pai (evita scroll horizontal) */
+    width: calc(100% - var(--invoisys-ds-sidebar-w));
+    max-width: calc(100vw - var(--invoisys-ds-sidebar-w));
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(160px, 220px);
+    align-items: start;
+    box-sizing: border-box;
+}
+
+/* —— Sidebar (fixo; largura: --invoisys-ds-sidebar-w; altura = viewport abaixo da topbar) —— */
+.invoisys-ds-sidebar {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    z-index: var(--z-sticky);
+    box-sizing: border-box;
+    width: var(--invoisys-ds-sidebar-w);
+    max-width: min(var(--invoisys-ds-sidebar-w), 100vw);
+    height: calc(100vh - 50px);
+    border-right: 1px solid var(--cor-borda);
+    background: var(--cor-superficie-nuvem, #f8f9fa);
+    padding: var(--espacamento-md) var(--espacamento-sm);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.invoisys-ds-brand {
+    padding: var(--espacamento-sm) var(--espacamento-xs) var(--espacamento-md);
+    border-bottom: 1px solid var(--cor-borda-suave);
+    margin-bottom: var(--espacamento-sm);
+}
+
+.invoisys-ds-brand-title {
+    font-size: var(--tamanho-md);
+    font-weight: var(--peso-fonte-strong);
+    margin: 0 0 4px;
+    color: var(--cor-texto-heading);
+}
+
+.invoisys-ds-brand-sub {
+    margin: 0;
+    font-size: var(--tamanho-xs);
+    color: var(--cor-texto-secundario);
+}
+
+.invoisys-ds-nav-group {
+    margin-bottom: var(--espacamento-md);
+}
+
+.invoisys-ds-nav-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: var(--peso-fonte-negrito);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--cor-texto-corpo-forte, #333333);
+    margin: 0 0 8px 8px;
+}
+
+.invoisys-ds-nav-heading-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.125rem;
+    height: 1.125rem;
+    flex-shrink: 0;
+    color: var(--cor-texto-corpo-forte, #333333);
+    font-size: 14px;
+    line-height: 1;
+}
+
+.invoisys-ds-nav-heading-icon .fa {
+    font-size: 14px;
+    line-height: 1;
+}
+
+.invoisys-ds-nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.invoisys-ds-nav-list button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: var(--peso-fonte-normal);
+    line-height: var(--line-height-corpo);
+    color: var(--cor-texto-secundario);
+    padding: 4px 10px 4px 14px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background var(--transicao-rapida), color var(--transicao-rapida);
+}
+
+.invoisys-ds-nav-list button:hover {
+    background: rgba(79, 183, 59, 0.08);
+    color: var(--cor-texto-heading);
+}
+
+.invoisys-ds-nav-list button[aria-current="page"] {
+    background: var(--cor-brand);
+    color: var(--cor-texto-sobre-brand);
+    font-weight: var(--peso-fonte-normal);
+}
+
+.invoisys-ds-nav-list button[aria-current="page"]:hover {
+    background: var(--cor-brand);
+    color: var(--cor-texto-sobre-brand);
+    filter: brightness(0.92);
+}
+
+.invoisys-ds-nav-list button[aria-current="page"]:focus-visible {
+    outline: 2px solid var(--cor-texto-sobre-brand);
+    outline-offset: 2px;
+}
+
+/* —— Conteúdo —— */
+.invoisys-ds-main {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: calc(100vh - 50px);
+    margin-left: 0;
+    padding: var(--espacamento-xl) var(--espacamento-xxl);
+    /* Largura total da coluna (grade: main + TOC); prosa ~90ch / lead ~92ch */
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* —— «Nesta página» (TOC) —— */
+.invoisys-ds-toc {
+    position: sticky;
+    top: 50px;
+    align-self: start;
+    max-height: calc(100vh - 50px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: var(--espacamento-md) var(--espacamento-md) var(--espacamento-xl) var(--espacamento-lg);
+    border-left: 1px solid var(--cor-borda);
+    background: var(--cor-superficie);
+    box-sizing: border-box;
+}
+
+.invoisys-ds-toc-title {
+    margin: 0 0 var(--espacamento-xs);
+    font-size: var(--tamanho-xs);
+    font-weight: var(--peso-fonte-strong);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--cor-texto-medio, #666);
+}
+
+.invoisys-ds-toc-rule {
+    height: 1px;
+    background: var(--cor-borda-suave);
+    margin-bottom: var(--espacamento-sm);
+}
+
+.invoisys-ds-toc-nav {
+    margin: 0;
+}
+
+.invoisys-ds-toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.invoisys-ds-toc-list li {
+    margin: 0 0 2px;
+}
+
+.invoisys-ds-toc-list a {
+    display: block;
+    padding: 4px 6px 4px 10px;
+    margin-left: -2px;
+    border-left: 3px solid transparent;
+    font-size: 13px;
+    line-height: 1.35;
+    color: var(--cor-texto-secundario);
+    text-decoration: none;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    transition: color var(--transicao-rapida), border-color var(--transicao-rapida), background var(--transicao-rapida);
+}
+
+.invoisys-ds-toc-list a:hover {
+    color: var(--cor-texto-heading);
+    background: var(--cor-superficie-suave);
+}
+
+.invoisys-ds-toc-list a:focus-visible {
+    outline: 2px solid var(--focus-ring-cor);
+    outline-offset: 2px;
+}
+
+.invoisys-ds-toc-list a[aria-current="location"] {
+    border-left-color: var(--cor-brand);
+    color: var(--cor-brand);
+    font-weight: var(--peso-fonte-strong);
+    background: rgba(79, 183, 59, 0.08);
+}
+
+.invoisys-ds-toc-list__sub a {
+    padding-left: 1.1rem;
+    font-size: 12px;
+    color: var(--cor-texto-secundario);
+}
+
+.invoisys-ds-toc-list__sub a[aria-current="location"] {
+    font-weight: var(--peso-fonte-strong);
+}
+
+/* Timeline / fluxo de trabalho (doc) — inativos com a mesma família cromática do menu lateral da doc (tokens main.css) */
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Trilho único atrás dos números (o gap da coluna flex mantém a linha contínua entre passos) */
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-ol::before {
+    content: "";
+    position: absolute;
+    left: 14px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: var(--cor-borda-discreta);
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-li {
+    margin-bottom: 0;
+}
+
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-row {
+    position: relative;
+    z-index: 1;
+}
+
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-track {
+    width: 32px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    min-height: 44px;
+    z-index: 1;
+}
+
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-num {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    background-color: var(--cor-texto-secundario);
+    color: var(--cor-texto-sobre-brand);
+    border-radius: 4px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    width: 27px;
+    height: 27px;
+    min-width: 27px;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 2px var(--cor-superficie);
+}
+
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-num--on {
+    background-color: var(--cor-brand);
+}
+
+/* table.css .panel traz padding — retiramos só no demo para a barra horizontal coincidir com o layout */
+/* table.css .panel { overflow: hidden !important } cortava o ícone do toggle à direita */
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-panel.panel {
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    overflow: visible !important;
+}
+
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-panel-header {
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--cor-borda);
+    border-left: 4px solid var(--cor-texto-secundario);
+    background-color: var(--cor-superficie-nuvem);
+    border-radius: 0 5px 5px 0;
+    /* visible: overflow:hidden + border-radius cortava o chevron à direita */
+    overflow: visible;
+}
+
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-panel-header--active {
+    border-color: rgba(79, 183, 59, 0.35);
+    border-left-color: var(--cor-brand);
+    border-left-width: 4px;
+    background-color: rgba(79, 183, 59, 0.11);
+}
+
+/* display:block: o .panel-toggle do portal é flex com um filho — sem isto o filho não estica e o chevron não fica à direita */
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-toggle.panel-toggle {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 16px 11px 14px;
+    color: var(--cor-texto-corpo-forte) !important;
+    text-decoration: none;
+}
+
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-toggle.panel-toggle > .d-flex {
+    width: 100%;
+    min-width: 0;
+}
+
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-head-main {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-time {
+    font-size: 11px;
+    line-height: 1.2;
+    color: var(--cor-texto-principal);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-divider {
+    width: 1px;
+    height: 1.1rem;
+    margin: 0 8px 0 10px;
+    background-color: var(--cor-borda);
+    flex-shrink: 0;
+    border-radius: 1px;
+}
+
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-title {
+    font-size: 14px;
+    line-height: 1.35;
+    font-weight: 500;
+    color: var(--cor-texto-heading);
+}
+
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-title--active {
+    font-weight: 700;
+}
+
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-chev {
+    margin-left: auto;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.375rem;
+    font-size: 14px;
+    color: var(--cor-texto-secundario);
+    line-height: 1;
+}
+
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-panel-content {
+    max-height: 300px;
+    overflow: auto;
+    padding: 12px 14px;
+    border: 1px solid var(--cor-borda);
+    border-top: none;
+    background: var(--cor-superficie);
+    box-sizing: border-box;
+    border-radius: 0 0 5px 5px;
+}
+
+.invoisys-ds-doc-workflow-demo .invoisys-ds-doc-workflow-panel-content[hidden] {
+    display: none !important;
+}
+
+/* Quick start — lista de descargas (doc) */
+.invoisys-ds-doc-download-list {
+    list-style: none;
+    margin: 0 0 var(--espacamento-md);
+    padding: 0;
+    max-width: min(100%, 90ch);
+}
+
+.invoisys-ds-doc-download-list li {
+    margin-bottom: var(--espacamento-xs);
+    padding-left: 0;
+}
+
+.invoisys-ds-doc-download-list a {
+    font-weight: var(--peso-fonte-strong);
+}
+
+/* Área, Kanban e resultados (doc) — três colunas responsivas */
+.invoisys-ds-doc-area-kanban {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espacamento-md);
+    margin: var(--espacamento-md) 0 var(--espacamento-xl);
+}
+
+.invoisys-ds-doc-area-kanban__col {
+    flex: 1 1 220px;
+    min-width: 200px;
+    max-width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius-md);
+    padding: var(--espacamento-md);
+    background: var(--cor-superficie-nuvem);
+}
+
+.invoisys-ds-doc-area-kanban__col--doing {
+    border-left: 4px solid var(--cor-brand);
+}
+
+.invoisys-ds-doc-area-kanban__col--done {
+    border-left: 4px solid var(--cor-texto-secundario);
+}
+
+/* Kanban — cartões estilo Jira (só documentação) */
+.invoisys-ds-doc-kanban-cards {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacamento-sm);
+}
+
+.invoisys-ds-doc-kanban-card {
+    margin: 0;
+    padding: var(--espacamento-md);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius-md);
+    background: var(--cor-superficie);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    transition:
+        box-shadow 0.15s ease,
+        transform 0.15s ease;
+}
+
+.invoisys-ds-doc-kanban-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+}
+
+.invoisys-ds-doc-kanban-card--done {
+    border-left: 3px solid var(--cor-indicador-sucesso);
+}
+
+.invoisys-ds-doc-kanban-card__title {
+    margin: 0 0 var(--espacamento-xs);
+    padding: 0;
+    font-size: var(--tamanho-sm);
+    font-weight: var(--peso-fonte-negrito);
+    line-height: 1.35;
+    color: var(--cor-texto-heading);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.invoisys-ds-doc-kanban-card__chip {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: var(--espacamento-sm);
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--radius-sm);
+    font-size: var(--tamanho-xs);
+    font-weight: var(--peso-fonte-strong);
+    line-height: 1.3;
+    color: var(--cor-texto-heading);
+    background: var(--cor-superficie-suave);
+    border: 1px solid var(--cor-borda-suave);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.invoisys-ds-doc-kanban-card__body {
+    margin: 0 0 var(--espacamento-sm);
+    font-size: var(--tamanho-sm);
+    line-height: 1.55;
+    color: var(--cor-texto-secundario);
+}
+
+.invoisys-ds-doc-kanban-card__body strong {
+    color: var(--cor-texto-heading);
+    font-weight: var(--peso-fonte-strong);
+}
+
+.invoisys-ds-doc-kanban-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: var(--espacamento-sm);
+    border-top: 1px solid var(--cor-borda-suave);
+}
+
+.invoisys-ds-doc-kanban-card__area {
+    flex-shrink: 0;
+    min-width: 2rem;
+    height: 1.75rem;
+    padding: 0 0.35rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    font-size: var(--tamanho-xs);
+    font-weight: var(--peso-fonte-negrito);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--cor-texto-sobre-brand);
+    background: var(--cor-brand);
+}
+
+.invoisys-ds-doc-kanban-card__area--ux {
+    color: var(--cor-texto-sobre-brand);
+    background: var(--cor-action-texto);
+}
+
+.invoisys-ds-doc-kanban-card__area--ui {
+    color: var(--cor-texto-heading);
+    background: var(--cor-superficie-nuvem);
+    border: 1px solid var(--cor-borda);
+}
+
+.invoisys-ds-doc-kanban-card__area--ws {
+    color: var(--cor-texto-sobre-brand);
+    background: var(--cor-pill-warning-texto);
+}
+
+/* Área — comparativo UX, UI e designer (três cartões, só documentação) */
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-define {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--espacamento-md);
+    margin: 0 0 var(--espacamento-md);
+    max-width: min(100%, 118ch);
+}
+
+@media (max-width: 1020px) {
+    .invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-define {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-define {
+        grid-template-columns: 1fr;
+    }
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-define__card {
+    box-sizing: border-box;
+    margin: 0;
+    padding: var(--espacamento-md);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius-lg);
+    background: var(--cor-superficie);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Faixa do pill: mesma altura que .pill (28px) + margem — alinha os três cartões ao padrão de Pills */
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-define__badge-row {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    min-height: 28px;
+    margin: 0 0 var(--espacamento-sm);
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-define__badge-row .pill {
+    width: auto;
+    max-width: 100%;
+    flex-shrink: 0;
+    white-space: nowrap;
+    justify-content: flex-start;
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-define__badge-row .pill .fa {
+    font-size: 13px;
+    line-height: 1;
+    opacity: 0.95;
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-define__card-title {
+    margin: 0 0 var(--espacamento-sm);
+    font-size: var(--tamanho-md);
+    font-weight: var(--peso-fonte-strong);
+    color: var(--cor-texto-heading);
+    line-height: 1.3;
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-define__list {
+    margin: 0;
+    padding-left: 1.15rem;
+    font-size: var(--tamanho-sm);
+    line-height: 1.55;
+    color: var(--cor-texto-secundario);
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-define__list li {
+    margin-bottom: 0.45rem;
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-define__list li:last-child {
+    margin-bottom: 0;
+}
+
+/* Resumo da apresentação: um cartão numa coluna (não herdar 3/2/1 do grid dos três cartões UX·UI·Designer) */
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-define.invoisys-ds-doc-ux-ui-define--pitch-single {
+    grid-template-columns: 1fr;
+    max-width: min(100%, 90ch);
+    margin: 0 0 var(--espacamento-xl);
+}
+
+/* Página Área — prosa com classe dedicada (mesma largura que o resto da doc) */
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-area-prose {
+    max-width: min(100%, 90ch);
+    line-height: 1.65;
+}
+
+/* Coluna de leitura em todos os painéis da doc (alinhado à Área: 92ch lead, 90ch prosa e callouts) */
+.invoisys-ds-doc-html .invoisys-ds-main .invoisys-ds-panel .invoisys-ds-callout {
+    max-width: min(100%, 90ch);
+}
+
+/* Cartões compactos por tema — Área e Manifesto (mesmo padrão visual) */
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-topics,
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-ux-ui-topics {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--espacamento-sm);
+    margin: var(--espacamento-sm) 0 var(--espacamento-lg);
+    max-width: 100%;
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-topic,
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-ux-ui-topic {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--espacamento-sm);
+    box-sizing: border-box;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius-md);
+    padding: var(--espacamento-sm) var(--espacamento-md);
+    background: var(--cor-superficie);
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-topic__icon,
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-ux-ui-topic__icon {
+    flex-shrink: 0;
+    width: 2.125rem;
+    height: 2.125rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    background: rgba(79, 183, 59, 0.12);
+    color: var(--cor-brand);
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-topic__title,
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-ux-ui-topic__title {
+    margin: 0 0 4px;
+    font-size: var(--tamanho-sm);
+    font-weight: var(--peso-fonte-strong);
+    color: var(--cor-texto-heading);
+    line-height: 1.3;
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-topic__text,
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-ux-ui-topic__text {
+    margin: 0;
+    font-size: var(--tamanho-xs);
+    line-height: 1.45;
+    color: var(--cor-texto-secundario);
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-topic__text a,
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-ux-ui-topic__text a {
+    font-weight: var(--peso-fonte-strong);
+}
+
+/* Manifesto — missão e visão em jumbotron; restantes cartões em coluna */
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-manifesto-jumbotron {
+    margin: var(--espacamento-sm) 0 var(--espacamento-lg);
+    padding: var(--espacamento-xl) var(--espacamento-xxl);
+    max-width: min(100%, 90ch);
+    box-sizing: border-box;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(
+        145deg,
+        rgba(79, 183, 59, 0.1) 0%,
+        var(--cor-superficie-nuvem) 42%,
+        var(--cor-superficie) 100%
+    );
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-manifesto-jumbotron__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--espacamento-xl);
+    align-items: start;
+}
+
+@media (max-width: 720px) {
+    .invoisys-ds-doc-manifesto .invoisys-ds-doc-manifesto-jumbotron__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .invoisys-ds-doc-manifesto .invoisys-ds-doc-manifesto-jumbotron {
+        padding: var(--espacamento-lg) var(--espacamento-md);
+    }
+}
+
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-manifesto-jumbotron__head {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-sm);
+    margin-bottom: var(--espacamento-sm);
+}
+
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-manifesto-jumbotron__icon {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    background: rgba(79, 183, 59, 0.18);
+    color: var(--cor-brand);
+    font-size: 1.125rem;
+    line-height: 1;
+}
+
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-manifesto-jumbotron__label {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: var(--tamanho-xl);
+    font-weight: var(--peso-fonte-negrito);
+    line-height: 1.2;
+    color: var(--cor-texto-heading);
+    letter-spacing: -0.02em;
+}
+
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-manifesto-jumbotron__text {
+    margin: 0;
+    font-size: var(--tamanho-sm);
+    line-height: 1.65;
+    color: var(--cor-texto-secundario);
+}
+
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-manifesto-jumbotron__text strong {
+    color: var(--cor-texto-heading);
+}
+
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-manifesto-jumbotron__list {
+    margin: 0;
+    padding-left: 1.15rem;
+    font-size: var(--tamanho-sm);
+    line-height: 1.65;
+    color: var(--cor-texto-secundario);
+}
+
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-manifesto-jumbotron__list li {
+    margin-bottom: var(--espacamento-sm);
+}
+
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-manifesto-jumbotron__list li:last-child {
+    margin-bottom: 0;
+}
+
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-manifesto-jumbotron__list strong {
+    color: var(--cor-texto-heading);
+}
+
+/* Manifesto na prática — card + alerta fora do preview (mesma largura) */
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-manifesto-ux-pratica {
+    max-width: min(100%, 90ch);
+}
+
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-ux-ui-topics--manifesto-stack {
+    grid-template-columns: 1fr;
+    max-width: min(100%, 38rem);
+    gap: var(--espacamento-md);
+    margin-top: 0;
+}
+
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-ux-ui-topics--manifesto-stack .invoisys-ds-doc-ux-ui-topic {
+    border-left: 4px solid var(--cor-brand);
+}
+
+/* Manifesto — respiro dos badges */
+.invoisys-ds-doc-manifesto .invoisys-ds-doc-manifesto-badges {
+    max-width: min(100%, 90ch);
+}
+
+.invoisys-ds-doc-manifesto [data-testid="ds-manifesto-equipa-collapse-wrap"] {
+    margin-top: var(--espacamento-sm);
+}
+
+/* Manifesto — coroa dourada junto aos pills Fluxo DS / Oficial (só doc) */
+body.invoisys-ds-doc .invoisys-ds-doc-manifesto .invoisys-ds-doc-manifesto-pills-crown {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #c9a227;
+    filter: drop-shadow(0 0.5px 0 rgba(101, 67, 33, 0.25));
+}
+
+body.invoisys-ds-doc .invoisys-ds-doc-manifesto .invoisys-ds-doc-manifesto-pills-crown svg {
+    display: block;
+}
+
+/* Fluxo «nascimento da tela» — passos em coluna (1 → 6 em sequência) */
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-fluxo-slide__tagline {
+    margin-bottom: var(--espacamento-sm);
+    line-height: 1.45;
+    max-width: min(100%, 72ch);
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-topics--fluxo-slide {
+    margin-top: 0;
+    grid-template-columns: 1fr;
+    max-width: min(100%, 38rem);
+    gap: var(--espacamento-md);
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-topics--fluxo-slide .invoisys-ds-doc-ux-ui-topic {
+    padding: var(--espacamento-sm) var(--espacamento-md);
+    border-left: 4px solid var(--cor-brand);
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-topics--fluxo-slide .invoisys-ds-doc-ux-ui-topic__title {
+    font-size: var(--tamanho-md);
+    margin-bottom: 2px;
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-topics--fluxo-slide .invoisys-ds-doc-ux-ui-topic__text {
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-fluxo-slide__callout {
+    margin-top: var(--espacamento-sm);
+    padding: var(--espacamento-sm) var(--espacamento-md);
+    font-size: var(--tamanho-xs);
+}
+
+/* Colaboradores — cartões com nomes em destaque */
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-people {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacamento-md);
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-person-card {
+    margin: 0;
+    padding: var(--espacamento-md);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--cor-brand);
+    background: var(--cor-superficie);
+    box-sizing: border-box;
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-person-card dt {
+    margin: 0 0 var(--espacamento-sm);
+    padding: 0;
+    font-size: var(--tamanho-xl);
+    font-weight: var(--peso-fonte-negrito);
+    line-height: 1.25;
+    color: var(--cor-texto-heading);
+    letter-spacing: -0.01em;
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-person-card .invoisys-ds-doc-ux-ui-person-role {
+    font-size: var(--tamanho-sm);
+    font-weight: var(--peso-fonte-strong);
+    color: var(--cor-texto-secundario);
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-person-card dd {
+    margin: 0;
+    padding: 0;
+    font-size: var(--tamanho-sm);
+    line-height: 1.55;
+    color: var(--cor-texto-secundario);
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-person-names {
+    margin: 0 0 var(--espacamento-xs);
+    padding: 0;
+    font-size: var(--tamanho-md);
+    font-weight: var(--peso-fonte-negrito);
+    line-height: 1.35;
+    color: var(--cor-texto-heading);
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-person-names-desc {
+    margin: 0;
+    padding: 0;
+    font-size: var(--tamanho-sm);
+    line-height: 1.55;
+    color: var(--cor-texto-secundario);
+}
+
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-person-card dd a {
+    font-weight: var(--peso-fonte-strong);
+}
+
+/* Ferramentas — destaque ao Cursor (IA no fluxo de entrega) */
+.invoisys-ds-doc-ux-ui-area .invoisys-ds-doc-ux-ui-tools-list > li.invoisys-ds-doc-ux-ui-tools-highlight {
+    list-style: none;
+    margin-left: calc(-1 * 1.25rem);
+    padding: var(--espacamento-md);
+    background: rgba(79, 183, 59, 0.1);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--cor-brand);
+}
+
+.invoisys-ds-panel[hidden] {
+    display: none !important;
+}
+
+.invoisys-ds-panel h1 {
+    font-size: var(--tamanho-xxxl);
+    font-weight: var(--peso-fonte-negrito);
+    margin: 0 0 var(--espacamento-sm);
+    line-height: var(--line-height-heading);
+}
+
+/* Alinhar âncoras com a topbar fixa (ver design-system-docs.js, getTocStickyOffsetPx) */
+.invoisys-ds-doc-html .invoisys-ds-panel h1[id],
+.invoisys-ds-doc-html .invoisys-ds-panel h2.invoisys-ds-section-title[id],
+.invoisys-ds-doc-html .invoisys-ds-panel h3.invoisys-ds-subsection-title[id] {
+    scroll-margin-top: calc(var(--invoisys-ds-doc-topbar-h, 50px) + var(--invoisys-ds-doc-anchor-pad, 12px));
+}
+
+.invoisys-ds-lead {
+    font-size: var(--tamanho-md);
+    color: var(--cor-texto-secundario);
+    margin: 0 0 var(--espacamento-xl);
+    max-width: min(100%, 92ch);
+}
+
+.invoisys-ds-section-title {
+    font-size: var(--tamanho-lg, 1.125rem);
+    font-weight: var(--peso-fonte-strong);
+    margin: var(--espacamento-xl) 0 var(--espacamento-sm);
+}
+
+.invoisys-ds-subsection-title {
+    font-size: var(--tamanho-md);
+    font-weight: var(--peso-fonte-strong);
+    color: var(--cor-texto-heading);
+    margin: var(--espacamento-lg) 0 var(--espacamento-xs);
+    line-height: var(--line-height-tight);
+}
+
+.invoisys-ds-color-table .invoisys-ds-td-type-sample {
+    width: 4.5rem;
+    max-width: 6rem;
+    text-align: center;
+    vertical-align: middle;
+    font-family: var(--fonte-principal);
+    font-weight: var(--peso-fonte-strong);
+    color: var(--cor-texto-heading);
+    line-height: 1;
+}
+
+.invoisys-ds-preview {
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius-lg);
+    background: var(--cor-superficie);
+    /* Destaque: respiro vertical forte nos exemplos (antes: --espacamento-lg em todos os lados) */
+    padding: var(--espacamento-xxxl) var(--espacamento-xxl);
+    margin-bottom: var(--espacamento-xl);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Loading (doc): pré-visualização centrada sem o margin-top de table.css (.loading-table) */
+[data-testid="ds-loading-demo-bloco"].loading-table {
+    margin-top: 0 !important;
+}
+
+/*
+ * Switch em #filtersList (doc): em produção o chrome base costuma vir de ui.css / bundle do portal.
+ * Aqui só o necessário para pré-visualizar com as medidas já definidas em componentes.css (#filtersList .form-group .switch …).
+ * Na doc Inputs há dois demos: #filtersList (caso isolado) e #filtersListGrupo (grupo + select) — o segundo id evita HTML inválido; espelhamos as medidas do switch em #filtersListGrupo abaixo.
+ */
+#filtersList.invoisys-ds-doc-filters-list-demo,
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo {
+    margin-top: 0 !important;
+    padding: var(--espacamento-md) !important;
+    background: var(--cor-superficie) !important;
+    border-radius: var(--radius-md);
+    box-sizing: border-box;
+}
+
+#filtersList.invoisys-ds-doc-filters-list-demo .form-group .switch,
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--cor-botao-secondary-fundo);
+    transition: background-color 0.2s ease;
+}
+
+#filtersList.invoisys-ds-doc-filters-list-demo .form-group .switch:has(.switch-input:checked),
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch:has(.switch-input:checked) {
+    background: var(--cor-brand);
+}
+
+#filtersList.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-input,
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    z-index: 3;
+    cursor: pointer;
+}
+
+#filtersList.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-label,
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-label {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    margin: 0;
+    pointer-events: none;
+}
+
+#filtersList.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-label::before,
+#filtersList.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-label::after,
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-label::before,
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-label::after {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 700;
+    line-height: 1;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+}
+
+#filtersList.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-label::before,
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-label::before {
+    content: "NÃO";
+    right: 6px;
+    color: var(--cor-texto-corpo-forte);
+    opacity: 1;
+}
+
+#filtersList.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-label::after,
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-label::after {
+    content: "SIM";
+    left: 6px;
+    color: var(--cor-texto-sobre-brand);
+    opacity: 0;
+}
+
+#filtersList.invoisys-ds-doc-filters-list-demo .form-group .switch:has(.switch-input:checked) .switch-label::before,
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch:has(.switch-input:checked) .switch-label::before {
+    opacity: 0;
+}
+
+#filtersList.invoisys-ds-doc-filters-list-demo .form-group .switch:has(.switch-input:checked) .switch-label::after,
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch:has(.switch-input:checked) .switch-label::after {
+    opacity: 1;
+}
+
+#filtersList.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-handle,
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-handle {
+    position: absolute;
+    z-index: 2;
+    background: var(--cor-superficie);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    transition: left 0.2s ease;
+    pointer-events: none;
+}
+
+/* #filtersListGrupo: espelho das medidas de componentes.css (#filtersList .form-group .switch …) — o produto não estiliza fora de #filtersList */
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo label {
+    font-size: 13px !important;
+}
+
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch {
+    height: 18px;
+    width: 52px;
+    padding: 2px;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-radius: 14px;
+}
+
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-label {
+    font-size: 10px;
+    overflow: visible;
+    white-space: nowrap;
+}
+
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-label:before,
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-label:after {
+    font-size: 10px;
+    overflow: visible;
+}
+
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-label:before {
+    right: 6px;
+}
+
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-label:after {
+    left: 6px;
+}
+
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-handle {
+    height: 14px;
+    width: 14px;
+    top: 2px;
+    left: 2px;
+    border-radius: 8px;
+}
+
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-handle:before {
+    height: 10px;
+    width: 10px;
+    margin: -5px 0 0 -5px;
+    border-radius: 5px;
+}
+
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group .switch .switch-input:checked ~ .switch-handle {
+    left: 34px;
+}
+
+#filtersListGrupo.invoisys-ds-doc-filters-list-demo .form-group select.form-control {
+    width: 100%;
+    max-width: none;
+}
+
+/* Modal Detalhes (doc): largura extra no demo das abas para as 6 abas caberem numa linha */
+body.invoisys-ds-doc .invoisys-ds-modal-detalhes-tabs-demo-wide {
+    width: 100%;
+    max-width: min(1200px, 100%);
+    overflow-x: auto;
+    box-sizing: border-box;
+}
+
+/* Modal Detalhes (doc): layout em linha das abas + área de painéis + recolher conteúdo */
+body.invoisys-ds-doc .invoisys-ds-modal-detalhes-doc .modal-detalhes-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--cor-borda-discreta);
+    background: var(--cor-superficie);
+}
+
+body.invoisys-ds-doc .invoisys-ds-modal-detalhes-tabs-demo-wide .modal-detalhes-tabs {
+    flex-wrap: nowrap;
+}
+
+body.invoisys-ds-doc .invoisys-ds-modal-detalhes-doc .modal-detalhes-tabs > li {
+    margin: 0;
+}
+
+body.invoisys-ds-doc .invoisys-ds-modal-detalhes-tabs-demo-wide .modal-detalhes-tabs > li {
+    flex-shrink: 0;
+}
+
+body.invoisys-ds-doc .invoisys-ds-modal-detalhes-doc .modal-detalhes-tabs > li > a {
+    border-radius: 0;
+}
+
+body.invoisys-ds-doc .invoisys-ds-modal-detalhes-doc .modal-detalhes-tabs > li.active > a {
+    border: none !important;
+    border-bottom: 2px solid var(--cor-brand) !important;
+    margin-bottom: -1px;
+}
+
+body.invoisys-ds-doc .invoisys-ds-modal-detalhes-doc .invoisys-ds-modal-detalhes-tabpanes {
+    padding: var(--espacamento-md);
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda-discreta);
+    border-top: none;
+    box-sizing: border-box;
+}
+
+body.invoisys-ds-doc .invoisys-ds-modal-detalhes-doc .tab-content .tab-pane[hidden] {
+    display: none !important;
+}
+
+body.invoisys-ds-doc [data-testid="modal-detalhes-container"] .modal-detalhes-panel--collapsed .panel-content,
+body.invoisys-ds-doc [data-testid="ds-manifesto-equipa-collapse"] .modal-detalhes-panel--collapsed .panel-content {
+    display: none !important;
+}
+
+/* Manifesto — colapsos «Valores / Propósito / Manifesto» (mesmo padrão visual do modal Detalhes, só nesta doc) */
+body.invoisys-ds-doc [data-testid="ds-manifesto-equipa-collapse"] .modal-detalhes-panel {
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--cor-borda-suave);
+    background-color: var(--cor-superficie);
+}
+
+body.invoisys-ds-doc [data-testid="ds-manifesto-equipa-collapse"] .modal-detalhes-panel:last-child {
+    border-bottom: none;
+}
+
+body.invoisys-ds-doc [data-testid="ds-manifesto-equipa-collapse"] .modal-detalhes-panel .panel-header {
+    padding: 12px 16px;
+    transition: background-color 0.2s ease;
+    background-color: var(--cor-superficie);
+}
+
+body.invoisys-ds-doc [data-testid="ds-manifesto-equipa-collapse"] .modal-detalhes-panel .modal-detalhes-panel-toggle {
+    font-size: 15px;
+    width: 100%;
+    flex: 1 1 auto !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    color: var(--cor-texto-secundario) !important;
+    text-decoration: none;
+}
+
+body.invoisys-ds-doc [data-testid="ds-manifesto-equipa-collapse"] .modal-detalhes-panel .modal-detalhes-panel-toggle:hover {
+    color: var(--cor-texto-corpo-forte) !important;
+}
+
+body.invoisys-ds-doc [data-testid="ds-manifesto-equipa-collapse"] .modal-detalhes-chevron {
+    margin-left: auto;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+    color: var(--cor-texto-secundario);
+}
+
+body.invoisys-ds-doc [data-testid="ds-manifesto-equipa-collapse"] .modal-detalhes-panel .panel-content {
+    overflow: hidden;
+    padding: 12px 16px 16px;
+    background-color: var(--cor-superficie);
+}
+
+/*
+ * Tabs do modal na página «Tabs»: mesmo visual que [data-testid="modal-detalhes-container"] em componentes.css,
+ * mas com data-testid distinto para não haver dois modal-detalhes-container no mesmo documento.
+ */
+[data-testid="ds-modal-detalhes-tabs-container"] .modal-detalhes-tabs > li > a,
+[data-testid="ds-modal-detalhes-tabs-container-disabled"] .modal-detalhes-tabs > li > a {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    color: var(--cor-texto-secundario);
+    text-decoration: none;
+}
+
+[data-testid="ds-modal-detalhes-tabs-container"] .modal-detalhes-tabs > li > a:hover,
+[data-testid="ds-modal-detalhes-tabs-container-disabled"] .modal-detalhes-tabs > li > a:hover {
+    color: var(--cor-texto-corpo-forte);
+}
+
+[data-testid="ds-modal-detalhes-tabs-container"] .modal-detalhes-tabs > li > a .d-flex,
+[data-testid="ds-modal-detalhes-tabs-container-disabled"] .modal-detalhes-tabs > li > a .d-flex {
+    gap: 0.5rem;
+}
+
+[data-testid="ds-modal-detalhes-tabs-container"] .modal-detalhes-tabs > li > a i.fa,
+[data-testid="ds-modal-detalhes-tabs-container-disabled"] .modal-detalhes-tabs > li > a i.fa {
+    color: inherit;
+    font-size: 1em;
+}
+
+[data-testid="ds-modal-detalhes-tabs-container"] .modal-detalhes-tabs > li.active > a,
+[data-testid="ds-modal-detalhes-tabs-container"] .modal-detalhes-tabs > li.active > a:focus,
+[data-testid="ds-modal-detalhes-tabs-container"] .modal-detalhes-tabs > li.active > a:hover,
+[data-testid="ds-modal-detalhes-tabs-container-disabled"] .modal-detalhes-tabs > li.active > a,
+[data-testid="ds-modal-detalhes-tabs-container-disabled"] .modal-detalhes-tabs > li.active > a:focus,
+[data-testid="ds-modal-detalhes-tabs-container-disabled"] .modal-detalhes-tabs > li.active > a:hover {
+    color: var(--cor-texto-corpo-forte);
+    cursor: default;
+    background-color: var(--cor-superficie);
+    border: none !important;
+    border-bottom-color: transparent;
+}
+
+[data-testid="ds-modal-detalhes-tabs-container"] .modal-detalhes-tabs > li.active > a i.fa,
+[data-testid="ds-modal-detalhes-tabs-container-disabled"] .modal-detalhes-tabs > li.active > a i.fa {
+    color: inherit;
+}
+
+[data-testid="ds-modal-detalhes-tabs-container-disabled"] .modal-detalhes-tabs > li.disabled > a {
+    cursor: not-allowed;
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+/* Em componentes.css, .page-content usa fundo cinza-suave; na doc queremos branco nos exemplos. */
+.invoisys-ds-preview .main-content,
+.invoisys-ds-preview .main-content .page-content {
+    background: var(--cor-superficie) !important;
+}
+
+/* Pré-visualização de .main-content / .page-content (largura útil na sandbox) */
+.invoisys-ds-preview .invoisys-ds-preview-page-content {
+    padding-left: var(--espacamento-md) !important;
+    padding-right: var(--espacamento-md) !important;
+    padding-bottom: var(--espacamento-md) !important;
+}
+
+.invoisys-ds-preview .invoisys-ds-preview-main {
+    min-height: 0;
+}
+
+/* Campos de formulário na doc — largura típica de select/toolbar no portal (385px) */
+.invoisys-ds-field-stack {
+    width: 100%;
+    max-width: min(385px, 100%);
+    box-sizing: border-box;
+}
+
+/* Espaço antes do rodapé tipo modal (.modal-footer em componentes.css — sem borda superior) */
+.invoisys-ds-field-stack > .modal-footer {
+    margin-top: var(--espacamento-lg);
+}
+
+
+/* KPIs · faixa tipo Delivery Monitor (totalizadores): valor → rótulo caps → ícone + %) */
+.invoisys-ds-kpi-dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: stretch;
+    gap: 8px 12px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: var(--cor-superficie);
+    padding: 12px 8px 14px;
+    border-bottom: 1px solid var(--cor-borda-suave);
+}
+
+.invoisys-ds-kpi-dashboard .invoisys-ds-kpi-tile {
+    flex: 1 1 0;
+    min-width: min(140px, 100%);
+    max-width: 220px;
+    padding: 8px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.invoisys-ds-kpi-dashboard .invoisys-ds-kpi-value {
+    margin: 0;
+    padding: 0;
+    font-family: var(--fonte-principal), Arial, sans-serif;
+    font-size: var(--tamanho-xxxl);
+    font-weight: 700;
+    color: #555;
+    line-height: 1.1;
+}
+
+.invoisys-ds-kpi-dashboard .invoisys-ds-kpi-label {
+    margin: 6px 0 0;
+    padding: 0;
+    font-family: var(--fonte-principal), Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #888;
+}
+
+.invoisys-ds-kpi-dashboard .invoisys-ds-kpi-footer {
+    margin-top: 4px;
+    min-height: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.invoisys-ds-kpi-dashboard .invoisys-ds-kpi-footer .fa {
+    color: #aaa;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.invoisys-ds-kpi-dashboard .invoisys-ds-kpi-pct {
+    font-family: var(--fonte-principal), Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cor-dm-acento-verde, #7cb342);
+    line-height: 1;
+}
+
+.invoisys-ds-kpi-dashboard .invoisys-ds-kpi-footer--empty {
+    visibility: hidden;
+}
+
+/* Resultados (doc) — página inteira: pt-BR no HTML + tipografia com tokens */
+.invoisys-ds-doc-resultados-page {
+    font-size: var(--tamanho-sm);
+    line-height: 1.65;
+}
+
+.invoisys-ds-doc-resultados-page > .text-label {
+    font-size: var(--tamanho-xs);
+    line-height: 1.45;
+}
+
+.invoisys-ds-doc-resultados {
+    margin-bottom: var(--espacamento-xl);
+}
+
+.invoisys-ds-doc-resultados .invoisys-ds-subsection-title {
+    font-size: var(--tamanho-md);
+    line-height: var(--line-height-tight, 1.35);
+}
+
+.invoisys-ds-doc-resultados__list-panel {
+    background: var(--cor-superficie);
+    border-radius: var(--radius-md);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.invoisys-ds-doc-resultados__desafios-panel {
+    max-width: min(100%, 92ch);
+    box-sizing: border-box;
+    border-color: var(--cor-borda);
+}
+
+.invoisys-ds-doc-resultados__list {
+    margin: 0;
+    padding-left: 1.25rem;
+    line-height: 1.65;
+    font-size: var(--tamanho-sm);
+}
+
+.invoisys-ds-doc-resultados__intro {
+    max-width: min(100%, 92ch);
+    line-height: 1.6;
+    font-size: var(--tamanho-md);
+}
+
+.invoisys-ds-doc-resultados .invoisys-ds-doc-resultados__intro.invoisys-ds-lead {
+    margin-top: 0;
+    margin-bottom: var(--espacamento-md);
+}
+
+.invoisys-ds-doc-resultados__final-callout {
+    max-width: min(100%, 92ch);
+    box-sizing: border-box;
+    margin-top: var(--espacamento-sm);
+}
+
+.invoisys-ds-doc-resultados__final-body {
+    font-size: var(--tamanho-sm);
+    line-height: 1.65;
+}
+
+/* Largura alinhada às outras secções de Resultados (sem .invoisys-ds-preview à volta dos KPIs) */
+.invoisys-ds-doc-resultados__kpi-dashboard {
+    max-width: min(100%, 92ch);
+    box-sizing: border-box;
+}
+
+.invoisys-ds-kpi-dashboard--resultados-done {
+    background: transparent;
+    border-bottom: none;
+    padding: 0;
+    gap: var(--espacamento-md);
+}
+
+.invoisys-ds-kpi-dashboard--resultados-done .invoisys-ds-kpi-tile {
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius-md);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    max-width: none;
+    flex: 1 1 200px;
+    min-height: 9.5rem;
+    padding: var(--espacamento-lg) var(--espacamento-sm) var(--espacamento-md);
+    justify-content: flex-start;
+}
+
+.invoisys-ds-kpi-dashboard--resultados-done .invoisys-ds-kpi-value {
+    font-size: var(--tamanho-xxl);
+    line-height: 1;
+    color: var(--cor-indicador-sucesso);
+}
+
+.invoisys-ds-kpi-dashboard--resultados-done .invoisys-ds-kpi-value .fa {
+    color: var(--cor-indicador-sucesso);
+}
+
+.invoisys-ds-kpi-dashboard--resultados-done .invoisys-ds-kpi-label {
+    margin-top: var(--espacamento-sm);
+    font-size: var(--tamanho-sm);
+    line-height: 1.3;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--cor-texto-heading);
+    font-weight: var(--peso-fonte-negrito);
+}
+
+.invoisys-ds-doc-resultados__kpi-desc {
+    margin: var(--espacamento-xs) 0 0;
+    padding: 0 var(--espacamento-xs);
+    font-size: var(--tamanho-sm);
+    line-height: 1.5;
+    color: var(--cor-texto-secundario);
+    text-align: center;
+    font-weight: var(--peso-fonte-normal);
+    max-width: min(100%, 24ch);
+    align-self: center;
+}
+
+.invoisys-ds-doc-resultados__kpi-desc strong {
+    color: var(--cor-texto-heading);
+    font-weight: var(--peso-fonte-strong);
+}
+
+.invoisys-ds-kpi-dashboard--resultados-done .invoisys-ds-doc-resultados__kpi-desc {
+    max-width: min(100%, 34ch);
+}
+
+.invoisys-ds-kpi-dashboard--resultados-done .invoisys-ds-kpi-footer {
+    margin-top: auto;
+    padding-top: var(--espacamento-sm);
+    width: 100%;
+    justify-content: space-between;
+    gap: var(--espacamento-xs);
+    flex-wrap: wrap;
+}
+
+.invoisys-ds-kpi-dashboard--resultados-done .invoisys-ds-kpi-pct {
+    font-size: var(--tamanho-xs);
+    font-weight: var(--peso-fonte-negrito);
+    color: var(--cor-texto-secundario);
+}
+
+/* Resultados (doc) — segunda fila de cartões (consolidação / evolução) */
+.invoisys-ds-kpi-dashboard--resultados-doing {
+    background: transparent;
+    border-bottom: none;
+    padding: 0;
+    gap: var(--espacamento-md);
+    align-items: stretch;
+}
+
+/* Mesmo “molde” que Done: cartão branco, borda e sombra leves (sem barra lateral) */
+.invoisys-ds-kpi-dashboard--resultados-doing .invoisys-ds-kpi-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius-md);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    max-width: none;
+    flex: 1 1 200px;
+    min-height: 9.5rem;
+    padding: var(--espacamento-lg) var(--espacamento-sm) var(--espacamento-md);
+    justify-content: flex-start;
+    box-sizing: border-box;
+}
+
+.invoisys-ds-kpi-dashboard--resultados-doing .invoisys-ds-kpi-value {
+    font-size: var(--tamanho-xxl);
+    line-height: 1;
+    color: var(--cor-indicador-info);
+}
+
+.invoisys-ds-kpi-dashboard--resultados-doing .invoisys-ds-kpi-value .fa {
+    color: var(--cor-indicador-info);
+}
+
+.invoisys-ds-kpi-dashboard--resultados-doing .invoisys-ds-kpi-label {
+    margin-top: var(--espacamento-sm);
+    font-size: var(--tamanho-sm);
+    line-height: 1.3;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--cor-texto-heading);
+    font-weight: var(--peso-fonte-negrito);
+}
+
+.invoisys-ds-doc-resultados__kpi-desc--doing {
+    max-width: min(100%, 28ch);
+    font-size: var(--tamanho-sm);
+    line-height: 1.5;
+}
+
+.invoisys-ds-kpi-dashboard--resultados-doing .invoisys-ds-kpi-footer {
+    margin-top: auto;
+    padding-top: var(--espacamento-sm);
+    width: 100%;
+    justify-content: space-between;
+    gap: var(--espacamento-xs);
+    flex-wrap: wrap;
+}
+
+.invoisys-ds-kpi-dashboard--resultados-doing .invoisys-ds-kpi-footer--resultados-solo {
+    justify-content: flex-end;
+}
+
+.invoisys-ds-kpi-dashboard--resultados-doing .invoisys-ds-kpi-pct {
+    font-size: var(--tamanho-xs);
+    font-weight: var(--peso-fonte-negrito);
+    color: var(--cor-texto-secundario);
+}
+
+.invoisys-ds-doc-resultados__final-heading {
+    margin-top: var(--espacamento-xl);
+}
+
+/* Introdução (doc) — tipografia com tokens e texto pt-BR */
+.invoisys-ds-doc-introducao-page {
+    font-size: var(--tamanho-sm);
+    line-height: 1.65;
+}
+
+.invoisys-ds-doc-introducao-page .invoisys-ds-doc-introducao__lead-tight {
+    margin-top: 0;
+}
+
+.invoisys-ds-doc-introducao__prose {
+    max-width: min(100%, 90ch);
+    font-size: var(--tamanho-sm);
+    line-height: 1.65;
+}
+
+.invoisys-ds-doc-introducao-page .invoisys-ds-callout.invoisys-ds-doc-introducao__callout {
+    max-width: min(100%, 90ch);
+    font-size: var(--tamanho-sm);
+    line-height: 1.6;
+}
+
+.invoisys-ds-doc-introducao__cascade-preview {
+    max-width: min(100%, 90ch);
+    box-sizing: border-box;
+    background: var(--cor-superficie-suave);
+    border-color: var(--cor-borda);
+}
+
+.invoisys-ds-doc-introducao__cascade-heading {
+    font-size: var(--tamanho-sm);
+    line-height: 1.4;
+}
+
+.invoisys-ds-doc-introducao__cascade-note {
+    font-size: var(--tamanho-xs);
+    line-height: 1.5;
+}
+
+.invoisys-ds-doc-introducao__componentes-p {
+    max-width: min(100%, 90ch);
+    font-size: var(--tamanho-sm);
+    line-height: 1.55;
+}
+
+.invoisys-ds-doc-introducao__alert-body {
+    font-size: var(--tamanho-sm);
+    line-height: 1.55;
+}
+
+/* Carrossel de fases / plugins — caixas .metrics-box com borda (só nesta documentação) */
+.invoisys-ds-preview--metrics-phases {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.invoisys-ds-preview--metrics-phases .metrics-carousel .metrics-box {
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda-neutra);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+/* Trilho em cápsula (portal pode trazer Bootstrap .progress; aqui reforçamos o raio) */
+.invoisys-ds-preview--metrics-phases .metrics-carousel .metrics-box .metrics-progress {
+    border-radius: 9999px;
+}
+
+.invoisys-ds-preview--metrics-phases .metrics-carousel .metrics-box .metrics-progress .progress-bar {
+    border-radius: 9999px;
+}
+
+/* Toolbar · chips .panel-card-btn (sombra + raio — doc; alinhamento do texto entre ícones) */
+.invoisys-ds-preview--toolbar-cards .panel-card-btn.nfeentrada-toolbar-btn {
+    padding-inline: 12px !important;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.invoisys-ds-preview--toolbar-cards .panel-card-btn.nfeentrada-toolbar-btn .heading-sm {
+    margin: 0;
+}
+
+/* «Filtrar por»: três filhos (funil + texto + chevron) — texto centrado entre ícones */
+.invoisys-ds-preview--toolbar-cards .panel-card-btn.nfeentrada-toolbar-btn:has(> .fa-filter) .heading-sm {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+/* Pesquisa — espelha table.css (.search-input / input[type="search"]) na doc sem carregar table.css */
+.invoisys-ds-search-demo .search-input,
+.invoisys-ds-search-demo input[type="search"].form-control {
+    height: 39px !important;
+    font-size: var(--tamanho-base-fonte) !important;
+    font-family: var(--fonte-principal), Arial, sans-serif !important;
+}
+
+.invoisys-ds-search-demo .search-input {
+    padding: 10px 12px;
+    border: 1px solid var(--cor-borda-neutra);
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: var(--cor-superficie);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+/* Arquivo — caixa alinhada a .form-control (o botão nativo varia por browser) */
+.invoisys-ds-file-demo input[type="file"].form-control {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    padding: 6px 12px;
+    font-family: var(--fonte-principal), Arial, sans-serif;
+    font-size: var(--tamanho-sm);
+    color: var(--cor-texto-secundario);
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda-neutra);
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* Select2 — demo alinhada ao portal (lista aberta + borda marca) */
+.invoisys-ds-preview.invoisys-ds-preview--select2-portal {
+    overflow: visible;
+}
+
+.invoisys-ds-select2-demo--portal {
+    position: relative;
+}
+
+.invoisys-ds-input-help-btn {
+    border: 0;
+    background: var(--cor-brand);
+    color: var(--cor-texto-sobre-brand);
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    padding: 0;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.invoisys-ds-input-help-btn .fa {
+    font-size: 11px;
+    color: var(--cor-texto-sobre-brand);
+    line-height: 1;
+}
+
+.invoisys-ds-input-help-btn:focus {
+    outline: none;
+}
+
+.invoisys-ds-input-help-btn:focus-visible {
+    outline: 2px solid var(--cor-brand);
+    outline-offset: 2px;
+}
+
+.invoisys-ds-select2-demo--portal .select2-container--open {
+    z-index: 1200 !important;
+}
+
+.invoisys-ds-select2-demo--portal .select2-container--default.select2-container--open .select2-selection--single .select2-selection__rendered {
+    border-color: var(--cor-brand) !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+/* Dropdown no body (dropdownCssClass) ou dentro do demo */
+.invoisys-ds-select2-demo--portal .select2-dropdown,
+.select2-dropdown.invoisys-ds-select2-dropdown-portal {
+    border: 1px solid var(--cor-brand) !important;
+    border-top: none !important;
+    border-radius: 0 0 4px 4px !important;
+}
+
+.invoisys-ds-select2-demo--portal .select2-search--dropdown,
+.select2-dropdown.invoisys-ds-select2-dropdown-portal .select2-search--dropdown {
+    padding: 8px;
+    border-bottom: 1px solid var(--cor-borda-suave);
+}
+
+.invoisys-ds-select2-demo--portal .select2-search--dropdown .select2-search__field,
+.select2-dropdown.invoisys-ds-select2-dropdown-portal .select2-search--dropdown .select2-search__field {
+    border: 1px solid var(--cor-borda-neutra);
+    border-radius: 4px;
+}
+
+.invoisys-ds-select2-demo--portal .select2-results__option--highlighted,
+.select2-dropdown.invoisys-ds-select2-dropdown-portal .select2-results__option--highlighted {
+    background-color: var(--cor-superficie-hover-linha) !important;
+    color: var(--cor-texto-heading) !important;
+}
+
+/* Intervalo de datas — demo alinhada à demo Select2 (borda marca + painel; só nesta documentação) */
+.invoisys-ds-preview.invoisys-ds-preview--daterange-portal {
+    overflow: visible;
+}
+
+.invoisys-ds-daterange-demo--portal {
+    position: relative;
+}
+
+.invoisys-ds-daterange-demo--portal .date-range-container {
+    position: relative;
+    width: 100%;
+}
+
+.invoisys-ds-daterange-demo--portal .prepend-icon {
+    position: relative;
+    width: 100%;
+    max-width: 385px;
+}
+
+.invoisys-ds-daterange-demo--portal .date-range-input {
+    height: 39px !important;
+    font-size: var(--tamanho-base-fonte) !important;
+    font-family: var(--fonte-principal) !important;
+    font-weight: var(--peso-fonte-strong);
+    padding-left: 30px;
+    padding-right: 28px;
+    min-width: min(31ch, 100%);
+    box-sizing: border-box;
+}
+
+.invoisys-ds-daterange-demo--portal.invoisys-ds-daterange-demo--open {
+    z-index: 1200 !important;
+}
+
+.invoisys-ds-daterange-demo--portal.invoisys-ds-daterange-demo--open .date-range-input.form-control {
+    border-color: var(--cor-brand) !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+/* Painel do plugin: continuidade visual com o input (como .select2-dropdown na demo Select2) */
+body.invoisys-ds-doc .daterangepicker {
+    z-index: 1200;
+    border: 1px solid var(--cor-brand) !important;
+    border-top: none !important;
+    border-radius: 0 0 4px 4px !important;
+}
+
+body.invoisys-ds-doc .daterangepicker td.active,
+body.invoisys-ds-doc .daterangepicker td.active:hover {
+    background-color: var(--cor-brand) !important;
+    border-color: transparent;
+}
+
+body.invoisys-ds-doc .daterangepicker .ranges li.active {
+    background-color: var(--cor-brand) !important;
+}
+
+/*
+ * Cabeçalho NF-e — pré-visualização alinhada ao tela da plataforma (só nesta documentação).
+ * Classes f-20, btn-ajuda-header, etc. vêm do portal; aqui simulamos o aspecto final.
+ */
+.invoisys-ds-preview.invoisys-ds-preview--nfe-header {
+    padding: var(--espacamento-xxxl) var(--espacamento-xl);
+    overflow: hidden;
+}
+
+.invoisys-ds-preview.invoisys-ds-preview--nfe-header .invoisys-ds-preview-page-content {
+    padding-top: 0 !important;
+
+}
+
+.invoisys-ds-preview .invoisys-ds-nfe-header-demo {
+    width: 100%;
+    padding: 10px 0 12px;
+    margin: 0;
+    background: var(--cor-superficie);
+    gap: 0.75rem 1rem;
+    flex-wrap: wrap;
+}
+
+.invoisys-ds-preview .invoisys-ds-nfe-header-demo h2 {
+    font-size: var(--tamanho-md);
+    font-family: var(--fonte-principal);
+    margin: 0;
+    font-weight: var(--peso-fonte-leve);
+    color: var(--cor-texto-secundario);
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.35rem;
+    line-height: var(--line-height-tight);
+}
+
+.invoisys-ds-preview .invoisys-ds-nfe-header-demo h2 strong {
+    font-weight: var(--peso-fonte-negrito);
+    color: var(--cor-texto-heading);
+}
+
+.invoisys-ds-preview .invoisys-ds-nfe-header-demo .btn-ajuda-header {
+    border: 0;
+    background: var(--cor-brand);
+    color: var(--cor-texto-sobre-brand) !important;
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    padding: 0;
+    margin: 0 0 0 2px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+.invoisys-ds-preview .invoisys-ds-nfe-header-demo .btn-ajuda-header:hover {
+    filter: brightness(0.95);
+}
+
+.invoisys-ds-preview .invoisys-ds-nfe-header-demo .btn-ajuda-header .fa {
+    font-size: 14px;
+    color: var(--cor-texto-sobre-brand);
+}
+
+.invoisys-ds-preview .invoisys-ds-nfe-header-demo .f-20 {
+    font-size: 14px !important;
+}
+
+.invoisys-ds-preview .invoisys-ds-nfe-header-demo .cursor-pointer {
+    cursor: pointer;
+}
+
+.invoisys-ds-preview .invoisys-ds-nfe-breadcrumb.breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    list-style: none !important;
+}
+
+.invoisys-ds-preview .invoisys-ds-nfe-breadcrumb > li {
+    float: none !important;
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--tamanho-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--cor-texto-secundario);
+}
+
+.invoisys-ds-preview .invoisys-ds-nfe-breadcrumb > li + li::before {
+    content: '•';
+    float: none;
+    padding: 0 0.5rem;
+    color: var(--cor-texto-muted-extra);
+    font-size: 0.75rem;
+    line-height: 1;
+}
+
+.invoisys-ds-preview .invoisys-ds-nfe-breadcrumb > li > a {
+    color: var(--cor-brand) !important;
+    text-decoration: none;
+}
+
+.invoisys-ds-preview .invoisys-ds-nfe-breadcrumb > li > a:hover {
+    text-decoration: underline;
+}
+
+/* Botões na sandbox da doc (sem depender do Bootstrap) */
+.invoisys-ds-preview .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
+    border-radius: var(--borda-arredondada);
+    border-width: 1px;
+    border-style: solid;
+    cursor: pointer;
+    margin: 0 0.5rem 0.5rem 0;
+    box-sizing: border-box;
+}
+
+.invoisys-ds-code-wrap {
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: var(--espacamento-xl);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.invoisys-ds-code-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px;
+    background: var(--cor-superficie-suave);
+    border-bottom: 1px solid var(--cor-borda);
+    font-size: var(--tamanho-xs);
+    color: var(--cor-texto-secundario);
+}
+
+.invoisys-ds-code-bar button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 0;
+    background: transparent;
+    font: inherit;
+    font-size: var(--tamanho-xs);
+    color: var(--cor-action-texto);
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+}
+
+.invoisys-ds-code-bar button:hover {
+    background: var(--cor-action-fundo);
+}
+
+.invoisys-ds-code-bar button:focus-visible {
+    outline: var(--focus-ring-largura) solid var(--focus-ring-cor);
+    outline-offset: 2px;
+}
+
+.invoisys-ds-pre {
+    margin: 0;
+    padding: var(--espacamento-md);
+    background: #1e293b;
+    color: #e2e8f0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    overflow-x: auto;
+    white-space: pre;
+}
+
+.invoisys-ds-pre code.invoisys-ds-pre-code {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    background: transparent;
+    padding: 0;
+    border: 0;
+    display: block;
+    white-space: pre;
+}
+
+.invoisys-ds-callout {
+    border-left: 4px solid var(--cor-action-border);
+    background: var(--cor-action-fundo);
+    padding: var(--espacamento-sm) var(--espacamento-md);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin: var(--espacamento-md) 0;
+    font-size: var(--tamanho-sm);
+    color: var(--cor-texto-corpo-forte);
+}
+
+/* Inputs — Select2 + intervalo de datas como integrações prioritárias (só documentação) */
+.invoisys-ds-callout.invoisys-ds-callout--prioridade-inputs {
+    border-left-color: var(--cor-brand);
+    background: var(--cor-superficie);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cor-brand) 22%, transparent);
+}
+
+.invoisys-ds-doc-prioridade-mark {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 0.4rem;
+    padding: 0.15rem 0.5rem;
+    font-size: var(--tamanho-xs);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--cor-texto-sobre-brand);
+    background: var(--cor-brand);
+    border-radius: var(--radius-sm);
+    line-height: 1.2;
+}
+
+/* Pré-visualizações «portal» (Select2 + data de exibição) — mesma hierarquia visual */
+.invoisys-ds-preview.invoisys-ds-preview--doc-prioridade {
+    border-color: color-mix(in srgb, var(--cor-brand) 45%, var(--cor-borda));
+    box-shadow: 0 1px 0 color-mix(in srgb, var(--cor-brand) 12%, transparent);
+}
+
+/* Cores — grade de amostras */
+.invoisys-ds-swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--espacamento-sm);
+}
+
+.invoisys-ds-swatch {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--cor-borda);
+}
+
+.invoisys-ds-swatch-color {
+    height: 56px;
+}
+
+.invoisys-ds-swatch-meta {
+    padding: 8px 10px;
+    background: var(--cor-superficie-suave);
+    font-size: var(--tamanho-xs);
+    word-break: break-all;
+    color: var(--cor-texto-secundario);
+}
+
+.invoisys-ds-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: var(--espacamento-lg);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius-md);
+    background: var(--cor-superficie);
+}
+
+.invoisys-ds-table-wrap--tall {
+    max-height: min(70vh, 28rem);
+    overflow-y: auto;
+}
+
+.invoisys-ds-color-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--tamanho-sm);
+}
+
+.invoisys-ds-color-table th,
+.invoisys-ds-color-table td {
+    padding: 10px 12px;
+    text-align: start;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.invoisys-ds-color-table th {
+    font-weight: var(--peso-fonte-strong);
+    background: var(--cor-superficie-suave);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.invoisys-ds-color-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.invoisys-ds-td-swatch {
+    width: 72px;
+}
+
+.invoisys-ds-mini-swatch {
+    width: 100%;
+    max-width: 48px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--cor-borda);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+.invoisys-ds-hex code {
+    font-size: var(--tamanho-xs);
+    word-break: break-all;
+}
+
+.invoisys-ds-placeholder-box {
+    border: 2px dashed var(--cor-borda);
+    border-radius: var(--radius-md);
+    padding: var(--espacamento-xxl);
+    text-align: center;
+    color: var(--cor-texto-secundario);
+    background: var(--cor-superficie-suave);
+}
+
+.invoisys-ds-logo-demo-label {
+    font-size: var(--tamanho-xs);
+    color: var(--cor-texto-secundario);
+    margin: 0 0 var(--espacamento-xs);
+}
+
+.invoisys-ds-logo-banner {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: var(--cor-brand);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-sizing: border-box;
+}
+
+.invoisys-ds-logo-banner--compact {
+    min-height: 50px;
+    padding: 0 var(--espacamento-md);
+}
+
+.invoisys-ds-logo-banner--compact .invoisys-ds-logo-banner-img {
+    max-height: 34px;
+    width: auto;
+    max-width: min(200px, 55vw);
+}
+
+.invoisys-ds-logo-banner--hero {
+    min-height: 120px;
+    padding: var(--espacamento-xl) var(--espacamento-xxl);
+    justify-content: center;
+}
+
+.invoisys-ds-logo-banner--hero .invoisys-ds-logo-banner-img {
+    max-height: 56px;
+    width: auto;
+    max-width: min(280px, 85vw);
+}
+
+.invoisys-ds-logo-banner-img {
+    height: auto;
+    display: block;
+}
+
+/* —— Espaçamento (doc): grades de swatches —— */
+.invoisys-ds-space-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+    gap: var(--espacamento-md);
+}
+
+.invoisys-ds-space-pad-wrap {
+    border: 1px dashed var(--cor-borda);
+    border-radius: var(--radius-md);
+    background: var(--cor-superficie);
+    min-width: 0;
+}
+
+.invoisys-ds-space-pad-body {
+    background: var(--cor-action-fundo);
+    color: var(--cor-action-texto);
+    font-size: var(--tamanho-xs);
+    border-radius: var(--radius-sm);
+    min-height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.invoisys-ds-space-chip {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 11px;
+    line-height: 1.2;
+}
+
+.invoisys-ds-space-margin-bed {
+    border: 1px dashed var(--cor-borda);
+    border-radius: var(--radius-md);
+    min-height: 76px;
+    padding: 6px;
+    box-sizing: border-box;
+    background: repeating-linear-gradient(
+        -45deg,
+        var(--cor-superficie-suave),
+        var(--cor-superficie-suave) 6px,
+        var(--cor-superficie-painel) 6px,
+        var(--cor-superficie-painel) 12px
+    );
+    text-align: center;
+}
+
+.invoisys-ds-space-margin-inner {
+    background: var(--cor-action-fundo);
+    color: var(--cor-action-texto);
+    border-radius: var(--radius-sm);
+    padding: 6px 8px;
+    box-sizing: border-box;
+}
+
+.invoisys-ds-space-margin-bed--tall {
+    min-height: 104px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    overflow: auto;
+}
+
+.invoisys-ds-space-margin-bed--stack {
+    min-height: 92px;
+    overflow: auto;
+}
+
+.invoisys-ds-space-margin-bed--ms {
+    text-align: start;
+}
+
+.invoisys-ds-space-margin-bed--me {
+    text-align: end;
+}
+
+.invoisys-ds-space-margin-bed--auto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 104px;
+}
+
+.invoisys-ds-space-gap-block {
+    margin-bottom: var(--espacamento-md);
+}
+
+.invoisys-ds-space-gap-label {
+    display: block;
+    font-size: var(--tamanho-xs);
+    color: var(--cor-texto-secundario);
+    margin-bottom: 6px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.invoisys-ds-root-space-swatch {
+    display: inline-block;
+    height: 12px;
+    min-width: 2px;
+    max-width: 100%;
+    background: var(--cor-brand);
+    border-radius: 2px;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+
+/* —— Flexbox (doc) —— */
+.invoisys-ds-flex-row-block {
+    margin-bottom: var(--espacamento-lg);
+}
+
+.invoisys-ds-flex-demo {
+    border: 1px dashed var(--cor-borda);
+    border-radius: var(--radius-md);
+    background: var(--cor-superficie);
+    padding: var(--espacamento-sm);
+    box-sizing: border-box;
+}
+
+.invoisys-ds-flex-demo-label {
+    margin: 0 0 6px;
+    font-size: var(--tamanho-xs);
+    color: var(--cor-texto-secundario);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    line-height: 1.35;
+}
+
+.invoisys-ds-flex-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    background: var(--cor-action-fundo);
+    color: var(--cor-action-texto);
+    font-size: var(--tamanho-xs);
+    font-weight: var(--peso-fonte-strong);
+    border: 1px solid var(--cor-action-border);
+    box-sizing: border-box;
+}
+
+.invoisys-ds-flex-pill--short {
+    padding: 2px 10px;
+}
+
+.invoisys-ds-flex-pill--tall {
+    padding: 18px 10px;
+}
+
+.invoisys-ds-caixa-ruler {
+    border: 1px dashed var(--cor-borda);
+    border-radius: var(--radius-md);
+    padding: var(--espacamento-sm);
+    margin-bottom: var(--espacamento-md);
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+.invoisys-ds-sticky-scroll {
+    max-height: 140px;
+    overflow: auto;
+    border: 1px dashed var(--cor-borda);
+    border-radius: var(--radius-md);
+    padding: var(--espacamento-sm);
+    background: var(--cor-superficie);
+    box-sizing: border-box;
+}
+
+.invoisys-ds-shadow-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espacamento-lg);
+    margin-bottom: var(--espacamento-lg);
+}
+
+.invoisys-ds-shadow-card {
+    flex: 1 1 140px;
+    max-width: 220px;
+    min-height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--tamanho-xs);
+    color: var(--cor-texto-secundario);
+    background: var(--cor-superficie);
+    border-radius: var(--radius-md);
+    box-sizing: border-box;
+}
+
+.invoisys-ds-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(108px, 1fr));
+    gap: var(--espacamento-md);
+    margin-bottom: var(--espacamento-md);
+}
+
+.invoisys-ds-icon-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--espacamento-md) var(--espacamento-sm);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius-md);
+    background: var(--cor-superficie);
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.invoisys-ds-icon-cell > .fa {
+    font-size: 1.35rem;
+    line-height: 1.2;
+    color: var(--cor-texto-heading);
+}
+
+.invoisys-ds-icon-cell-label {
+    margin: var(--espacamento-sm) 0 4px;
+    font-size: var(--tamanho-xs);
+    font-weight: var(--peso-fonte-normal);
+    color: var(--cor-texto-secundario);
+    line-height: 1.35;
+}
+
+.invoisys-ds-icon-cell-code {
+    display: block;
+    font-size: 10px;
+    word-break: break-word;
+    color: var(--cor-texto-secundario);
+}
+
+.invoisys-ds-space-gap-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    min-height: 2rem;
+    padding: 0 0.5rem;
+    border-radius: var(--radius-sm);
+    font-size: var(--tamanho-xs);
+    font-weight: var(--peso-fonte-strong);
+    background: var(--cor-action-fundo);
+    color: var(--cor-action-texto);
+    border: 1px solid var(--cor-action-border);
+}
+
+/* Botões · demos de menu (documentação; não depende de Bootstrap) */
+.invoisys-ds-doc .invoisys-ds-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.invoisys-ds-doc .invoisys-ds-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 30;
+    min-width: 11.5rem;
+    margin: 0;
+    padding: 0.35rem 0;
+    list-style: none;
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda-neutra);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    display: none;
+    box-sizing: border-box;
+}
+
+.invoisys-ds-doc .invoisys-ds-dropdown-menu > li {
+    list-style: none;
+    margin: 0;
+}
+
+.invoisys-ds-doc .invoisys-ds-dropdown.invoisys-ds-dropdown--open .invoisys-ds-dropdown-menu {
+    display: block;
+}
+
+.invoisys-ds-doc .invoisys-ds-dropdown-menu.invoisys-ds-dropdown-menu--align-end {
+    left: auto;
+    right: 0;
+}
+
+.invoisys-ds-doc .invoisys-ds-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0.5rem 0.875rem;
+    border: 0;
+    background: transparent;
+    font: inherit;
+    font-size: var(--tamanho-sm);
+    line-height: 1.3;
+    color: var(--cor-texto-heading);
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.invoisys-ds-doc a.invoisys-ds-dropdown-item:hover,
+.invoisys-ds-doc button.invoisys-ds-dropdown-item:hover {
+    background: var(--cor-superficie-hover-linha);
+}
+
+.invoisys-ds-doc .invoisys-ds-dropdown-item--danger {
+    color: var(--cor-pill-danger-texto);
+}
+
+.invoisys-ds-doc .invoisys-ds-dropdown-item--danger:hover {
+    background: var(--cor-danger-fundo-claro);
+}
+
+.invoisys-ds-doc .invoisys-ds-dropdown-divider {
+    height: 0;
+    margin: 0.35rem 0;
+    padding: 0;
+    list-style: none;
+    border: 0;
+    border-top: 1px solid var(--cor-borda-suave);
+}
+
+.invoisys-ds-doc .invoisys-ds-btn-group {
+    display: inline-flex;
+    align-items: stretch;
+}
+
+.invoisys-ds-doc .invoisys-ds-btn-group > .btn:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.invoisys-ds-doc .invoisys-ds-btn-group > .btn + .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: -1px;
+    min-width: 2.25rem;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* Modais — demos (design-system-docs apenas; markup de produção nos <pre> da página Modais) */
+.invoisys-ds-doc .invoisys-ds-modal-demo[hidden] {
+    display: none !important;
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo:not([hidden]) {
+    display: block;
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo {
+    position: fixed;
+    inset: 0;
+    z-index: 12000;
+    pointer-events: none;
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo__backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    pointer-events: auto;
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo__dialog {
+    position: absolute;
+    pointer-events: auto;
+    box-sizing: border-box;
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo--centered .invoisys-ds-modal-demo__dialog {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(520px, 92vw);
+    max-height: min(640px, 85vh);
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo--entrada-xml.invoisys-ds-modal-demo--centered .invoisys-ds-modal-demo__dialog {
+    width: min(600px, 94vw);
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo--centered .invoisys-ds-modal-demo__sheet {
+    max-height: min(640px, 85vh);
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo--fullscreen .invoisys-ds-modal-demo__dialog {
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-height: none;
+    transform: none;
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo--fullscreen .invoisys-ds-modal-demo__sheet {
+    min-height: 100vh;
+    max-height: none;
+    border-radius: 0;
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo--fullscreen .invoisys-ds-modal-demo__body {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo--offcanvas .invoisys-ds-modal-demo__dialog {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: min(400px, 88vw);
+    max-height: none;
+    transform: none;
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo--offcanvas .invoisys-ds-modal-demo__sheet {
+    height: 100%;
+    border-radius: 0;
+    max-height: none;
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo--offcanvas .invoisys-ds-modal-demo__body {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo__sheet {
+    display: flex;
+    flex-direction: column;
+    background: var(--cor-superficie);
+    border-radius: var(--radius-md);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo .modal-header {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-shrink: 0;
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo .modal-header .close {
+    margin: 0;
+    padding: 4px 6px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    opacity: 0.9;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo .modal-header .close:hover {
+    opacity: 1;
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo__title {
+    margin: 0;
+    flex: 1 1 auto;
+    font-size: var(--tamanho-modal-titulo);
+    font-weight: var(--peso-fonte-normal);
+    line-height: 1.35;
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo__title strong {
+    font-weight: inherit;
+}
+
+.invoisys-ds-doc .invoisys-ds-modal-demo__body {
+    padding: var(--espacamento-lg) var(--espacamento-xl);
+    overflow-y: auto;
+    font-size: var(--tamanho-sm);
+    color: var(--cor-texto-corpo-forte);
+}
+
+@media (max-width: 880px) {
+    .invoisys-ds-layout {
+        flex-direction: column;
+    }
+
+    .invoisys-ds-layout-inner {
+        display: block;
+        margin-left: 0;
+        width: 100%;
+        max-width: none;
+        min-height: 0;
+    }
+
+    .invoisys-ds-toc {
+        display: none;
+    }
+
+    .invoisys-ds-sidebar {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        max-width: none;
+        height: auto;
+        max-height: none;
+        padding: var(--espacamento-md) var(--espacamento-sm);
+        border-right: 0;
+        border-bottom: 1px solid var(--cor-borda);
+    }
+
+    .invoisys-ds-brand {
+        text-align: start;
+        padding: var(--espacamento-sm) var(--espacamento-xs) var(--espacamento-md);
+        margin-bottom: var(--espacamento-sm);
+    }
+
+    .invoisys-ds-brand-title {
+        font-size: var(--tamanho-md);
+        white-space: normal;
+        text-overflow: clip;
+    }
+
+    .invoisys-ds-brand-sub {
+        font-size: var(--tamanho-xs);
+        display: block;
+        -webkit-line-clamp: unset;
+        -webkit-box-orient: unset;
+    }
+
+    .invoisys-ds-nav-heading {
+        font-size: 14px;
+        justify-content: flex-start;
+        margin: 0 0 8px 8px;
+        gap: 8px;
+    }
+
+    .invoisys-ds-nav-heading-icon {
+        width: 1.125rem;
+        height: 1.125rem;
+    }
+
+    .invoisys-ds-nav-list button {
+        text-align: left;
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: var(--peso-fonte-normal);
+        padding: 6px 12px 6px 18px;
+        overflow-wrap: normal;
+        hyphens: manual;
+    }
+
+    .invoisys-ds-main {
+        margin-left: 0;
+        min-height: 0;
+        padding: var(--espacamento-md);
+    }
+}
+
+/* Tabelas · cabeçalho da listagem — esquema em duas linhas (só documentação) */
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-toolbar-sketch {
+    max-width: min(100%, 90ch);
+    padding: var(--espacamento-md);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius-md);
+    background: var(--cor-superficie);
+    box-sizing: border-box;
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-toolbar-sketch__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0.5rem;
+    margin-bottom: 0.65rem;
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-toolbar-sketch__row:last-child {
+    margin-bottom: 0;
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-toolbar-sketch__slot {
+    font-size: var(--tamanho-xs);
+    color: var(--cor-texto-corpo-forte);
+    border: 1px dashed var(--cor-borda);
+    border-radius: 4px;
+    padding: 0.45rem 0.55rem;
+    line-height: 1.35;
+    box-sizing: border-box;
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-toolbar-sketch__slot--grow {
+    flex: 1 1 140px;
+    min-width: min(100%, 160px);
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-toolbar-sketch__slot--flex1 {
+    flex: 1 1 auto;
+    min-width: 120px;
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-toolbar-sketch__muted {
+    font-size: 0.92em;
+    color: var(--cor-texto-secundario);
+}
+
+/* Tabelas · cabeçalho — exemplo completo (prévia + 2.ª linha alinhada à doc) */
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-cabecalho-full-demo-host {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Sobrepor .invoisys-ds-preview--toolbar-cards: 1.ª linha alinhada ao .search-input; «Filtrar por» plano */
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-cabecalho-full-demo-host.invoisys-ds-preview--toolbar-cards [data-testid="nfeentrada-toolbar"] .panel-card-btn.nfeentrada-toolbar-btn {
+    border: 1px solid var(--cor-borda-neutra);
+    border-radius: 4px;
+    background-color: var(--cor-superficie);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    height: 39px !important;
+    min-height: 39px;
+    box-sizing: border-box;
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-cabecalho-full-demo-host.invoisys-ds-preview--toolbar-cards [data-testid="nfeentrada-toolbar"] .square-button {
+    border: 1px solid var(--cor-borda-neutra);
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: var(--cor-superficie);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    height: 39px !important;
+    min-height: 39px;
+    width: 39px;
+    min-width: 39px;
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-cabecalho-full-demo-host.invoisys-ds-preview--toolbar-cards .invoisys-ds-doc-cabecalho-btn-filtrar-plain.panel-card-btn.nfeentrada-toolbar-btn {
+    box-shadow: none !important;
+    border: none !important;
+    background-color: #fff !important;
+    height: 39px !important;
+    min-height: 39px;
+    box-sizing: border-box;
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-cabecalho-full-demo-host.invoisys-ds-preview--toolbar-cards .invoisys-ds-doc-cabecalho-btn-filtrar-plain.panel-card-btn.nfeentrada-toolbar-btn:hover {
+    background-color: #fff !important;
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-cabecalho-empresa-wrap {
+    width: min(385px, 100%);
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Data na toolbar: mesma cor e peso que .form-control / pesquisa (a demo global do daterange usa strong) */
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-cabecalho-full-demo-host .invoisys-ds-daterange-demo--portal .date-range-input.form-control {
+    font-weight: var(--peso-fonte-normal) !important;
+    font-size: var(--tamanho-sm) !important;
+    color: var(--cor-texto-secundario) !important;
+    -webkit-text-fill-color: var(--cor-texto-secundario) !important;
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa)
+    .invoisys-ds-doc-tabelas-cabecalho-full-demo-host
+    .invoisys-ds-daterange-demo--portal
+    .date-range-input.form-control:-webkit-autofill {
+    -webkit-text-fill-color: var(--cor-texto-secundario) !important;
+}
+
+/* Pesquisa na mesma toolbar: placeholder explícito + texto igual ao .form-control */
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-cabecalho-full-demo-host .invoisys-ds-search-demo .search-input.form-control {
+    font-size: var(--tamanho-sm) !important;
+    color: var(--cor-texto-secundario) !important;
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-cabecalho-full-demo-host .invoisys-ds-search-demo .search-input.form-control::placeholder {
+    color: var(--cor-texto-placeholder);
+    opacity: 1;
+}
+
+/* Chip «Mostrar / Ocultar painel»: texto e ícone herdam o cinza da toolbar (evita aspeto de link) */
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-cabecalho-full-demo-host [data-testid="nfeentrada-toolbar"] .panel-card-btn.nfeentrada-toolbar-btn .heading-sm,
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-cabecalho-full-demo-host [data-testid="nfeentrada-toolbar"] .panel-card-btn.nfeentrada-toolbar-btn .fa {
+    color: var(--cor-texto-secundario);
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-cabecalho-linha2-spacer {
+    min-width: 1.5rem;
+    min-height: 2.5rem;
+}
+
+/* Tabelas · cabeçalho — painéis KPI / filtros (prévia colapsável) */
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-cabecalho-flyout-panel {
+    border: 1px solid var(--cor-borda-neutra);
+    border-radius: 4px;
+    background-color: var(--cor-superficie);
+    padding: var(--espacamento-md);
+    box-sizing: border-box;
+}
+
+/* Painel KPI: faixa tipo Cards / Delivery — sem borda nem padding extra (o bloco .invoisys-ds-kpi-dashboard já preenche) */
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-cabecalho-kpis-panel.invoisys-ds-doc-cabecalho-flyout-panel {
+    padding: 0;
+    overflow: hidden;
+    border: none;
+    border-radius: 0;
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-cabecalho-kpis-panel .invoisys-ds-kpi-dashboard {
+    border-bottom: none;
+}
+
+/* Tabelas · cabeçalho — painel «Filtrar por»: grelha 3 colunas + fundo neutro (só documentação) */
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-cabecalho-filtros-panel.invoisys-ds-doc-cabecalho-flyout-panel {
+    border: none;
+    border-radius: 6px;
+    background-color: var(--cor-superficie-nuvem, #f5f5f5);
+    padding: var(--espacamento-md);
+    box-sizing: border-box;
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-cabecalho-filtros-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--espacamento-md) var(--espacamento-lg);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Mesma largura por coluna: table.css fixa .combo-container a 385px; aqui tudo encosta à célula da grelha */
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-cabecalho-filtros-grid .form-group {
+    width: 100%;
+    min-width: 0;
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-cabecalho-filtros-grid .form-control,
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-cabecalho-filtros-grid select.form-control {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-cabecalho-filtros-grid .combo-container {
+    width: 100% !important;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-cabecalho-filtros-grid .date-range-container {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-cabecalho-filtros-grid .invoisys-ds-daterange-demo--portal .prepend-icon {
+    width: 100%;
+    max-width: 100%;
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-cabecalho-filtros-grid .invoisys-ds-daterange-demo--portal .date-range-input {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+@media (max-width: 767.98px) {
+    :is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-cabecalho-filtros-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-cabecalho-full-demo-host [data-testid="ds-tabelas-cabecalho-demo-metricas"].invoisys-ds-doc-cabecalho-chip-expanded,
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-cabecalho-full-demo-host [data-testid="ds-tabelas-cabecalho-demo-filtrar"].invoisys-ds-doc-cabecalho-chip-expanded,
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-cabecalho-full-demo-host [data-testid="ds-tabelas-listagem-completa-demo-metricas"].invoisys-ds-doc-cabecalho-chip-expanded,
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa) .invoisys-ds-doc-tabelas-cabecalho-full-demo-host [data-testid="ds-tabelas-listagem-completa-demo-filtrar"].invoisys-ds-doc-cabecalho-chip-expanded {
+    background-color: #ececec !important;
+}
+
+:is(#panel-tabelas-cabecalho, #panel-tabelas-listagem-completa)
+    .invoisys-ds-doc-tabelas-cabecalho-full-demo-host.invoisys-ds-preview--toolbar-cards
+    .invoisys-ds-doc-cabecalho-btn-filtrar-plain.panel-card-btn.nfeentrada-toolbar-btn.invoisys-ds-doc-cabecalho-chip-expanded {
+    background-color: #ececec !important;
+}
+
+
+/* Tabelas · visão geral — alerta de inicialização (estrutura tipo manifesto: título + blocos + rodapé com links) */
+#panel-tabelas-visao .invoisys-ds-doc-alert--tabelas-data-table {
+    max-width: min(100%, 90ch);
+    padding: 1.125rem 1.25rem 1rem;
+    box-sizing: border-box;
+}
+
+#panel-tabelas-visao .invoisys-ds-doc-alert--tabelas-data-table .alert-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-size: var(--tamanho-md);
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+#panel-tabelas-visao .invoisys-ds-doc-alert--tabelas-data-table .alert-heading .fa {
+    flex-shrink: 0;
+    margin-top: 0.12rem;
+    opacity: 0.9;
+}
+
+#panel-tabelas-visao .invoisys-ds-doc-alert--tabelas-data-table .alert-heading code {
+    font-size: 0.92em;
+    font-weight: 700;
+}
+
+#panel-tabelas-visao .invoisys-ds-doc-alert--tabelas-data-table p.color-text {
+    color: var(--cor-texto-corpo-forte);
+}
+
+#panel-tabelas-visao .invoisys-ds-doc-alert--tabelas-data-table .alert-link {
+    text-decoration: underline;
+}
+
+#panel-tabelas-visao .invoisys-ds-doc-alert--tabelas-data-table .alert-link:hover {
+    text-decoration: none;
+}
+
+/* Tabelas · exemplo estático de grade na doc (host da prévia sem .main-content do portal) */
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo-host {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+#panel-tabelas-visao .invoisys-ds-nfeentrada-real-demo-host {
+    overflow: visible;
+}
+
+#panel-tabelas-listagem-completa .invoisys-ds-nfeentrada-real-demo-host {
+    overflow-x: auto;
+    overflow-y: visible;
+}
+
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo.layout-datatable-page.page-content {
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+    max-height: none;
+    overflow: visible;
+}
+
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo .panel[data-table] {
+    flex: 1 1 auto;
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+}
+
+/* Sobrepor table.css (portal): fluxo natural para ver todas as linhas do exemplo sem rolagem interna/corte */
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo [data-table] .panel-content.pagination2 {
+    flex: 0 1 auto !important;
+    min-height: min-content !important;
+    overflow: visible !important;
+    position: relative;
+}
+
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo [data-table] .panel-content.pagination2 .table-wrap {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    flex: 0 1 auto !important;
+    min-height: min-content !important;
+    /* Com overflow-x ≠ visible, overflow-y: visible vira "auto" na prática e aparece barra vertical */
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+}
+
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo [data-table] .panel-content.pagination2 .table-wrap .dataTables_wrapper,
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo [data-table] .panel-content.pagination2 .table-wrap div[class*="dataTables_wrapper"] {
+    flex: none !important;
+    min-height: min-content !important;
+    height: auto !important;
+    overflow: visible !important;
+}
+
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo [data-table] .panel-content.pagination2 .table-wrap .dataTables_wrapper > div:not(.footer-table),
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo [data-table] .panel-content.pagination2 .table-wrap div[class*="dataTables_wrapper"] > div:not(.footer-table),
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo [data-table] .panel-content.pagination2 .table-wrap .scrollX.table-responsive-Y,
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo [data-table] .panel-content.pagination2 .table-wrap div.scrollX {
+    flex: none !important;
+    min-height: min-content !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    display: block !important;
+}
+
+@media (max-width: 1200px) {
+    :is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo [data-table] .panel-content.pagination2 .table-wrap .scrollX.table-responsive-Y,
+    :is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo [data-table] .panel-content.pagination2 .table-wrap div.scrollX {
+        min-height: min-content !important;
+        max-height: none !important;
+        overflow-y: hidden !important;
+    }
+}
+
+/* Sem barra vertical no exemplo: wrapper ao tamanho do conteúdo (table.css usa flex 1 1 0% + overflow-y auto) */
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo :is(#tblDocNfeExemplo_wrapper, #tblDocListaCompletaDemo_wrapper).dataTables_wrapper {
+    flex: 0 0 auto !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo :is(#tblDocNfeExemplo_wrapper, #tblDocListaCompletaDemo_wrapper) > div.scrollX {
+    flex: 0 0 auto !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: min-content !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+}
+
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo :is(#tblDocNfeExemplo, #tblDocListaCompletaDemo) {
+    margin: 0;
+    min-width: 960px;
+}
+
+/* Classe th-title-abbrv: reticências nos títulos — só neste preview (no MVC, preferir table.css ou folha compartilhada) */
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo :is(#tblDocNfeExemplo, #tblDocListaCompletaDemo).th-title-abbrv {
+    table-layout: fixed;
+}
+
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo :is(#tblDocNfeExemplo, #tblDocListaCompletaDemo).th-title-abbrv > thead > tr > th {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* Status (1ª): centro + largura fixa 185px (pill 28px + gap + 4 ações × 28px na mesma linha; table-layout: fixed) */
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo :is(#tblDocNfeExemplo, #tblDocListaCompletaDemo).table > thead > tr > th:nth-child(1),
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo :is(#tblDocNfeExemplo, #tblDocListaCompletaDemo).table > tbody > tr > td:nth-child(1) {
+    text-align: center !important;
+    min-width: 185px;
+    width: 185px;
+}
+
+/* UF (6ª): centro — folha CDN do DataTables pode forçar text-align à esquerda */
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo :is(#tblDocNfeExemplo, #tblDocListaCompletaDemo).table > thead > tr > th:nth-child(6),
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo :is(#tblDocNfeExemplo, #tblDocListaCompletaDemo).table > tbody > tr > td:nth-child(6) {
+    text-align: center !important;
+}
+
+/* Linha estável: min-height 39px + padding vertical 5px ≈ 29px úteis; evita “salto” ao hover na Status */
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo :is(#tblDocNfeExemplo, #tblDocListaCompletaDemo).table > tbody > tr > td {
+    box-sizing: border-box;
+    min-height: 39px;
+    height: auto !important;
+    padding: 5px 8px !important;
+    vertical-align: middle;
+}
+
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo :is(#tblDocNfeExemplo, #tblDocListaCompletaDemo).table > tbody > tr {
+    min-height: 39px;
+}
+
+/* Ícones de ação à altura da pill (28px) para o flex em linha não empurrar a linha */
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo :is(#tblDocNfeExemplo, #tblDocListaCompletaDemo) .items-details span[role="button"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo .invoisys-ds-cell-ellipsis {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: min(14rem, 28vw);
+}
+
+/* Na doc, coluna Status como no portal: pill visível; ícones de ação só ao hover da linha */
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo .details {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    min-height: 40px;
+    white-space: normal;
+    gap: 0.35rem;
+    padding-block: 4px;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo .items-details {
+    display: none;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 0.35rem;
+}
+
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo tbody tr:hover .items-details,
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo tbody tr:focus-within .items-details {
+    display: flex !important;
+}
+
+/* Hover: indicador verde compacto (quadrado 28px, sem rótulo) à esquerda das ações */
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo tbody tr:hover .details,
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo tbody tr:focus-within .details {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    min-height: 40px;
+    padding-block: 4px;
+}
+
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo tbody tr:hover .details > .pill.pill-success,
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo tbody tr:focus-within .details > .pill.pill-success {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px;
+    min-height: 28px;
+    max-width: 28px;
+    max-height: 28px;
+    padding: 0 !important;
+    margin: 0;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    overflow: hidden;
+    white-space: nowrap;
+    text-indent: -9999px;
+    color: transparent !important;
+    border-radius: 4px !important;
+    flex-shrink: 0;
+    align-self: center;
+    justify-content: center;
+}
+
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo-host .invoisys-ds-nfe-length-fake {
+    width: 3.5rem;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0.35rem 0.5rem;
+    border: 1px solid var(--cor-borda, #ccc);
+    border-radius: 4px;
+    background: var(--cor-superficie, #fff);
+    font-size: var(--tamanho-sm, 0.875rem);
+    color: var(--cor-texto-secundario);
+}
+
+/* Paginação estática (sem &lt;a href="#"&gt;) — alinhar a estética DataTables/Bootstrap do portal */
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo .paginate-link-demo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 37px;
+    padding: 0 0.65rem;
+    font-family: var(--fonte-principal);
+    font-size: 13px;
+    font-weight: var(--peso-fonte-strong);
+    color: var(--cor-texto-secundario);
+    cursor: default;
+    user-select: none;
+}
+
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo .paginate_button.active .paginate-link-demo {
+    background-color: var(--cor-brand, #4fb73b);
+    border-radius: 4px;
+    color: #fff;
+}
+
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo .paginate_button.disabled .paginate-link-demo,
+:is(#panel-tabelas-visao, #panel-tabelas-listagem-completa) .invoisys-ds-nfeentrada-real-demo .paginate_button.previous.disabled .paginate-link-demo {
+    opacity: 0.55;
+}
+
+/* Tabelas · listagem completa — prévia com cabeçalho: toolbar um pouco mais compacta */
+#panel-tabelas-listagem-completa .invoisys-ds-doc-tabelas-cabecalho-full-demo-host.invoisys-ds-preview--toolbar-cards [data-testid="nfeentrada-toolbar"] {
+    gap: 0.375rem !important;
+}
+
+#panel-tabelas-listagem-completa .invoisys-ds-doc-tabelas-cabecalho-full-demo .invoisys-ds-doc-cabecalho-linha2.mt-2 {
+    margin-top: 0.35rem !important;
+}
+
+/* Iframe · demos estáticas (ex.: Tooltips Bootstrap 5.3 via CDN)
+   Altura inicial conservadora; a página filha pode enviar postMessage para ajustar ao conteúdo. */
+.invoisys-ds-demo-iframe {
+    display: block;
+    width: 100%;
+    height: 240px;
+    min-height: 160px;
+    max-height: min(90vh, 900px);
+    max-width: 100%;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    background: var(--cor-superficie);
+    box-sizing: border-box;
+}

@@ -1,0 +1,216 @@
+/*
+ * =============================================================================
+ * main.css ? vari?veis CSS (:root / tokens de design)
+ * =============================================================================
+ * Finalidade: ?nica fonte de vari?veis globais (cor, tipografia, espa?amento,
+ * sombras, bordas, z-index, transi??es). N?o definir classes utilit?rias aqui ?
+ * usar tokens.css.
+ *
+ * Cores novas: preferir tokens sem?nticos abaixo; evitar hex soltos em
+ * componentes.css / table.css (mapear para --cor-* / --cor-borda-*).
+ *
+ * Ordem t?pica nas telas novas (ex.: Delivery Monitor, NF-e Entrada Beta):
+ *   main.css ? tokens.css ? table.css ? componentes.css ? CSS da p?gina.
+ *   A ordem exata de <link> pode variar por view; n?o duplicar vari?veis noutros
+ *   ficheiros para evitar drift.
+ *
+ * Tipografia: c?digo novo deve usar --tamanho-xxs (n?o duplicar --tamanhao-xxs).
+ *
+ * ?ndice de grupos em :root:
+ *   ? Cor / texto / superf?cie / estado (marca, danger, action, pills, UI legada)
+ *   ? Tipografia (fam?lia, tamanhos, pesos, interlinha)
+ *   ? Espa?amento e letter-spacing
+ *   ? Eleva??o (sombras)
+ *   ? Bordas e raios (--radius-* alinhados a --borda-arredondada)
+ *   ? Empilhamento (z-index) e transi??es
+ *   ? Compatibilidade com nomes herdados (--bs-modal-margin)
+ *
+ * Vari?veis frequentes em pain?is: --cor-texto-secundario, --fonte-principal,
+ * --tamanho-sm/md, --espacamento-*, --cor-action-*, --cor-brand, --borda-*,
+ * --z-modal, --sombra-*.
+ * =============================================================================
+ */
+
+:root {
+    /* === Cor / fundo / texto === */
+    --cor-fundo-claro: #F5F8FA;
+    --cor-borda: #DEE4EA;
+    --cor-texto-secundario: #5B5B5B;
+    --cor-texto-disabled: #D9D9D9;
+    --cor-texto-principal: #8A8A8A;
+    --cor-texto-heading: #1D2939;
+    --cor-brand: #4FB73B;
+    /* Texto sobre fundo de marca (headers, bot?es cheios) */
+    --cor-texto-sobre-brand: #ffffff;
+    /* Superf?cies neutras (cards, ?reas de conte?do) */
+    --cor-superficie: #ffffff;
+    --cor-superficie-suave: #f5f5f5;
+    --cor-borda-suave: #eeeeee;
+
+    /* disabled */
+    --cor-disabled-fundo: #EAEFF5;
+    /* DANGER */
+    --cor-danger-fundo: #E34E4E;
+    --cor-danger-texto: #E34E4E;
+    --cor-danger-border: #CA2222;
+    --cor-danger-border-required: #FD1111;
+    /* ACTION BTN */
+    --cor-action-fundo: #E5F5F8;
+    --cor-action-texto: #147A8C;
+    --cor-action-border: #B1D3D9;
+    /* PILLS */
+    --cor-pill-danger: #CA2222;
+    --cor-pill-danger-texto: #CA2222;
+    --cor-pill-successo: #D6FFD4;
+    --cor-pill-successo-texto: #2B9326;
+    --cor-pill-warning: #FFF8B7;
+    --cor-pill-warning-texto: #C4902E;
+
+    /*
+     * UI legada (inputs, DataTables, hover de linha): mapeamento de hex repetidos
+     * em componentes.css / table.css. Preferir estes nomes em c?digo novo.
+     */
+    --cor-borda-neutra: #cccccc;
+    --cor-borda-discreta: #dfdfdf;
+    --cor-texto-corpo-forte: #333333;
+    --cor-overlay-puro: #000000;
+    --cor-superficie-painel: #f4f4f4;
+    --cor-superficie-alternada: #f1f1f1;
+    --cor-superficie-tabela: #f8f8f8;
+    --cor-superficie-hover-linha: #ececec;
+    --cor-superficie-nuvem: #f8f9fa;
+    --cor-progresso-track: #e9ecef;
+    --cor-indicador-sucesso: #6ab547;
+    --cor-indicador-info: #62b2fd;
+    --cor-indicador-perigo: #e45555;
+    --cor-botao-secondary-fundo: #c3c3c3;
+    --cor-danger-fundo-claro: #ffe0dc;
+    --cor-link-grid: #4298e7;
+    --cor-icone-calendario: #1b1e25;
+    --cor-icone-calendario-suave: rgba(27, 30, 37, 0.3);
+    /* DataTables / toolbar (table.css) */
+    --cor-borda-tabela: #dddddd;
+    --cor-borda-controle: #d9d9d9;
+    --cor-borda-separadora: #e8e8e8;
+    --cor-borda-forte: #bfbfbf;
+    --cor-borda-neutra-escura: #858585;
+    --cor-borda-bootstrap: #ced4da;
+    --cor-superficie-zebra: #f0f0f0;
+    --cor-superficie-barra: #f7f7f7;
+    --cor-superficie-desativado: #d8d8d8;
+    --cor-texto-celula-escuro: #424242;
+    --cor-texto-dim-grid: #3e474f;
+    --cor-texto-sobre-desativado: #242424;
+    --cor-texto-muted-extra: #b1b1b1;
+    --cor-texto-placeholder: #cccccc;
+    --cor-fundo-info-linha: #d0edf2;
+    --cor-superficie-hover-forte: #efefef;
+    /* Cabe?alhos DataTables / estado pressed (cinza #ddd) */
+    --cor-superficie-pressionado: #dddddd;
+    --cor-superficie-acinzentado: #e9e9e9;
+    --cor-borda-toolbar: #d5d5d5;
+    --cor-borda-toolbar-fina: #d3d3d3;
+    --cor-borda-painel-linha: #e9e9e9;
+    --cor-texto-hint: #aaaaaa;
+    --cor-status-sucesso-alt: #6fbe44;
+    --cor-status-erro: #ff3b30;
+    --cor-status-erro-alt: #ff4b3e;
+    --cor-status-alerta: #ff9814;
+    --cor-texto-muted-lista: #b8b8b8;
+    --cor-texto-medio: #666666;
+    --cor-texto-hint-forte: #777777;
+    --cor-texto-suave: #888888;
+    --cor-texto-a8: #a8a8a8;
+    --cor-texto-7a: #7a7a7a;
+    --cor-texto-444: #444444;
+    --cor-superficie-quase-branco: #fafafa;
+    --cor-material-500: #9e9e9e;
+    --cor-borda-e0: #e0e0e0;
+    --cor-superficie-ebe: #ebebeb;
+    --cor-dm-lista-fundo: #f7faf6;
+    --cor-dm-lista-borda: #e3ebe0;
+    --cor-dm-acento-verde: #7cb342;
+    --cor-texto-slate-500: #6b7280;
+    --cor-texto-slate-900: #111827;
+    --cor-superficie-e7: #e7e7e7;
+
+    /* === Tipografia === */
+    --fonte-principal: 'Lato';
+    --fonte-secundaria: 'Helvetica', sans-serif;
+    --tamanho-base-fonte: 14px;
+    /* Compat legado: usar --tamanho-xxs em c?digo novo */
+    --tamanhao-xxs: 10px;
+    --tamanho-xxs: 10px;
+    --tamanho-xs: 12px;
+    --tamanho-sm: 14px;
+    /* T�tulo do cabe�alho de modal (portal: 15px) */
+    --tamanho-modal-titulo: 15px;
+    --tamanho-md: 16px;
+    --tamanho-xl: 1.25rem;
+    --tamanho-xxl: 28px;
+    --tamanho-xxxl: 32px;
+    --tamanho-xxxxl: 40px;
+
+    --peso-fonte-extra-leve: 100;
+    --peso-fonte-leve: 300;
+    --peso-fonte-normal: 400;
+    --peso-fonte-strong: 600;
+    --peso-fonte-negrito: 800;
+    /* Interlinha (complementar aos tamanhos) */
+    --line-height-corpo: 1.5;
+    --line-height-tight: 1.25;
+    --line-height-heading: 1.2;
+
+    /* === Espa?amento e layout === */
+    --none: 0;
+    --espacamento-xs: 8px;
+    --espacamento-sm: 12px;
+    --espacamento-md: 16px;
+    /* Passo interm?dio (entre md e xl) ? comum em grids e gaps */
+    --espacamento-lg: 20px;
+    --espacamento-xl: 24px;
+    --espacamento-xxl: 32px;
+    --espacamento-xxxl: 40px;
+    --espacamento-xxxxl: 64px;
+    --letter-spacing-sm: -0.5px;
+    --letter-spacing-md: 0px;
+    --letter-spacing-lg: 0.5px;
+
+    /* === Eleva??o (sombras) === */
+    --sombra-leve: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --sombra-media: 0 4px 8px rgba(0, 0, 0, 0.15);
+    --sombra-forte: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+    /* === Bordas e raios === */
+    --borda-arredondada: 5px;
+    --borda-media: 2px solid #dee2e6;
+    --borda-fina: 1px solid #dee2e6;
+    --radius-sm: 2px;
+    --radius-md: var(--borda-arredondada);
+    --radius-lg: 8px;
+
+    /* === Foco (acessibilidade) ? usar em :focus-visible onde aplic?vel === */
+    --focus-ring-cor: rgba(79, 183, 59, 0.45);
+    --focus-ring-offset: 2px;
+    --focus-ring-largura: 2px;
+
+    /* === Empilhamento (z-index) ? valores est?veis para modais / dropdowns === */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+    /* Dropdown Select2 (anexo ao body): acima de modal/tooltip da escala */
+    --z-select2-dropdown: 10050;
+
+    /* === Transi??es === */
+    --transicao-rapida: 0.15s ease;
+    --transicao-padrao: 0.2s ease;
+    --transicao-lenta: 0.35s ease;
+
+    /* === Compatibilidade (nomes fora do prefixo --cor-*) === */
+    /* Usado em componentes.css (.modal-dialog); alinhado a modais Bootstrap 3 */
+    --bs-modal-margin: 30px auto;
+}

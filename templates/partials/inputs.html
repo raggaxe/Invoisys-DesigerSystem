@@ -1,0 +1,563 @@
+                <h2 class="invoisys-ds-section-title" id="sec-inputs-visao">Visão geral</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Padrões de <strong>campos de formulário</strong> alinhados a <strong>componentes.css</strong>: <code>.form-group</code>, <code>.control-label</code> e <code>.form-control</code> em
+                    <code>input</code>, <code>select</code> e <code>textarea</code> (incluindo o bloco <a href="#sec-inputs-textarea">Textarea · comentários</a>), além de <strong>interruptores</strong> no painel de filtros (secção <a href="#sec-inputs-switch-filtros">Switch</a>: <a href="#sec-inputs-switch-isolado">isolado</a>, <a href="#sec-inputs-switch-grupo">grupo com select</a>). Em muitas views MVC o Bootstrap ainda fornece reset adicional; a base em <strong>componentes.css</strong> cobre o aspecto Invoisys (altura ~39px, borda, sombra interior).
+                </p>
+                <p class="invoisys-ds-callout invoisys-ds-callout--prioridade-inputs">
+                    <strong>Prioridade em listagens e filtros:</strong> trate <a href="#sec-inputs-select2">Select2</a> e <a href="#sec-inputs-daterange">intervalo de datas</a> (<strong>Moment.js</strong> + <strong>bootstrap-daterangepicker</strong>, campo «<strong>Data de exibição</strong>» nas grades) como integrações do <strong>mesmo patamar</strong> — ambas dependem de <strong>jQuery</strong>, <strong>CSS vendor</strong>, ordem correta de scripts e do stack Invoisys (<code>componentes.css</code>, <code>table.css</code>). O intervalo segue o <strong>mesmo arranjo visual</strong> que o select avançado (rótulo, botão de ajuda, borda verde marca ao abrir o painel).
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Select2:</strong> o aspecto não vem só do <code>select2.min.css</code> — há <strong>CSS exclusivo Invoisys</strong> que completa o componente (detalhe na secção <a href="#sec-inputs-select2">Select2</a> e no snippet de init).
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Datas:</strong> uma <strong>data única</strong> pode usar <code>input type="date"</code> (<a href="#sec-inputs-date-native">Data nativa</a>). Para <strong>intervalos com presets</strong> e calendário duplo, siga a secção <a href="#sec-inputs-daterange">Intervalo de datas</a> (prioridade acima).
+                </p>
+
+                <h2 class="invoisys-ds-section-title" id="sec-inputs-text">Texto</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    <code>type="text"</code>, <code>email</code>, <code>url</code>, etc. — mesma classe <code>form-control</code>. Para <strong>pesquisa</strong> na toolbar ou listagens, ver <a href="#sec-inputs-search">Pesquisa (search)</a>.
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-inputs-preview-text">
+                    <div class="invoisys-ds-field-stack">
+                        <div class="form-group mb-0">
+                            <label class="control-label" for="ds-input-text-demo">Nome</label>
+                            <input type="text" class="form-control" id="ds-input-text-demo" name="ds-input-text-demo" placeholder="Ex.: Empresa SA" autocomplete="off" data-testid="ds-inputs-demo-text" />
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-inputs-textarea">Textarea · comentários</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    <code>textarea.form-control</code> com várias linhas — em <strong>componentes.css</strong> o <code>textarea</code> partilha borda e foco com os <code>input</code>, com altura mínima própria. O padrão abaixo replica o bloco habitual na ficha (ex.: NF-e): <strong>cabeçalho</strong> com ícone Font Awesome + rótulo, campo com <code>placeholder</code> e <strong>ação primária</strong> alinhada à direita (<code>btn btn-primary</code> — ver página <strong>Botões</strong>).
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-inputs-preview-textarea-comentarios">
+                    <div class="invoisys-ds-field-stack">
+                        <div class="form-group mb-0">
+                            <label class="control-label d-flex align-items-center gap-2 mb-2" for="ds-inputs-textarea-comentario">
+                                <i class="fa fa-comment-o" aria-hidden="true"></i>
+                                <span>Comentários</span>
+                            </label>
+                            <textarea class="form-control" id="ds-inputs-textarea-comentario" name="ComentarioTexto" rows="5" placeholder="Adicionar um comentário…" data-testid="ds-inputs-demo-textarea-comentario"></textarea>
+                            <div class="d-flex justify-content-end mt-2">
+                                <button type="button" class="btn btn-primary m-0" data-testid="ds-inputs-demo-textarea-comentario-adicionar">Adicionar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML / Razor (textarea + botão)</span>
+                        <button type="button" data-ds-copy="pre-inputs-textarea-comentarios" data-testid="ds-copy-pre-inputs-textarea-comentarios"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-inputs-textarea-comentarios"><code class="invoisys-ds-pre-code">&lt;div class="form-group"&gt;
+    &lt;label class="control-label d-flex align-items-center gap-2 mb-2" for="ComentarioTexto"&gt;
+        &lt;i class="fa fa-comment-o" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;span&gt;Comentários&lt;/span&gt;
+    &lt;/label&gt;
+    &lt;textarea class="form-control" id="ComentarioTexto" name="ComentarioTexto" rows="5" placeholder="Adicionar um comentário…"&gt;&lt;/textarea&gt;
+    &lt;div class="d-flex justify-content-end mt-2"&gt;
+        &lt;button type="submit" class="btn btn-primary m-0"&gt;Adicionar&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-inputs-number">Número</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    <code>type="number"</code> — útil para quantidades; em Razor você pode usar <code>Html.TextBoxFor</code> com tipo ou atributos.
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-inputs-preview-number">
+                    <div class="invoisys-ds-field-stack">
+                        <div class="form-group mb-0">
+                            <label class="control-label" for="ds-input-number-demo">Quantidade</label>
+                            <input type="number" class="form-control" id="ds-input-number-demo" name="ds-input-number-demo" min="0" step="1" value="10" data-testid="ds-inputs-demo-number" />
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-inputs-switch-filtros">Switch (painel de filtros)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O interruptor <strong>SIM / NÃO</strong> das colunas de filtro usa a marcação <code>.switch</code> com <code>.switch-input</code> (checkbox), <code>.switch-label</code> e <code>.switch-handle</code>.
+                    Em <strong>componentes.css</strong>, os ajustes de tamanho e texto aplicam-se dentro de <code>#filtersList</code> (painel de filtros ao lado da grade). O aspecto completo do trilho e do texto costuma completar-se com o CSS global do portal (ex.: <code>ui.css</code> no bundle MVC).
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Storybook:</strong> na <strong>mesma view MVC</strong> mantém <strong>um único</strong> <code>id="filtersList"</code> — não dupliques. Aqui há <strong>dois exemplos</strong> em caixas separadas: o primeiro usa <code>filtersList</code> (como em produção); o segundo usa <code>id="filtersListGrupo"</code> só para esta página não ter HTML inválido — ao copiar o snippet do grupo, troca para <code>filtersList</code> se for o mesmo painel que o caso isolado, ou integra o markup dentro do teu <code>#filtersList</code> real.
+                </p>
+
+                <h3 class="invoisys-ds-subsection-title" id="sec-inputs-switch-isolado">Caso 1 · Switch isolado (rótulo + SIM / NÃO)</h3>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Uma linha: texto à esquerda, interruptor à direita — típico para um único critério binário (ex.: incluir filiais) sem outro controlo no mesmo <code>form-group</code>.
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-inputs-preview-switch-filtros">
+                    <div id="filtersList" class="invoisys-ds-doc-filters-list-demo" style="max-width: 420px">
+                        <div class="form-group mb-0">
+                            <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
+                                <span class="text-label mb-0" id="ds-inputs-switch-only-lbl">Incluir filiais</span>
+                                <div class="switch">
+                                    <input type="checkbox" class="switch-input" id="ds-inputs-switch-only" checked aria-labelledby="ds-inputs-switch-only-lbl" data-testid="ds-inputs-demo-switch-only" />
+                                    <label class="switch-label" for="ds-inputs-switch-only"></label>
+                                    <span class="switch-handle" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML / Razor · switch isolado</span>
+                        <button type="button" data-ds-copy="pre-inputs-switch" data-testid="ds-copy-pre-inputs-switch"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-inputs-switch"><code class="invoisys-ds-pre-code">&lt;div id="filtersList"&gt;
+    &lt;div class="form-group"&gt;
+        &lt;div class="d-flex align-items-center justify-content-between gap-2 flex-wrap"&gt;
+            &lt;span class="text-label mb-0" id="lblIncluirFiliais"&gt;Incluir filiais&lt;/span&gt;
+            &lt;div class="switch"&gt;
+                &lt;input type="checkbox" class="switch-input" id="chkIncluirFiliais" name="IncluirFiliais" value="true" aria-labelledby="lblIncluirFiliais" /&gt;
+                &lt;label class="switch-label" for="chkIncluirFiliais"&gt;&lt;/label&gt;
+                &lt;span class="switch-handle" aria-hidden="true"&gt;&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+
+                <h3 class="invoisys-ds-subsection-title" id="sec-inputs-switch-grupo">Caso 2 · Grupo com select (rótulo + switch + campo)</h3>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Padrão recorrente em filtros: <strong>nome do critério</strong> à esquerda, <strong>opção binária</strong> (ex.: incluir filiais) à direita na mesma linha, e o <strong>select</strong> principal por baixo — <code>select</code> nativo ou Select2, conforme a view.
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-inputs-preview-switch-grupo">
+                    <div id="filtersListGrupo" class="invoisys-ds-doc-filters-list-demo" style="max-width: 420px">
+                        <div class="form-group mb-0">
+                            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                                <label class="control-label mb-0" for="ds-inputs-select-destinatario">Destinatário</label>
+                                <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                                    <span class="text-label mb-0" id="ds-inputs-lbl-filiais">Incluir filiais</span>
+                                    <div class="switch">
+                                        <input type="checkbox" class="switch-input" id="ds-inputs-switch-filiais" checked aria-labelledby="ds-inputs-lbl-filiais" data-testid="ds-inputs-demo-switch-filiais" />
+                                        <label class="switch-label" for="ds-inputs-switch-filiais"></label>
+                                        <span class="switch-handle" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <select class="form-control" id="ds-inputs-select-destinatario" name="DestinatarioId" data-testid="ds-inputs-demo-select-destinatario">
+                                <option value="">Selecione um destinatário</option>
+                                <option value="1">Contribuinte exemplo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML / Razor · grupo + select</span>
+                        <button type="button" data-ds-copy="pre-inputs-switch-grupo" data-testid="ds-copy-pre-inputs-switch-grupo"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-inputs-switch-grupo"><code class="invoisys-ds-pre-code">&lt;div id="filtersList"&gt;
+    &lt;div class="form-group"&gt;
+        &lt;div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2"&gt;
+            &lt;label class="control-label mb-0" for="destinatarioId"&gt;Destinatário&lt;/label&gt;
+            &lt;div class="d-flex align-items-center gap-2 flex-shrink-0"&gt;
+                &lt;span class="text-label mb-0" id="lblIncluirFiliais"&gt;Incluir filiais&lt;/span&gt;
+                &lt;div class="switch"&gt;
+                    &lt;input type="checkbox" class="switch-input" id="chkIncluirFiliais" name="IncluirFiliais" value="true" aria-labelledby="lblIncluirFiliais" /&gt;
+                    &lt;label class="switch-label" for="chkIncluirFiliais"&gt;&lt;/label&gt;
+                    &lt;span class="switch-handle" aria-hidden="true"&gt;&lt;/span&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;select class="form-control" id="destinatarioId" name="DestinatarioId"&gt;
+            &lt;option value=""&gt;Selecione um destinatário&lt;/option&gt;
+        &lt;/select&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-inputs-date-native">Data nativa</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    <code>input type="date"</code> — calendário nativo do browser, sem Moment nem plugin. Útil para uma única data quando não precisa de presets nem de intervalo no mesmo controle.
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-inputs-preview-date-native">
+                    <div class="invoisys-ds-field-stack">
+                        <div class="form-group mb-0">
+                            <label class="control-label" for="ds-input-date-native-demo">Data de emissão</label>
+                            <input type="date" class="form-control" id="ds-input-date-native-demo" name="ds-input-date-native-demo" data-testid="ds-inputs-demo-date-native" />
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-inputs-search">Pesquisa (search)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    <code>input type="search"</code> ou classe <code>.search-input</code> — campo de pesquisa ao lado de filtros e grades. Em <strong>table.css</strong> as regras <code>.search-input</code> e <code>input[type="search"]</code> alinham altura (~39px) e tipografia ao resto da toolbar (junto de <code>.date-range-input</code>).
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Na view MVC com listagens:</strong> inclua <code>table.css</code> na cascade (ver <a href="#sec-introducao-cascade">Introdução — ordem de cascade nas views</a>). O storybook também carrega <code>table.css</code>; o exemplo abaixo usa ainda <strong>design-system-docs.css</strong> (<code>.invoisys-ds-search-demo</code>) para isolar padding e sombra do demo sem depender do contexto completo da toolbar.
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-inputs-preview-search">
+                    <div class="invoisys-ds-field-stack invoisys-ds-search-demo">
+                        <div class="form-group mb-0">
+                            <label class="control-label" for="ds-input-search-demo">Pesquisar</label>
+                            <input type="search" class="form-control search-input" id="ds-input-search-demo" name="ds-input-search-demo" placeholder="Pesquisar…" autocomplete="off" data-testid="ds-inputs-demo-search" />
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-inputs-file">Arquivo (file)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    No portal, o padrão mais comum para XML ou anexos é o <strong>campo composto</strong>: caixa única com fundo <code>#fafafa</code>, texto só leitura com o nome (ou «Nenhum arquivo selecionado») e botão verde <strong>Escolha o …</strong> à direita.
+                    Use <code>.file</code> &gt; <code>.option-group</code> com <code>input.form-control</code> (readonly), <code>span.file-button.btn-primary</code> e <code>input type="file"</code> com classes <code>.dropzone.custom-file</code> — estilos em <strong>componentes.css</strong> (o <code>input file</code> fica invisível por cima do botão para o clique abrir o diálogo).
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Boas práticas:</strong> <code>accept</code> para extensões/MIME esperados, <code>aria-label</code> no <code>type="file"</code> e no campo de nome, <code>onchange</code> (ou JS) para copiar o nome do arquivo para o <code>readonly</code>, e validação no servidor sempre.
+                    Ver também o modal <a href="#sec-modais-entrada-xml">Entrada XML</a> na página <strong>Modais</strong>.
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-inputs-preview-file-xml">
+                    <div class="invoisys-ds-field-stack invoisys-ds-file-demo">
+                        <div class="form-group mb-0">
+                            <label for="ds-inputs-xml-file" class="control-label">Arquivo XML</label>
+                            <div class="file">
+                                <div class="option-group">
+                                    <input type="text" class="form-control" id="ds-inputs-xml-name" placeholder="Nenhum arquivo selecionado" readonly="readonly" aria-label="Nome do arquivo selecionado" data-testid="ds-inputs-xml-name" />
+                                    <span class="file-button btn-primary" aria-hidden="true">Escolha o XML</span>
+                                    <input type="file" id="ds-inputs-xml-file" name="ds-inputs-xml-file" class="dropzone custom-file" accept=".xml,application/xml,text/xml" aria-label="Selecionar arquivo XML" data-testid="ds-inputs-xml-file" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>HTML / Razor (referência)</span>
+                        <button type="button" data-ds-copy="pre-inputs-file-xml" data-testid="ds-copy-pre-inputs-file-xml"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-inputs-file-xml">&lt;div class="form-group"&gt;
+    &lt;label for="arquivoXMLPost" class="control-label"&gt;Arquivo XML&lt;/label&gt;
+    &lt;div class="file"&gt;
+        &lt;div class="option-group"&gt;
+            &lt;input type="text" class="form-control" id="uploaderXML" placeholder="Nenhum arquivo selecionado" readonly="readonly" aria-label="Nome do arquivo selecionado" /&gt;
+            &lt;span id="btnXML" class="file-button btn-primary"&gt;Escolha o XML&lt;/span&gt;
+            &lt;input id="arquivoXMLPost" name="arquivoXMLPost" type="file" class="dropzone custom-file" accept=".xml,application/xml,text/xml"
+                   onchange="document.getElementById('uploaderXML').value = this.files &amp;&amp; this.files[0] ? this.files[0].name : '';"
+                   aria-label="Selecionar arquivo XML" /&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+                </div>
+                <p class="invoisys-ds-lead" style="margin-top: var(--espacamento-lg)">
+                    <strong>Variação mínima:</strong> <code>input type="file"</code> só com <code>.form-control</code> — o botão «Procurar…» é o nativo do browser (aspecto inconsistente entre sistemas).
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-inputs-preview-file-native">
+                    <div class="invoisys-ds-field-stack invoisys-ds-file-demo">
+                        <div class="form-group mb-0">
+                            <label class="control-label" for="ds-input-file-demo">Anexo</label>
+                            <input type="file" class="form-control" id="ds-input-file-demo" name="ds-input-file-demo" accept=".pdf,.xml,application/pdf,application/xml" data-testid="ds-inputs-demo-file-native" />
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-inputs-select">Select (nativo)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    <code>select.form-control</code> — opção única, <strong>sem JavaScript</strong>: o menu que abre é o <strong>do browser</strong> (no macOS costuma mostrar o visto ✓ nas opções). <strong>Isto não é Select2.</strong>
+                    Variantes como <code>.select-filter</code> / <code>.select-verde</code> estão em <strong>componentes.css</strong> para estados específicos.
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-inputs-preview-select-native">
+                    <div class="invoisys-ds-field-stack">
+                        <div class="form-group mb-0">
+                            <label class="control-label" for="ds-select-demo">Estado (HTML nativo)</label>
+                            <select class="form-control" id="ds-select-demo" name="ds-select-demo" data-testid="ds-inputs-demo-select-native">
+                                <option value="">Selecione…</option>
+                                <option value="sp">São Paulo</option>
+                                <option value="rj">Rio de Janeiro</option>
+                                <option value="mg">Minas Gerais</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-inputs-multiselect">Multiselect (nativo)</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    <code>select multiple</code> com <code>size</code> — útil como fallback sem JavaScript. Para pesquisa, chips e múltipla seleção alinhada ao resto do portal, use <strong>Select2</strong> na seção seguinte.
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-inputs-preview-multiselect-native">
+                    <div class="invoisys-ds-field-stack">
+                        <div class="form-group mb-0">
+                            <label class="control-label" for="ds-multiselect-demo">Perfis</label>
+                            <select class="form-control" id="ds-multiselect-demo" name="ds-multiselect-demo" multiple size="4" data-testid="ds-inputs-demo-multiselect-native">
+                                <option value="a">Administrador</option>
+                                <option value="f">Fiscal</option>
+                                <option value="c">Consulta</option>
+                                <option value="o">Operador</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-inputs-select2">Select2 (biblioteca + CSS Invoisys) <span class="invoisys-ds-doc-prioridade-mark">Prioridade</span></h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O <strong>Select2</strong> é uma biblioteca de terceiros: substitua o <code>&lt;select&gt;</code> por markup próprio (<code>.select2-container</code>, <code>.select2-selection</code>, …). O portal carrega o <strong>CSS base do pacote</strong> e, a seguir, as folhas Invoisys que <strong>personalizam</strong> esse componente — não basta o arquivo da biblioteca sozinho.
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Ordem típica no <code>_Layout.cshtml</code> / bundles (MVC):</strong>
+                </p>
+                <ol class="color-text font-normal" style="margin:0 0 var(--espacamento-lg); padding-left:1.25rem; max-width:75ch; line-height:1.65">
+                    <li class="mb-2"><strong>CSS do Select2</strong> — arquivo distribuído com a biblioteca (ex.: <code>select2.min.css</code> em <code>Content/Css/vendor/</code> ou via CDN). Em bundles antigos o import costumava chamar-se <code>select2_dist_css_select2.min.css</code> — é o mesmo papel: folha base do pacote antes dos overrides Invoisys.</li>
+                    <li class="mb-2"><strong>Design system</strong> — <code>main.css</code>, <code>tokens.css</code>, <code>componentes.css</code> (regras globais <code>.select2-container</code>, <code>.select2-selection--single</code>, <code>.select2-selection--multiple</code>, empresas, filtros, etc.).</li>
+                    <li class="mb-2"><strong>Listagens / DataTables</strong> — <code>table.css</code> quando o select está no contexto de grade (ex.: toolbar com loading).</li>
+                    <li class="mb-0"><strong>CSS por tela</strong> — quando existir, folha em <code>Content/Css/Pages/…</code> com seletores específicos (ex.: Delivery Monitor, filtros com classes dedicadas no dropdown).</li>
+                </ol>
+                <p class="invoisys-ds-callout">
+                    <strong>JavaScript:</strong> jQuery + <code>select2.min.js</code> (ou bundle); na view, <code>$(\'#MeuSelect\').select2({ … })</code> — o mesmo padrão dos scripts em <code>Scripts/</code> do projeto.
+                </p>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O primeiro exemplo reproduz o <strong>aspecto típico do portal</strong>: rótulo + ajuda contextual, placeholder longo, <strong>campo de pesquisa</strong> na lista aberta e <strong>borda verde marca</strong> unindo a caixa ao painel de resultados (detalhe tratado no CSS da solução + overrides em <strong>componentes.css</strong> / página).
+                </p>
+                <div class="invoisys-ds-preview invoisys-ds-preview--select2-portal invoisys-ds-preview--doc-prioridade" data-testid="ds-inputs-preview-select2-single">
+                    <div class="invoisys-ds-field-stack">
+                        <div class="form-group mb-0 invoisys-ds-select2-demo invoisys-ds-select2-demo--portal">
+                            <div class="d-flex align-items-center flex-wrap gap-2 mb-1">
+                                <label class="control-label mb-0" for="ds-select2-single-demo">Status da fase de vinculação</label>
+                                <button type="button" class="invoisys-ds-input-help-btn" title="Ajuda" aria-label="Ajuda sobre este campo" onclick="return false;" data-testid="ds-inputs-select2-help-status"><i class="fa fa-info" aria-hidden="true"></i></button>
+                            </div>
+                            <select class="form-control" id="ds-select2-single-demo" name="ds-select2-single-demo" data-testid="ds-inputs-select2-single">
+                                <option></option>
+                                <option value="todos">Todos</option>
+                                <option value="efet">Vínculo Efetivado</option>
+                                <option value="div">Vínculo Com Divergências</option>
+                                <option value="sem">Sem Vinculação</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="invoisys-ds-preview invoisys-ds-preview--doc-prioridade" data-testid="ds-inputs-preview-select2-multi">
+                    <div class="invoisys-ds-field-stack invoisys-ds-select2-demo invoisys-ds-select2-demo--multi">
+                        <div class="form-group mb-0">
+                            <label class="control-label" for="ds-select2-multi-demo">Perfis (Select2 — múltipla)</label>
+                            <select class="form-control" id="ds-select2-multi-demo" name="ds-select2-multi-demo" multiple data-testid="ds-inputs-select2-multi">
+                                <option value="a">Administrador</option>
+                                <option value="f">Fiscal</option>
+                                <option value="c">Consulta</option>
+                                <option value="o">Operador</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="invoisys-ds-subsection-title" id="sec-inputs-select2-snippet">Layout e init (snippet)</h3>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Links + init mínimo · prioridade (listagens)</span>
+                        <button type="button" data-ds-copy="pre-inputs-select2" data-testid="ds-copy-pre-inputs-select2"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-inputs-select2"><code class="invoisys-ds-pre-code">&lt;!-- _Layout.cshtml — ordem sugerida (antes de componentes.css) --&gt;
+&lt;link href="~/Content/Css/vendor/select2.min.css" rel="stylesheet" /&gt;
+&lt;!-- … main.css, tokens.css, componentes.css, table.css se aplicável, CSS da página … --&gt;
+
+&lt;!-- Scripts (jQuery antes de select2) --&gt;
+&lt;script src="~/Scripts/vendor/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="~/Scripts/vendor/select2.min.js"&gt;&lt;/script&gt;
+
+&lt;!-- View: o &lt;select&gt; mantém classes habituais; Select2 injeta o resto --&gt;
+&lt;select id="CidadeId" name="CidadeId" class="form-control"&gt;…&lt;/select&gt;
+&lt;script&gt;
+  $(function () {
+    $('#CidadeId').select2({ width: '100%', placeholder: 'Selecione…' });
+  });
+&lt;/script&gt;</code></pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-inputs-daterange">Intervalo de datas (biblioteca + CSS Invoisys) <span class="invoisys-ds-doc-prioridade-mark">Prioridade</span></h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O <strong>bootstrap-daterangepicker</strong> é biblioteca de terceiros (jQuery + <strong>Moment.js</strong>): o filtro <strong>«Data de exibição»</strong> nas invoices e listagens é um <code>input type="text"</code>, não <code>type="date"</code>. Trate-o como <strong>integração crítica</strong> ao lado do <a href="#sec-inputs-select2">Select2</a> (mesma cascade de vendors + <code>main.css</code> / <code>tokens.css</code> / <code>componentes.css</code> / <code>table.css</code>). O portal carrega o <strong>CSS do pacote</strong> e, em seguida, o mesmo <strong>stack Invoisys</strong> que o Select2 (<code>table.css</code> para <code>.date-range-input</code> / <code>.date-range-container</code>, <code>componentes.css</code> para <code>.prepend-icon</code>) — o aspecto do campo na toolbar fica coerente com os selects Select2 (altura ~39px, borda neutra, <strong>borda verde marca</strong> ao focar/abrir).
+                </p>
+                <p class="invoisys-ds-callout">
+                    <strong>Ordem típica no <code>_Layout.cshtml</code> / bundles (MVC)</strong> — espelha a seção <a href="#sec-inputs-select2">Select2</a> e adicione o vendor do intervalo:
+                </p>
+                <ol class="color-text font-normal" style="margin:0 0 var(--espacamento-lg); padding-left:1.25rem; max-width:75ch; line-height:1.65">
+                    <li class="mb-2"><strong>CSS do daterangepicker</strong> — <code>daterangepicker.css</code> (ou min) em <code>Content/Css/vendor/</code>. Na mesma página com Select2, mantenha <strong>primeiro</strong> o <code>select2.min.css</code> (passo 1 da lista Select2) e coloca este arquivo a seguir, ainda antes de <code>main.css</code>.</li>
+                    <li class="mb-2"><strong>Design system</strong> — <code>main.css</code>, <code>tokens.css</code>, <code>componentes.css</code> (inclua <code>.prepend-icon</code> + restantes inputs) e <strong><code>table.css</code></strong> para regras <code>.date-range-*</code> nas toolbars.</li>
+                    <li class="mb-2"><strong>Listagens / DataTables</strong> — reforço de contexto em <code>table.css</code> quando o intervalo está na grade (igual ao Select2 na toolbar).</li>
+                    <li class="mb-0"><strong>CSS por tela</strong> — <code>Content/Css/Pages/…</code> quando a tela ajusta o bloco (ex.: Delivery Monitor). Combinações como «Classificar por data de: Entrada» são <strong>HTML extra da tela</strong>, não fazem parte do plugin.</li>
+                </ol>
+                <p class="invoisys-ds-callout">
+                    <strong>JavaScript:</strong> jQuery → <strong>Moment</strong> (<code>moment.min.js</code>) → <strong>daterangepicker</strong> (<code>daterangepicker.min.js</code>); na view, <code>$(\'#MeuIntervalo\').daterangepicker({ … })</code> — o mesmo padrão de ordem que jQuery antes de <code>select2.min.js</code> na seção Select2.
+                </p>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    O exemplo abaixo segue o <strong>mesmo arranjo visual da demo Select2</strong> (rótulo + ajuda + campo) para filtros de listagem; o painel do calendário usa a <strong>verde marca</strong> como o dropdown Select2 nesta documentação.
+                </p>
+                <div class="invoisys-ds-preview invoisys-ds-preview--daterange-portal invoisys-ds-preview--doc-prioridade" data-testid="ds-inputs-preview-daterange">
+                    <div class="invoisys-ds-field-stack">
+                        <div class="form-group mb-0 invoisys-ds-daterange-demo invoisys-ds-daterange-demo--portal">
+                            <div class="d-flex align-items-center flex-wrap gap-2 mb-1">
+                                <label class="control-label mb-0" for="ds-daterange-demo">Data de exibição</label>
+                                <button type="button" class="invoisys-ds-input-help-btn" title="Ajuda" aria-label="Ajuda sobre o intervalo de datas" onclick="return false;" data-testid="ds-inputs-daterange-help"><i class="fa fa-info" aria-hidden="true"></i></button>
+                            </div>
+                            <div class="date-range-container">
+                                <div class="prepend-icon dm-toolbar-date-range">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    <input type="text" class="form-control date-range-input" id="ds-daterange-demo" name="ds-daterange-demo" autocomplete="off" data-testid="ds-inputs-daterange" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="invoisys-ds-subsection-title" id="sec-inputs-daterange-snippet">Layout e init (snippet)</h3>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Links + init mínimo · prioridade (listagens)</span>
+                        <button type="button" data-ds-copy="pre-inputs-daterange" data-testid="ds-copy-pre-inputs-daterange"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-inputs-daterange"><code class="invoisys-ds-pre-code">&lt;!-- _Layout.cshtml — vendors (Select2 + intervalo) antes de main/tokens/componentes/table --&gt;
+&lt;link href="~/Content/Css/vendor/select2.min.css" rel="stylesheet" /&gt;
+&lt;link href="~/Content/Css/vendor/daterangepicker.css" rel="stylesheet" /&gt;
+&lt;!-- … main.css, tokens.css, componentes.css, table.css, CSS da página … --&gt;
+
+&lt;script src="~/Scripts/vendor/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="~/Scripts/vendor/moment.min.js"&gt;&lt;/script&gt;
+&lt;script src="~/Scripts/vendor/daterangepicker.min.js"&gt;&lt;/script&gt;
+&lt;script src="~/Scripts/vendor/select2.min.js"&gt;&lt;/script&gt;
+
+&lt;!-- View: markup alinhado a table.css + componentes.css (prepend-icon) --&gt;
+&lt;div class="date-range-container"&gt;
+  &lt;div class="prepend-icon dm-toolbar-date-range"&gt;
+    &lt;i class="fa fa-calendar"&gt;&lt;/i&gt;
+    &lt;input type="text" class="form-control date-range-input" id="dmDateRange" autocomplete="off" /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  $(function () {
+    if (!$('#dmDateRange').length || typeof $.fn.daterangepicker !== 'function' || typeof moment === 'undefined') return;
+
+    $('#dmDateRange').daterangepicker({
+      showDropdowns: false,
+      autoApply: true,
+      linkedCalendars: true,
+      autoUpdateInput: false,
+      startDate: moment(),
+      endDate: moment(),
+      ranges: {
+        'Ontem': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+        'Hoje': [moment(), moment()],
+        'Semana Atual': [moment().startOf('week'), moment().endOf('week')],
+        'Mês Atual': [moment().startOf('month'), moment().endOf('month')],
+        'Semana Passada': [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')],
+        'Mês Passado': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+      },
+      locale: {
+        format: 'DD/MM/YYYY',
+        separator: ' - ',
+        applyLabel: 'Aplicar',
+        cancelLabel: 'Limpar',
+        fromLabel: 'De: ',
+        toLabel: 'Até: ',
+        daysOfWeek: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+        monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+        firstDay: 0
+      },
+      alwaysShowCalendars: true
+    });
+
+    var hoje = moment();
+    $('#dmDateRange').val(hoje.format('DD/MM/YYYY') + ' - ' + hoje.format('DD/MM/YYYY'));
+
+    $('#dmDateRange').on('apply.daterangepicker', function (e, picker) {
+      $(this).val(
+        picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY')
+      );
+    });
+  });
+&lt;/script&gt;</code></pre>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-inputs-form">Formulário</h2>
+                <p class="invoisys-ds-lead" style="margin-top:0">
+                    Composição típica: vários <code>.form-group</code>, anexo com o campo composto <code>.file</code> (como em <a href="#sec-inputs-file">Arquivo (file)</a>) e ações no rodapé com o mesmo markup que nos modais (<code>modal-footer</code> + <code>d-flex</code> + <code>flex-fill</code> — ver <a href="#sec-modais-centrado">Modais · centrado</a>); botões na página <strong>Botões</strong>.
+                </p>
+                <div class="invoisys-ds-preview" data-testid="ds-inputs-preview-form-demo">
+                    <form class="invoisys-ds-field-stack" action="#" method="post" onsubmit="return false;" data-testid="ds-inputs-form-demo">
+                        <div class="form-group">
+                            <label class="control-label" for="ds-form-nome">Razão social</label>
+                            <input type="text" class="form-control" id="ds-form-nome" name="nome" placeholder="Obrigatório" data-testid="ds-inputs-form-nome" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="ds-form-email">E-mail</label>
+                            <input type="email" class="form-control" id="ds-form-email" name="email" data-testid="ds-inputs-form-email" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="ds-form-pais">País</label>
+                            <select class="form-control" id="ds-form-pais" name="pais" data-testid="ds-inputs-form-pais">
+                                <option value="br">Brasil</option>
+                                <option value="pt">Portugal</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="ds-form-obs">Observações</label>
+                            <textarea class="form-control" id="ds-form-obs" name="obs" rows="3" data-testid="ds-inputs-form-obs"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="ds-form-search">Pesquisa</label>
+                            <input type="search" class="form-control search-input" id="ds-form-search" name="q" placeholder="Pesquisar…" autocomplete="off" data-testid="ds-inputs-form-search" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="ds-form-anexo-file">Anexo</label>
+                            <div class="file">
+                                <div class="option-group">
+                                    <input type="text" class="form-control" id="ds-form-anexo-name" placeholder="Nenhum arquivo selecionado" readonly="readonly" aria-label="Nome do arquivo selecionado" data-testid="ds-inputs-form-anexo-nome" />
+                                    <span class="file-button btn-primary" aria-hidden="true">Escolha o arquivo</span>
+                                    <input type="file" id="ds-form-anexo-file" name="anexo" class="dropzone custom-file" accept=".pdf,.xml,application/pdf,application/xml" aria-label="Selecionar anexo" data-testid="ds-inputs-form-anexo-file" />
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="modal-footer d-flex justify-content-between align-items-center gap-2 py-2" data-testid="ds-inputs-form-footer">
+                            <button type="button" class="btn btn-canceled flex-fill m-0" data-testid="ds-inputs-form-btn-cancelar">Cancelar</button>
+                            <button type="submit" class="btn btn-primary flex-fill m-0" data-testid="ds-inputs-form-btn-guardar">Guardar</button>
+                        </footer>
+                    </form>
+                </div>
+
+                <h2 class="invoisys-ds-section-title" id="sec-inputs-snippet">HTML · exemplo completo (MVC)</h2>
+                <div class="invoisys-ds-code-wrap">
+                    <div class="invoisys-ds-code-bar">
+                        <span>Razor / HTML</span>
+                        <button type="button" data-ds-copy="pre-inputs-form" data-testid="ds-copy-pre-inputs-form"><span class="invoisys-ds-copy-label">Copiar</span></button>
+                    </div>
+                    <pre class="invoisys-ds-pre" id="pre-inputs-form"><code class="invoisys-ds-pre-code">&lt;div class="form-group"&gt;
+    &lt;label class="control-label" for="Nome"&gt;Razão social&lt;/label&gt;
+    &lt;input type="text" class="form-control" id="Nome" name="Nome" /&gt;
+&lt;/div&gt;
+&lt;div class="form-group"&gt;
+    &lt;label class="control-label" for="Regiao"&gt;Estado&lt;/label&gt;
+    &lt;select class="form-control" id="Regiao" name="Regiao"&gt;
+        &lt;option value=""&gt;Selecione…&lt;/option&gt;
+        &lt;option value="sp"&gt;São Paulo&lt;/option&gt;
+    &lt;/select&gt;
+&lt;/div&gt;
+&lt;div class="form-group"&gt;
+    &lt;label class="control-label" for="Perfis"&gt;Perfis&lt;/label&gt;
+    &lt;select class="form-control" id="Perfis" name="Perfis" multiple size="4"&gt;
+        &lt;option value="a"&gt;Administrador&lt;/option&gt;
+        &lt;option value="f"&gt;Fiscal&lt;/option&gt;
+    &lt;/select&gt;
+&lt;/div&gt;
+&lt;div class="form-group"&gt;
+    &lt;label class="control-label" for="Qtd"&gt;Quantidade&lt;/label&gt;
+    &lt;input type="number" class="form-control" id="Qtd" name="Qtd" min="0" step="1" /&gt;
+&lt;/div&gt;
+&lt;div class="form-group"&gt;
+    &lt;label class="control-label" for="Busca"&gt;Pesquisa&lt;/label&gt;
+    &lt;input type="search" class="form-control search-input" id="Busca" name="q" placeholder="Pesquisar…" autocomplete="off" /&gt;
+&lt;/div&gt;
+&lt;div class="form-group"&gt;
+    &lt;label class="control-label" for="arquivoAnexo"&gt;Anexo&lt;/label&gt;
+    &lt;div class="file"&gt;
+        &lt;div class="option-group"&gt;
+            &lt;input type="text" class="form-control" id="nomeAnexo" placeholder="Nenhum arquivo selecionado" readonly="readonly" aria-label="Nome do arquivo selecionado" /&gt;
+            &lt;span class="file-button btn-primary"&gt;Escolha o arquivo&lt;/span&gt;
+            &lt;input id="arquivoAnexo" name="Anexo" type="file" class="dropzone custom-file" accept=".pdf,.xml,application/pdf,application/xml"
+                   onchange="document.getElementById('nomeAnexo').value = this.files &amp;&amp; this.files[0] ? this.files[0].name : '';"
+                   aria-label="Selecionar anexo" /&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;footer class="modal-footer d-flex justify-content-between align-items-center gap-2 py-2"&gt;
+    &lt;button type="button" class="btn btn-canceled flex-fill m-0"&gt;Cancelar&lt;/button&gt;
+    &lt;button type="submit" class="btn btn-primary flex-fill m-0"&gt;Guardar&lt;/button&gt;
+&lt;/footer&gt;</code></pre>
+                </div>
